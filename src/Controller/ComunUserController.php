@@ -4,12 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminController extends AbstractController
+class ComunUserController extends AbstractController
 {
 
     public function index()
     {
-        return $this->render('admin/index.html.twig', [
+        return $this->render('user/index.html.twig', [
             'controller_name' => 'AdminController',
         ]);
     }

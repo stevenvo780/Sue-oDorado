@@ -14,11 +14,18 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        /*
+
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_login');
+            $user =$this->getUser()->getRoles();
+            dump($user[0]);
+            if ($user[0] == "ROLE_ADMIN") {
+                return $this->redirectToRoute('dasboard');
+            } elseif ($user[0] == "ROLE_USER") {
+                return $this->redirectToRoute('app_login');
+            }
         }
-        */
+
+
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
