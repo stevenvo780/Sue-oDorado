@@ -92,22 +92,47 @@
 
     <div class="container-fluid">
       <!-- DataTables Example -->
-      <section class="testimonials text-center bg-light">
-        <div class="container">
-          <h2 class="mb-5">What people are saying...</h2>
-          <div class="row">
-
-            <div class="col-lg-8 text-center">
-              <div class="testimonial-item mx-auto mb-5 mb-lg-0">
-                <img class="img-fluid rounded-circle mb-3" src="img/testimonials-2.jpg" alt="">
-                <h5>Fred S.</h5>
-                <p class="font-weight-light mb-0">"Bootstrap is amazing. I've been using it to create lots of super nice landing pages."</p>
-              </div>
-            </div>
-
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fas fa-table"></i>
+          Usuarios</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Telefono movil</th>
+                  <th>Telefono fijo</th>
+                  <th>Referido</th>
+                  <th>Pais</th>
+                  <th>Correo</th>
+                  <th>Ciudad</th>
+                  <th>Monedas Bitcoin</th>
+                  <th>Monedas Marketcoin</th>
+                  <th>Veces Recividas</th>
+                </tr>
+              </thead>
+              <tfoot>
+              </tfoot>
+              <tbody>
+                  <tr>
+                    <td>{{ user.nombre }}</td>
+                    <td>{{ user.telmovil }}</td>
+                    <td>{{ user.telfijo }}</td>
+                    <td>{{ user.referido }}</td>
+                    <td>{{ user.pais }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.ciudad }}</td>
+                    <td>{{ user.monedasBitcoin }}</td>
+                    <td>{{ user.monedasMarketcoin }}</td>
+                    <td>{{ user.vecesRecividas }}</td>
+                  </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
+      </div>
 
     </div>
     <!-- /.container-fluid -->
@@ -172,77 +197,5 @@
 {% block javascripts %}
 {{ parent() }}
 
-<script type="text/javascript">
-
-$(document).ready(function() {
-        usersList();
-        console.log("Docuemnto listo");
-    });
-
-function usersList() {
-
-    var misCabeceras = new Headers();
-    var miInit = { method: 'POST',
-           headers: misCabeceras,
-           mode: 'cors',
-           cache: 'default' };
-  fetch('{{ path('list_Users') }}',miInit)
-    .then(response => response.json())
-    .then(myJson => {
-        var table = $('#Usuarios').DataTable({
-         "destroy": true,
-        });
-     table.clear();
-
-     console.log(myJson);
-     for (var i = 0; i < myJson.length; i++) {
-         var x = "modalBorrar("+myJson[i].id+")";
-         var id = myJson[i].id
-         var uri = "{{ path('edit_user',{'id': 'id'} )}}";
-         uri = uri.replace('id', id);
-         var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
-                         table.row.add([
-                             myJson[i].username,
-                             myJson[i].telmovil,
-                             myJson[i].telfijo,
-                             myJson[i].referido,
-                             myJson[i].monedas,
-                             myJson[i].nivel,
-                             boton,
-                         ]);
-     }
-     table.draw();
-    })
-    .catch(function(err) {
-       console.log(err);
-
-    });
-}
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
-
-function deleteUser(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    fetch(uri, {
-            method: 'POST',
-        })
-    .then(response => {
-        console.log(response);
-    })
-    .catch((error) => console.log(error));
-
-}
-
-</script>
 
 {% endblock %}
