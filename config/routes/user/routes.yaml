@@ -1,0 +1,3 @@
+dasboard_user:
+   path: /
+   controller: App\Controller\ComunUserController::index

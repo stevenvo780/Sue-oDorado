@@ -21,11 +21,9 @@ class SecurityController extends AbstractController
             if ($user[0] == "ROLE_ADMIN") {
                 return $this->redirectToRoute('dasboard');
             } elseif ($user[0] == "ROLE_USER") {
-                return $this->redirectToRoute('app_login');
+                return $this->redirectToRoute('dasboard_user');
             }
         }
-
-
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

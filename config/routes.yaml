@@ -2,6 +2,10 @@ admin:
   resource: 'routes/admin/routes.yaml'
   prefix: /admin
 
+profile:
+  resource: 'routes/user/routes.yaml'
+  prefix: /profile
+
 list_Users:
    path: /listusers
    controller: App\Controller\UsersController::list

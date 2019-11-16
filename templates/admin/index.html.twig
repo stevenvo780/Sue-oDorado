@@ -105,8 +105,11 @@
                   <th>Telefono movil</th>
                   <th>Telefono fijo</th>
                   <th>Referido</th>
-                  <th>Monedas</th>
-                  <th>Nivel</th>
+                  <th>Pais</th>
+                  <th>Ciudad</th>
+                  <th>Monedas Bitcoin</th>
+                  <th>Monedas Marketcoin</th>
+                  <th>Veces Recividas</th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -210,12 +213,15 @@ function usersList() {
          uri = uri.replace('id', id);
          var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
                          table.row.add([
-                             myJson[i].username,
+                             myJson[i].nombre,
                              myJson[i].telmovil,
                              myJson[i].telfijo,
                              myJson[i].referido,
-                             myJson[i].monedas,
-                             myJson[i].nivel,
+                             myJson[i].pais,
+                             myJson[i].ciudad,
+                             myJson[i].monedasBitcoin,
+                             myJson[i].monedasMarketcoin,
+                             myJson[i].vecesRecividas,
                              boton,
                          ]);
      }

@@ -17,14 +17,17 @@ class UserEditType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
-            ->add('username', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('nombre', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('telfijo', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('telmovil', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('email', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('edad', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('referido', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
-            ->add('edad', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
-            ->add('nivel', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
-            ->add('monedas', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('pais', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('ciudad', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('monedasBitcoin', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('monedasMarketcoin', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+            ->add('vecesRecividas', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
         ;
     }
 

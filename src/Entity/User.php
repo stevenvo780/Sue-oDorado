@@ -25,7 +25,7 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
-    private $username;
+    private $nombre;
 
     /**
      * @ORM\Column(type="string", nullable=false, length=180)
@@ -38,7 +38,7 @@ class User implements UserInterface
     private $telmovil;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
      */
     private $referido;
 
@@ -48,14 +48,29 @@ class User implements UserInterface
     private $edad;
 
     /**
-     * @ORM\Column(type="integer", length=255, nullable=false)
+     * @ORM\Column(type="string", length=180)
      */
-    private $nivel;
+    private $ciudad;
 
     /**
-     * @ORM\Column(type="integer", length=255, nullable=false)
+     * @ORM\Column(type="string", length=180)
      */
-    private $monedas;
+    private $pais;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $monedasBitcoin;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $monedasMarketcoin;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $vecesRecividas;
 
     /**
      * @ORM\Column(type="json")
@@ -79,14 +94,14 @@ class User implements UserInterface
     }
 
 
-    public function getUsername(): ?string
+    public function getNombre(): ?string
     {
-        return $this->username;
+        return $this->nombre;
     }
 
-    public function setUsername(string $username): self
+    public function setNombre(string $nombre): self
     {
-        $this->username = $username;
+        $this->nombre = $nombre;
 
         return $this;
     }
@@ -127,52 +142,93 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getReferido(): ?string
+    public function getReferido(): ?User
     {
         return $this->referido;
     }
 
-    public function setReferido(string $referido): self
+    public function setReferido(?User $referido): self
     {
         $this->referido = $referido;
 
         return $this;
     }
 
-    public function getEdad(): ?string
+    public function getEdad(): ?int
     {
         return $this->edad;
     }
 
-    public function setEdad(string $edad): self
+    public function setEdad(int $edad): self
     {
         $this->edad = $edad;
 
         return $this;
     }
 
-    public function getNivel(): ?string
+    public function getMonedasBitcoin(): ?int
     {
-        return $this->nivel;
+        return $this->monedasBitcoin;
     }
 
-    public function setNivel(string $nivel): self
+    public function setMonedasBitcoin(int $monedasBitcoin): self
     {
-        $this->nivel = $nivel;
+        $this->monedasBitcoin = $monedasBitcoin;
 
         return $this;
     }
 
-    public function getMonedas(): ?string
+    public function getMonedasMarketcoin(): ?int
     {
-        return $this->monedas;
+        return $this->monedasMarketcoin;
     }
 
-    public function setMonedas(string $monedas): self
+    public function setMonedasMarketcoin(int $monedasMarketcoin): self
     {
-        $this->monedas = $monedas;
+        $this->monedasMarketcoin = $monedasMarketcoin;
 
         return $this;
+    }
+
+    public function getPais(): ?string
+    {
+        return $this->pais;
+    }
+
+    public function setPais(string $pais): self
+    {
+        $this->pais = $pais;
+
+        return $this;
+    }
+
+    public function getCiudad(): ?string
+    {
+        return $this->ciudad;
+    }
+
+    public function setCiudad(string $ciudad): self
+    {
+        $this->ciudad = $ciudad;
+
+        return $this;
+    }
+
+    public function getVecesRecividas(): ?int
+    {
+        return $this->vecesRecividas;
+    }
+
+    public function setVecesRecividas(int $vecesRecividas): self
+    {
+        $this->vecesRecividas = $vecesRecividas;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->nombre;
     }
 
     /**
