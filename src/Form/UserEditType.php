@@ -23,6 +23,8 @@ class UserEditType extends AbstractType
             ->add('email', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('edad', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('referido', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
+
+
             ->add('pais', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('ciudad', TextType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
             ->add('monedasBitcoin', NumberType::class, array('attr'  => array('class' => 'form-control form-control-lg')))
