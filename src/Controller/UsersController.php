@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Entity\User;
+use DateTime;
 
 class UsersController extends AbstractController
 {
@@ -75,6 +76,7 @@ class UsersController extends AbstractController
             $user->setMonedasBitcoin(0);
             $user->setMonedasMarketcoin(0);
             $user->setVecesRecividas(0);
+            $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
 
             $em->persist($user);
             $em->flush();

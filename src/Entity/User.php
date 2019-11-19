@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use DateTime;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -71,6 +72,11 @@ class User implements UserInterface
      * @ORM\Column(type="integer", nullable=false)
      */
     private $vecesRecividas;
+
+    /**
+     * @ORM\Column(type="date")
+     */
+    private $fechaCreacion;
 
     /**
      * @ORM\Column(type="json")
@@ -222,6 +228,18 @@ class User implements UserInterface
     public function setVecesRecividas(int $vecesRecividas): self
     {
         $this->vecesRecividas = $vecesRecividas;
+
+        return $this;
+    }
+
+    public function getFechaCreacion(): ?DateTime
+    {
+        return $this->fechaCreacion;
+    }
+
+    public function setFechaCreacion(DateTime $fechaCreacion): self
+    {
+        $this->fechaCreacion = $fechaCreacion;
 
         return $this;
     }
