@@ -72,8 +72,9 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $user->setNivel(0);
-            $user->setMonedas(0);
+            $user->setMonedasBitcoin(0);
+            $user->setMonedasMarketcoin(0);
+            $user->setVecesRecividas(0);
 
             $em->persist($user);
             $em->flush();

@@ -5,7 +5,7 @@
 {% block body %}
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-  <a class="navbar-brand mr-1" href="index.html">Sueño dorado ADMIN</a>
+  <a class="navbar-brand mr-1" href="index.html">Sueño dorado</a>
 
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
     <i class="fas fa-bars"></i>
@@ -64,6 +64,12 @@
       <a class="nav-link" href="{{path('dasboard')}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Perfiles</span>
+      </a>
+    </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="{{ path('edit_profile',{'id': user.id} )}}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Editar perfil</span>
       </a>
     </li>
     <li class="nav-item">
