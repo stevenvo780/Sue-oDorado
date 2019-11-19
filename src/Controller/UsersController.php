@@ -30,8 +30,6 @@ class UsersController extends AbstractController
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        dump($usuarios);
-
         return new Response($serializer->serialize($usuarios, 'json'));
     }
 
