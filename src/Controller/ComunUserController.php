@@ -22,7 +22,7 @@ class ComunUserController extends AbstractController
     }
 
 
-    public function edit($id, EntityManagerInterface $em, Request $request)
+    public function edit($id, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {
         $user = $em->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
@@ -33,7 +33,7 @@ class ComunUserController extends AbstractController
                 $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
             }
-            if ($json['user']['user_referido']) {
+            if (array_key_exists('user_referido', $json['user'])) {
                 $userReferido = $em->getRepository(User::class)->find($json['user']['user_referido']);
                 $user->setReferido($userReferido);
             }

@@ -84,15 +84,14 @@
                 <option value="" selected >Ninguno</option>
                 {% endif %}
                 {% for usuario in usuarios %}
-                {% if user != usuario %}
-                {% if user.referido != usuario %}
-                <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
-                {% endif %}
-                {% endif %}
+                    {% if user != usuario %}
+                        {% if user.referido != usuario %}
+                        <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
                 </select>
                 <br>
-
                 {{ form_row(form.pais) }}
                 {{ form_row(form.edad) }}
                 {{ form_row(form.ciudad) }}
