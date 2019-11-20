@@ -79,6 +79,7 @@
                 <select name="user_edit[user_referido]" class="custom-select" id="user_edit_referido" multiple>
                 {% if user.referido %}
                 <option value="{{ user.referido.id }}" selected>{{ user.referido.nombre }}</option>
+                <option value="" >Ninguno</option>
                 {% else %}
                 <option value="" selected >Ninguno</option>
                 {% endif %}
