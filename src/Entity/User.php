@@ -29,11 +29,6 @@ class User implements UserInterface
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", nullable=false, length=180)
-     */
-    private $telfijo;
-
-    /**
      * @ORM\Column(type="string", length=180)
      */
     private $telmovil;
@@ -112,17 +107,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getTelfijo(): ?string
-    {
-        return $this->telfijo;
-    }
-
-    public function setTelfijo(string $telfijo): self
-    {
-        $this->telfijo = $telfijo;
-
-        return $this;
-    }
 
     public function getTelmovil(): ?string
     {
