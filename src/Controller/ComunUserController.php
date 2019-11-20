@@ -26,21 +26,32 @@ class ComunUserController extends AbstractController
     {
         $user = $em->getRepository(User::class)->find($id);
         $form = $this->createForm(UserType::class, $user);
-
+        $json = $request->request->all();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
+            if ($user->getPlainPassword()) {
+                $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                $user->setPassword($password);
+            }
+            if ($json['user']['user_referido']) {
+                $userReferido = $em->getRepository(User::class)->find($json['user']['user_referido']);
+                $user->setReferido($userReferido);
+            }
             $em->persist($user);
             $em->flush();
 
 
-            return $this->redirectToRoute('dasboard');
+            return $this->redirectToRoute('dasboard_user');
         }
         $user = $this->getUser();
-        return $this->render('user/editProfile.html.twig', [
-             'form' => $form->createView(),
-             'user' => $user,
-         ]);
+        $usuarios = $em->getRepository(User::class)->findAll();
+
+        return $this->render(
+            'user/editProfile.html.twig',
+            ['form' => $form->createView(),
+            'usuarios' => $usuarios,
+            'user' => $user,
+            ]
+        );
     }
 }

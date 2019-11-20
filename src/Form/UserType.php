@@ -18,18 +18,16 @@ class UserType extends AbstractType
         $builder
             ->add('email', EmailType::class, ['label' => 'Correo', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('nombre', TextType::class, ['label' => 'Nombre completo', 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('telfijo', TextType::class, ['label' => 'Telefono fijo', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('telmovil', TextType::class, ['label' => 'Telefono movil', 'attr'  => ['class' => 'form-control form-control-lg']])
-            //->add('referido', TextType::class, ['label' => 'Referido', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('edad', NumberType::class, ['label' => 'Edad', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('pais', TextType::class, ['label' => 'Pais', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('ciudad', TextType::class, ['label' => 'Ciudad', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('plainPassword', RepeatedType::class, array(
-
+                'required' => false,
                 'type' => PasswordType::class,
                 'first_options'  => array('label' => 'Contraseña'),
                 'second_options' => array('label' => 'Repita contraseña'),
-                'options' => array('attr' => array('class' => 'form-control form-control-lg')),
+                'options' => array('attr' => array('class' => 'form-control form-control-lg', 'autocomplete' => 'off')),
             ))
         ;
     }

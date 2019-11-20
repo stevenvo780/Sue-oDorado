@@ -38,19 +38,33 @@ class UsersController extends AbstractController
         $user = $em->getRepository(User::class)->find($id);
         $form = $this->createForm(UserEditType::class, $user);
 
+        $json = $request->request->all();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            dump($json);
+            if (array_key_exists('user_referido', $json['user_edit'])) {
+                $userReferido = $em->getRepository(User::class)->find($json['user_edit']['user_referido']);
+                $user->setReferido($userReferido);
+            }
+            if (array_key_exists('user_rol', $json['user_edit'])) {
+                $user->setRoles(['ROLE_ADMIN']);
+            } else {
+                $user->setRoles(['ROLE_USER']);
+            }
             $em->persist($user);
             $em->flush();
-
 
             return $this->redirectToRoute('dasboard');
         }
 
-         return $this->render(
-             'admin/editUser.html.twig',
-             array('form' => $form->createView())
-         );
+        $usuarios = $em->getRepository(User::class)->findAll();
+        return $this->render(
+            'admin/editUser.html.twig',
+            ['form' => $form->createView(),
+            'usuarios' => $usuarios,
+            'user' => $user,
+            ]
+        );
     }
 
     public function delete($id, EntityManagerInterface $em, Request $request)
