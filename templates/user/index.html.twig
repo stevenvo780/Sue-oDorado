@@ -101,7 +101,11 @@
                   <tr>
                     <td>{{ user.nombre }}</td>
                     <td>{{ user.telmovil }}</td>
-                    <td>{{ user.referido.nombre }}</td>
+                    {% if user.referido %}
+                        <td>{{ user.referido.nombre }}</td>
+                    {% else %}
+                        <td>{{ user.referido }}</td>
+                    {% endif %}
                     <td>{{ user.pais }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.ciudad }}</td>
