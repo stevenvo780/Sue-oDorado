@@ -80,22 +80,6 @@
           {{ form_row(form.email) }}
           {{ form_row(form.nombre) }}
           {{ form_row(form.telmovil) }}
-          <br>
-          <select name="user[user_referido]" class="custom-select" id="user_referido" multiple>
-                {% if user.referido %}
-                    <option value="{{ user.id }}" selected>{{ user.referido.nombre }}</option>
-                {% else %}
-                 <option value="" selected >Ninguno</option>
-                {% endif %}
-              {% for usuario in usuarios %}
-                  {% if user != usuario %}
-                        {% if user.referido != usuario %}
-                          <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
-                        {% endif %}
-                  {% endif %}
-              {% endfor %}
-          </select>
-          <br>
           {{ form_row(form.edad) }}
           {{ form_row(form.pais) }}
           {{ form_row(form.ciudad) }}

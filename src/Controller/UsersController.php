@@ -41,7 +41,6 @@ class UsersController extends AbstractController
         $json = $request->request->all();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            dump($json);
             if (array_key_exists('user_referido', $json['user_edit'])) {
                 $userReferido = $em->getRepository(User::class)->find($json['user_edit']['user_referido']);
                 $user->setReferido($userReferido);
