@@ -44,7 +44,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="{{path('posiciones_admin')}}">
         <i class="fas fa-code-branch"></i>
         <span>Posición</span></a>
     </li>
@@ -182,42 +182,35 @@ function usersList() {
          "destroy": true,
         });
      table.clear();
-
      console.log(myJson);
-     for (var i = 0; i < myJson.length; i++) {
-         var x = "modalBorrar("+myJson[i].id+")";
-         var id = myJson[i].id
-         var uri = "{{ path('edit_user',{'id': 'id'} )}}";
-         uri = uri.replace('id', id);
-         var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
-         if (myJson[i].referido != null) {
-             console.log(myJson[i].referido.nombre);
-             table.row.add([
-                 myJson[i].nombre,
-                 myJson[i].telmovil,
-                 myJson[i].referido.nombre,
-                 myJson[i].pais,
-                 myJson[i].ciudad,
-                 myJson[i].monedasBitcoin,
-                 myJson[i].monedasMarketcoin,
-                 myJson[i].vecesRecividas,
-                 boton,
-             ]);
-         }
-         else {
-             table.row.add([
-                 myJson[i].nombre,
-                 myJson[i].telmovil,
-                 myJson[i].referido,
-                 myJson[i].pais,
-                 myJson[i].ciudad,
-                 myJson[i].monedasBitcoin,
-                 myJson[i].monedasMarketcoin,
-                 myJson[i].vecesRecividas,
-                 boton,
-             ]);
-         }
+    for (var i = 0; i < myJson[0].length; i++) {
+        var id = myJson[0][i].id
+        var x = "modalBorrar("+id+")";
+        var uri = "{{ path('edit_user',{'id': 'id'} )}}";
+        uri = uri.replace('id', id);
+        var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
 
+        var contador = 0;
+        var referido = [];
+        for (var o = 0; o < myJson[1].length; o++) {
+            if (myJson[1][o]['usuario'].id == myJson[0][i].id) {
+                referido[contador] = myJson[1][o]['referido'].nombre
+                contador++;
+            }else {
+                referido[contador] = "";
+            }
+        }
+        table.row.add([
+            myJson[0][i].nombre,
+            myJson[0][i].telmovil,
+            referido[0],
+            myJson[0][i].pais,
+            myJson[0][i].ciudad,
+            myJson[0][i].monedasBitcoin,
+            myJson[0][i].monedasMarketcoin,
+            myJson[0][i].vecesRecividas,
+            boton,
+        ]);
      }
      table.draw();
     })

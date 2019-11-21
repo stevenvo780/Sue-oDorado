@@ -1,3 +1,19 @@
 dasboard:
    path: /
    controller: App\Controller\AdminController::index
+
+posiciones_admin:
+    path: /posiciones
+    controller: App\Controller\AdminController::posiciones
+
+edit_user:
+   path: /edituser/{id}
+   controller: App\Controller\UsersController::edit
+
+delete_User:
+   path: /delete/{id}
+   controller: App\Controller\UsersController::delete
+
+list_Users:
+   path: /listusers
+   controller: App\Controller\UsersController::list

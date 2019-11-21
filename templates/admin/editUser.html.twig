@@ -21,7 +21,9 @@
 
     <li class="nav-item dropdown no-arrow">
       <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {% if app.user %}
         {{app.user.nombre}} <i class="fas fa-user-circle fa-fw"></i>
+        {% endif %}
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
         <a class="dropdown-item" href="#">Configuracion de perfil</a>
@@ -77,16 +79,21 @@
                 {{ form_row(form.telmovil) }}
                 <br>
                 <select name="user_edit[user_referido]" class="custom-select" id="user_edit_referido" multiple>
-                {% if user.referido %}
-                <option value="{{ user.referido.id }}" selected>{{ user.referido.nombre }}</option>
-                <option value="" >Ninguno</option>
-                {% else %}
-                <option value="" selected >Ninguno</option>
+                {% set referido = ""  %}
+                {% for userUser in userUsers  %}
+                    {% if userUser.usuario.id == user.id %}
+                        <option value="{{ userUser.referido.id }}" selected >{{ userUser.referido.nombre }}</option>
+                        <option value="">Ninguno</option>
+                        {% set referido = userUser.referido %}
+                    {% endif %}
+                {% endfor %}
+                {% if referido == "" %}
+                    <option value="" selected >Ninguno</option>
                 {% endif %}
                 {% for usuario in usuarios %}
                     {% if user != usuario %}
-                        {% if user.referido != usuario %}
-                        <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
+                        {% if referido != usuario %}
+                            <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
                         {% endif %}
                     {% endif %}
                 {% endfor %}
@@ -170,5 +177,7 @@
 </div>
 {% endblock %}
 {% block javascripts %}
+<script>
 
+</script>
 {% endblock %}

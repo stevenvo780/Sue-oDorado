@@ -34,11 +34,6 @@ class User implements UserInterface
     private $telmovil;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist", "remove"})
-     */
-    private $referido;
-
-    /**
      * @ORM\Column(type="integer", length=255, nullable=false)
      */
     private $edad;
@@ -89,6 +84,7 @@ class User implements UserInterface
     private $password;
 
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -132,17 +128,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getReferido(): ?User
-    {
-        return $this->referido;
-    }
-
-    public function setReferido(?User $referido): self
-    {
-        $this->referido = $referido;
-
-        return $this;
-    }
 
     public function getEdad(): ?int
     {
@@ -293,4 +278,5 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
 }
