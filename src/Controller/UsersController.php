@@ -85,7 +85,10 @@ class UsersController extends AbstractController
     public function delete($id, EntityManagerInterface $em, Request $request)
     {
         $user = $em->getRepository(User::class)->find($id);
-
+        $userUser = $em->getRepository(UserUser::class)->findOneByUsuario($user->getId());
+        if ($userUser) {
+            $em->remove($userUser);
+        }
         $em->remove($user);
         $em->flush();
         return $this->redirectToRoute('dasboard');
