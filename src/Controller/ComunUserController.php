@@ -9,15 +9,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserType;
 use App\Entity\User;
+use App\Entity\UserUser;
 
 class ComunUserController extends AbstractController
 {
 
-    public function index()
+    public function index(EntityManagerInterface $em)
     {
         $user = $this->getUser();
+        $userUser = $em->getRepository(UserUser::class)->findAll();
         return $this->render('user/index.html.twig', [
             'user' => $user,
+            'userUsers' => $userUser,
         ]);
     }
 
@@ -32,10 +35,6 @@ class ComunUserController extends AbstractController
             if ($user->getPlainPassword()) {
                 $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
                 $user->setPassword($password);
-            }
-            if (array_key_exists('user_referido', $json['user'])) {
-                $userReferido = $em->getRepository(User::class)->find($json['user']['user_referido']);
-                $user->setReferido($userReferido);
             }
             $em->persist($user);
             $em->flush();

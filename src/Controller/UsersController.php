@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserEditType;
 use App\Form\UserType;
 use App\Entity\User;
+use App\Entity\UserUser;
 use DateTime;
 
 class UsersController extends AbstractController
@@ -22,15 +23,15 @@ class UsersController extends AbstractController
 
     public function list(EntityManagerInterface $em)
     {
-        $repository = $em->getRepository(User::class);
-        $usuarios = $repository->findAll();
+        $user = $em->getRepository(User::class)->findAll();
+        $userUser = $em->getRepository(UserUser::class)->findAll();
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
-
+        $data = [$user,$userUser];
         $serializer = new Serializer($normalizers, $encoders);
 
-        return new Response($serializer->serialize($usuarios, 'json'));
+        return new Response($serializer->serialize($data, 'json'));
     }
 
     public function edit($id, EntityManagerInterface $em, Request $request)
@@ -42,8 +43,21 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if (array_key_exists('user_referido', $json['user_edit'])) {
-                $userReferido = $em->getRepository(User::class)->find($json['user_edit']['user_referido']);
-                $user->setReferido($userReferido);
+                $userUser = $em->getRepository(UserUser::class)->findOneByUsuario($user->getId());
+                if ($userUser == false) {
+                    $userUser = new UserUSer;
+                }
+                $userUser->setUsuario($user);
+                if ($json['user_edit']['user_referido'] != "") {
+                    $userReferido = $em->getRepository(User::class)->find($json['user_edit']['user_referido']);
+                    $em->persist($userUser);
+                    $userUser->setReferido($userReferido);
+                } else {
+                    $em->remove($userUser);
+                }
+
+
+                $em->flush();
             }
             if (array_key_exists('user_rol', $json['user_edit'])) {
                 $user->setRoles(['ROLE_ADMIN']);
@@ -57,10 +71,12 @@ class UsersController extends AbstractController
         }
 
         $usuarios = $em->getRepository(User::class)->findAll();
+        $userUsers = $em->getRepository(UserUser::class)->findAll();
         return $this->render(
             'admin/editUser.html.twig',
             ['form' => $form->createView(),
             'usuarios' => $usuarios,
+            'userUsers' => $userUsers,
             'user' => $user,
             ]
         );
