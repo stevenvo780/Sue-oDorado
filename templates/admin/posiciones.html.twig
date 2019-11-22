@@ -168,7 +168,7 @@ var cy = cytoscape({
           {% for usuario in usuarios %}
               {% for userUser in userUsers  %}
                   {% if userUser.usuario.id == usuario.id %}
-                  { data: { id: '{{usuario.nombre}}{{userUser.referido.nombre}}', source: '{{userUser.referido.nombre}}', target: '{{usuario.nombre}}' } },
+                  { data: { id: '{{usuario.nombre}}{{userUser.referido.nombre}}', source: '{{usuario.nombre}}', target: '{{userUser.referido.nombre}}' } },
                   {% endif %}
               {% endfor %}
           {% endfor %}
