@@ -168,13 +168,12 @@ var cy = cytoscape({
           {% for usuario in usuarios %}
               {% for userUser in userUsers  %}
                   {% if userUser.usuario.id == usuario.id %}
-                  { data: { id: '{{usuario.nombre}}{{userUser.referido.nombre}}', weight: {{loop.index}}, source: '{{usuario.nombre}}', target: '{{userUser.referido.nombre}}' } },
+                  { data: { id: '{{usuario.nombre}}{{userUser.referido.nombre}}', source: '{{userUser.referido.nombre}}', target: '{{usuario.nombre}}' } },
                   {% endif %}
               {% endfor %}
           {% endfor %}
       ]
     },
-
   layout: {
     name: 'breadthfirst',
     directed: true,
@@ -183,20 +182,10 @@ var cy = cytoscape({
   }
 });
 
-var bfs = cy.elements().bfs('#a', function(){}, true);
+cy.layout({
+    name: 'breadthfirst'
+}).run();
 
-var i = 0;
-var highlightNextEle = function(){
-  if( i < bfs.path.length ){
-    bfs.path[i].addClass('highlighted');
-
-    i++;
-    setTimeout(highlightNextEle, 1000);
-  }
-};
-
-// kick off first highlight
-highlightNextEle();
 
 </script>
 
