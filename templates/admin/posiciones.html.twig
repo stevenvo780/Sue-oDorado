@@ -159,7 +159,7 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for usuario in usuarios %}
-            { data: { id: '{{usuario.nombre}}', position: { x: 0, y: {{loop.index}} } } },
+            { data: { id: '{{usuario.nombre}}'}},
           {% endfor %}
       ],
 
