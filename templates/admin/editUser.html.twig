@@ -78,18 +78,16 @@
                 {{ form_row(form.nombre) }}
                 {{ form_row(form.telmovil) }}
                 <br>
-                <select name="user_edit[user_referido]" class="custom-select" id="user_edit_referido" multiple>
+
+
+                <select  name="user_edit[referidos][]" class="custom-select" id="user_edit_referido" multiple size="2">
                 {% set referido = ""  %}
                 {% for userUser in userUsers  %}
                     {% if userUser.usuario.id == user.id %}
                         <option value="{{ userUser.referido.id }}" selected >{{ userUser.referido.nombre }}</option>
-                        <option value="">Ninguno</option>
                         {% set referido = userUser.referido %}
                     {% endif %}
                 {% endfor %}
-                {% if referido == "" %}
-                    <option value="" selected >Ninguno</option>
-                {% endif %}
                 {% for usuario in usuarios %}
                     {% if user != usuario %}
                         {% if referido != usuario %}
@@ -177,7 +175,14 @@
 </div>
 {% endblock %}
 {% block javascripts %}
+{{ parent() }}
 <script>
+$(document).ready(function() {
+var search = $('#user_edit_referido').select2({
+    maximumSelectionLength: 2
+});
+console.log(search);
+});
 
 </script>
 {% endblock %}

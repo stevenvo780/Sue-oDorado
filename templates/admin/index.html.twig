@@ -192,18 +192,17 @@ function usersList() {
 
         var contador = 0;
         var referido = [];
+
         for (var o = 0; o < myJson[1].length; o++) {
             if (myJson[1][o]['usuario'].id == myJson[0][i].id) {
                 referido[contador] = myJson[1][o]['referido'].nombre
                 contador++;
-            }else {
-                referido[contador] = "";
             }
         }
         table.row.add([
             myJson[0][i].nombre,
             myJson[0][i].telmovil,
-            referido[0],
+            referido.join(),
             myJson[0][i].pais,
             myJson[0][i].ciudad,
             myJson[0][i].monedasBitcoin,

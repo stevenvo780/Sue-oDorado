@@ -177,13 +177,12 @@ var cy = cytoscape({
   layout: {
     name: 'breadthfirst',
     directed: true,
-    roots: '#a',
     padding: 10
   }
 });
 
 cy.layout({
-    name: 'breadthfirst'
+    name: 'breadthfirst',
 }).run();
 
 

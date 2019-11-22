@@ -42,23 +42,31 @@ class UsersController extends AbstractController
         $json = $request->request->all();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            if (array_key_exists('user_referido', $json['user_edit'])) {
-                $userUser = $em->getRepository(UserUser::class)->findOneByUsuario($user->getId());
-                if ($userUser == false) {
-                    $userUser = new UserUSer;
+            if (array_key_exists('referidos', $json['user_edit'])) {
+                if (count($json['user_edit']['referidos'])) {
+                    $userUsers = $em->getRepository(UserUser::class)->findByUsuario($user->getId());
+                    for ($i=0; $i < count($userUsers); $i++) {
+                        $em->remove($userUsers[$i]);
+                        $em->flush();
+                    }
+                    for ($i=0; $i < count($json['user_edit']['referidos']); $i++) {
+                        $userReferido = $em->getRepository(User::class)->find($json['user_edit']['referidos'][$i]);
+                        if ($userReferido) {
+                            $userUser = new UserUSer;
+                            $userReferido = $em->getRepository(User::class)->find($json['user_edit']['referidos'][$i]);
+                            $userUser->setUsuario($user);
+                            $userUser->setReferido($userReferido);
+                            $em->persist($userUser);
+                        }
+                    }
                 }
-                $userUser->setUsuario($user);
-                if ($json['user_edit']['user_referido'] != "") {
-                    $userReferido = $em->getRepository(User::class)->find($json['user_edit']['user_referido']);
-                    $em->persist($userUser);
-                    $userUser->setReferido($userReferido);
-                } else {
+            } else {
+                $userUsers = $em->getRepository(UserUser::class)->findByUsuario($user->getId());
+                foreach ($userUsers as &$userUser) {
                     $em->remove($userUser);
                 }
-
-
-                $em->flush();
             }
+            $em->flush();
             if (array_key_exists('user_rol', $json['user_edit'])) {
                 $user->setRoles(['ROLE_ADMIN']);
             } else {
