@@ -78,8 +78,7 @@
                 {{ form_row(form.nombre) }}
                 {{ form_row(form.telmovil) }}
                 <br>
-
-
+                <p>Invitado</p>
                 <select  name="user_edit[referidos][]" class="custom-select" id="user_edit_referido" multiple size="2">
                 {% set referido = ""  %}
                 {% for userUser in userUsers  %}
@@ -96,6 +95,7 @@
                     {% endif %}
                 {% endfor %}
                 </select>
+                <br>
                 <br>
                 {{ form_row(form.pais) }}
                 {{ form_row(form.edad) }}
