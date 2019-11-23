@@ -145,13 +145,14 @@ var cy = cytoscape({
   style: cytoscape.stylesheet()
     .selector('node')
       .style({
-        'content': 'data(id)'
+        'content': 'data(id)',
+        'weight': 0.1,
       })
     .selector('edge')
       .style({
         'curve-style': 'bezier',
         'target-arrow-shape': 'triangle',
-        'width': {{ usuarios|length }},
+        'width': 1,
         'line-color': '#ddd',
         'target-arrow-color': '#ddd'
       }),
@@ -175,15 +176,13 @@ var cy = cytoscape({
       ]
     },
   layout: {
-    name: 'breadthfirst',
-    directed: true,
-    padding: 10
+    name: 'cose',
+    fit: true,
+    padding: 10,
+    spacingFactor: 10,
+
   }
 });
-
-cy.layout({
-    name: 'breadthfirst',
-}).run();
 
 
 </script>
