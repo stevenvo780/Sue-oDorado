@@ -33,10 +33,6 @@ class User implements UserInterface
      */
     private $telmovil;
 
-    /**
-     * @ORM\Column(type="integer", length=255, nullable=false)
-     */
-    private $edad;
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -129,17 +125,6 @@ class User implements UserInterface
     }
 
 
-    public function getEdad(): ?int
-    {
-        return $this->edad;
-    }
-
-    public function setEdad(int $edad): self
-    {
-        $this->edad = $edad;
-
-        return $this;
-    }
 
     public function getMonedasBitcoin(): ?int
     {
