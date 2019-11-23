@@ -19,7 +19,6 @@ class UserType extends AbstractType
             ->add('email', EmailType::class, ['label' => 'Correo', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('nombre', TextType::class, ['label' => 'Nombre completo', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('telmovil', TextType::class, ['label' => 'Telefono movil', 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('edad', NumberType::class, ['label' => 'Edad', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('pais', TextType::class, ['label' => 'Pais', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('ciudad', TextType::class, ['label' => 'Ciudad', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('plainPassword', RepeatedType::class, array(

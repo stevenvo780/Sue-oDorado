@@ -102,19 +102,18 @@
                     <td>{{ user.nombre }}</td>
                     <td>{{ user.telmovil }}</td>
                     {% set ahireferido = false %}
+                    <td>
                     {% for userUser in userUsers  %}
                         {% if userUser.id >= 0 %}
                             {% if userUser.usuario.id == user.id %}
-                                <td>{{ userUser.referido.nombre }}</td>
+                                {{ userUser.referido.nombre }}
                                 {% set ahireferido = false %}
                             {% endif %}
                         {% else %}
-                        <td></td>
                         {% endif %}
                     {% endfor %}
-                    {% if ahireferido == false %}
-                        <td></td>
-                    {% endif %}
+                    </td>
+
                     <td>{{ user.pais }}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.ciudad }}</td>
