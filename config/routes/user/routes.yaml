@@ -17,3 +17,7 @@ list_evento_user:
 posiciones_user:
     path: /posiciones
     controller: App\Controller\AdminController::posiciones
+
+proyecto_user:
+    path: /proyecto
+    controller: App\Controller\AdminController::proyecto

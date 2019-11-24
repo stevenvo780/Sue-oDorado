@@ -9,3 +9,7 @@ profile:
 register:
    path: /register
    controller: App\Controller\UsersController::new
+
+proyecto:
+   path: /informacion
+   controller: App\Controller\ProyectoController::index
