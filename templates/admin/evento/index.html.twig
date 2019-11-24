@@ -54,7 +54,7 @@
         <span>Mensajes</span></a>
     </li>
     <li class="nav-item active">
-      <a class="nav-link" href="{{path('eventos')}}">
+      <a class="nav-link" href="{{path('eventos_admin')}}">
         <i class="fas fa-calendar-week"></i>
         <span>Eventos</span></a>
     </li>
@@ -171,7 +171,7 @@ function usersList() {
            headers: misCabeceras,
            mode: 'cors',
            cache: 'default' };
-  fetch('{{ path('list_evento') }}',miInit)
+  fetch('{{ path('list_evento_admin') }}',miInit)
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Eventos').DataTable({

@@ -57,7 +57,6 @@ class EventoController extends AbstractController
                 "duracionFin" => $eventos[$i]->getDuracionFin()->format('H:i:s'),
             ]);
         }
-        dump($data);
         return new Response($serializer->serialize($data, 'json'));
     }
 
@@ -70,7 +69,7 @@ class EventoController extends AbstractController
             $em->persist($evento);
             $em->flush();
 
-            return $this->redirectToRoute('eventos');
+            return $this->redirectToRoute('eventos_admin');
         }
 
         return $this->render(
@@ -84,7 +83,7 @@ class EventoController extends AbstractController
         $evento = $em->getRepository(Eventos::class)->find($id);
         $em->remove($evento);
         $em->flush();
-        return $this->redirectToRoute('eventos');
+        return $this->redirectToRoute('eventos_admin');
     }
 
     public function new(Request $request, EntityManagerInterface $em)
@@ -96,7 +95,7 @@ class EventoController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('eventos');
+            return $this->redirectToRoute('eventos_admin');
         }
 
          return $this->render(

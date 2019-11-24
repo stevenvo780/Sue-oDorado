@@ -6,11 +6,11 @@ edit_profile:
    path: /edituser/{id}
    controller: App\Controller\ComunUserController::edit
 
-eventos:
+eventos_user:
    path: /eventos
    controller: App\Controller\EventoController::userView
 
-list_evento:
+list_evento_user:
    path: /listevento
    controller: App\Controller\EventoController::list
 

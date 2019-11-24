@@ -54,7 +54,7 @@
         <span>Mensajes</span></a>
     </li>
     <li class="nav-item active">
-      <a class="nav-link" href="{{path('eventos')}}">
+      <a class="nav-link" href="{{path('eventos_admin')}}">
         <i class="fas fa-calendar-week"></i>
         <span>Eventos</span></a>
     </li>
@@ -140,73 +140,6 @@
 {{ parent() }}
 
 <script type="text/javascript">
-
-$(document).ready(function() {
-        usersList();
-        console.log("Docuemnto listo");
-    });
-
-function usersList() {
-
-    var misCabeceras = new Headers();
-    var miInit = { method: 'POST',
-           headers: misCabeceras,
-           mode: 'cors',
-           cache: 'default' };
-  fetch('{{ path('list_evento') }}',miInit)
-    .then(response => response.json())
-    .then(myJson => {
-        var table = $('#Usuarios').DataTable({
-         "order": [[2, "'asc'" ]]
-         "destroy": true,
-        });
-     table.clear();
-     console.log(myJson);
-    for (var i = 0; i < myJson.length; i++) {
-        var id = myJson[i].id
-        var x = "modalBorrar("+id+")";
-        var uri = "{{ path('edit_evento',{'id': 'id'} )}}";
-        uri = uri.replace('id', id);
-        var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
-        table.row.add([
-            myJson[i].nombre,
-            myJson[i].fecha,
-            myJson[i].descipcion,
-            myJson[i].duracion,
-            boton,
-        ]);
-     }
-     table.draw();
-    })
-    .catch(function(err) {
-       console.log(err);
-
-    });
-}
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
-
-function deleteUser(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    fetch(uri, {
-            method: 'POST',
-        })
-    .then(response => {
-        console.log(response);
-    })
-    .catch((error) => console.log(error));
-
-}
 
 </script>
 

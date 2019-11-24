@@ -18,7 +18,7 @@ list_Users:
    path: /listusers
    controller: App\Controller\UsersController::list
 
-eventos:
+eventos_admin:
    path: /eventos
    controller: App\Controller\EventoController::adminView
 
@@ -34,6 +34,6 @@ delete_evento:
    path: /deleteevento/{id}
    controller: App\Controller\EventoController::delete
 
-list_evento:
+list_evento_admin:
    path: /listevento
    controller: App\Controller\EventoController::list
