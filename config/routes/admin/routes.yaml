@@ -17,3 +17,23 @@ delete_User:
 list_Users:
    path: /listusers
    controller: App\Controller\UsersController::list
+
+eventos:
+   path: /eventos
+   controller: App\Controller\EventoController::adminView
+
+new_evento:
+   path: /newevento
+   controller: App\Controller\EventoController::new
+
+edit_evento:
+   path: /editevento/{id}
+   controller: App\Controller\EventoController::edit
+
+delete_evento:
+   path: /deleteevento/{id}
+   controller: App\Controller\EventoController::delete
+
+list_evento:
+   path: /listevento
+   controller: App\Controller\EventoController::list

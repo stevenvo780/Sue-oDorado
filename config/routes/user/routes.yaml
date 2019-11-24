@@ -5,3 +5,15 @@ dasboard_user:
 edit_profile:
    path: /edituser/{id}
    controller: App\Controller\ComunUserController::edit
+
+eventos:
+   path: /eventos
+   controller: App\Controller\EventoController::userView
+
+list_evento:
+   path: /listevento
+   controller: App\Controller\EventoController::list
+
+posiciones_user:
+    path: /posiciones
+    controller: App\Controller\AdminController::posiciones

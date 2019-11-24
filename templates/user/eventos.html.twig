@@ -5,7 +5,7 @@
 {% block body %}
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-  <a class="navbar-brand mr-1" href="index.html">Sueño dorado</a>
+  <a class="navbar-brand mr-1" href="index.html">Sueño dorado ADMIN</a>
 
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
     <i class="fas fa-bars"></i>
@@ -37,16 +37,10 @@
 
   <!-- Sidebar -->
   <ul class="sidebar navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="{{path('dasboard_user')}}">
+    <li class="nav-item ">
+      <a class="nav-link" href="{{path('dasboard')}}">
         <i class="fas fa-child"></i>
-        <span>Perfil</span>
-      </a>
-    </li>
-    <li class="nav-item active">
-      <a class="nav-link" href="{{ path('edit_profile',{'id': user.id} )}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Editar perfil</span>
+        <span>Perfiles</span>
       </a>
     </li>
     <li class="nav-item">
@@ -59,7 +53,7 @@
         <i class="fas fa-envelope-square"></i>
         <span>Mensajes</span></a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item active">
       <a class="nav-link" href="{{path('eventos')}}">
         <i class="fas fa-calendar-week"></i>
         <span>Eventos</span></a>
@@ -77,56 +71,27 @@
       <!-- DataTables Example -->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fas fa-table"></i>
-          Usuarios</div>
+          <i class="fas fa-table"></i>Eventos</div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="Eventos" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>Nombre</th>
-                  <th>Telefono movil</th>
-                  <th>Referido</th>
-                  <th>Pais</th>
-                  <th>Correo</th>
-                  <th>Ciudad</th>
-                  <th>Monedas Bitcoin</th>
-                  <th>Monedas Marketcoin</th>
-                  <th>Veces recibidas</th>
+                  <th>Fecha</th>
+                  <th>Descipcion</th>
+                  <th>Inicia a las</th>
+                  <th>Finaliza a las</th>
                 </tr>
               </thead>
               <tfoot>
               </tfoot>
               <tbody>
-                  <tr>
-                    <td>{{ user.nombre }}</td>
-                    <td>{{ user.telmovil }}</td>
-                    {% set ahireferido = false %}
-                    <td>
-                    {% for userUser in userUsers  %}
-                        {% if userUser.id >= 0 %}
-                            {% if userUser.usuario.id == user.id %}
-                                {{ userUser.referido.nombre }}
-                                {% set ahireferido = false %}
-                            {% endif %}
-                        {% else %}
-                        {% endif %}
-                    {% endfor %}
-                    </td>
-
-                    <td>{{ user.pais }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.ciudad }}</td>
-                    <td>{{ user.monedasBitcoin }}</td>
-                    <td>{{ user.monedasMarketcoin }}</td>
-                    <td>{{ user.vecesRecividas }}</td>
-                  </tr>
               </tbody>
             </table>
           </div>
         </div>
       </div>
-
     </div>
     <!-- /.container-fluid -->
 
@@ -172,7 +137,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
+        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el evento?</h5>
         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">×</span>
         </button>
@@ -189,5 +154,43 @@
 {% block javascripts %}
 {{ parent() }}
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+        usersList();
+        console.log("Docuemnto listo");
+    });
+
+function usersList() {
+    var misCabeceras = new Headers();
+    var miInit = { method: 'POST',
+           headers: misCabeceras,
+           mode: 'cors',
+           cache: 'default' };
+  fetch('{{ path('list_evento') }}',miInit)
+    .then(response => response.json())
+    .then(myJson => {
+        var table = $('#Eventos').DataTable({
+         "order": [[ 1, 'desc' ]],
+         "destroy": true,
+        });
+    table.clear();
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    for (var i = 0; i < myJson.length; i++) {
+        table.row.add([
+            myJson[i].nombre,
+            myJson[i].fecha,
+            myJson[i].descripcion,
+            myJson[i].duracionInicio,
+            myJson[i].duracionFin,
+        ]);
+     }
+     table.draw();
+    })
+    .catch(function(err) {
+       console.log(err);
+    });
+}
+</script>
 
 {% endblock %}
