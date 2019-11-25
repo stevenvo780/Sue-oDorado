@@ -34,45 +34,73 @@
 
 <div id="wrapper">
 
-  <!-- Sidebar -->
-  <ul class="sidebar navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="{{path('dasboard_user')}}">
-        <i class="fas fa-child"></i>
-        <span>Perfil</span>
-      </a>
-    </li>
-    <li class="nav-item ">
-        {% if app.user %}
-            <a class="nav-link" href="{{ path('edit_profile',{'id': app.user.id} )}}">
-        {% else %}
-            <a class="nav-link" href="#">
-        {% endif %}
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Editar perfil</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-code-branch"></i>
-        <span>Posición</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-envelope-square"></i>
-        <span>Mensajes</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('eventos_user')}}">
-        <i class="fas fa-calendar-week"></i>
-        <span>Eventos</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('proyecto')}}">
-        <i class="fas fa-question"></i>
-        <span>Proyecto</span></a>
-    </li>
-  </ul>
+{% if is_granted('ROLE_ADMIN') %}
+<ul class="sidebar navbar-nav">
+  <li class="nav-item ">
+    <a class="nav-link" href="{{path('dasboard')}}">
+      <i class="fas fa-child"></i>
+      <span>Perfiles</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{path('posiciones_admin')}}">
+      <i class="fas fa-code-branch"></i>
+      <span>Posición</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="fas fa-envelope-square"></i>
+      <span>Mensajes</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{path('eventos_admin')}}">
+      <i class="fas fa-calendar-week"></i>
+      <span>Eventos</span></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="{{path('proyecto')}}">
+      <i class="fas fa-question"></i>
+      <span>Proyecto</span></a>
+  </li>
+</ul>
+{% elseif is_granted('ROLE_USER') %}
+<!-- Sidebar -->
+<ul class="sidebar navbar-nav">
+  <li class="nav-item ">
+    <a class="nav-link" href="{{path('dasboard_user')}}">
+      <i class="fas fa-child"></i>
+      <span>Perfil</span>
+    </a>
+  </li>
+  <li class="nav-item ">
+          <a class="nav-link" href="{{ path('edit_profile',{'id': app.user.id} )}}">
+      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <span>Editar perfil</span>
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="fas fa-code-branch"></i>
+      <span>Posición</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">
+      <i class="fas fa-envelope-square"></i>
+      <span>Mensajes</span></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{path('eventos_user')}}">
+      <i class="fas fa-calendar-week"></i>
+      <span>Eventos</span></a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="{{path('proyecto')}}">
+      <i class="fas fa-question"></i>
+      <span>Proyecto</span></a>
+  </li>
+</ul>
+{% endif %}
+
 {% endif %}
   <div id="content-wrapper">
 
@@ -89,7 +117,11 @@
               <div class="carousel-caption text-left">
                 <h1>Sueño dorado</h1>
                 <p>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti</p>
-                <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                {% else %}
+                    <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                {% endif %}
+
               </div>
             </div>
           </div>
@@ -99,7 +131,10 @@
               <div class="carousel-caption" style="color:black">
                   <h1>Sueño dorado</h1>
                   <p>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti</p>
-                <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                  {% else %}
+                      <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                  {% endif %}
               </div>
             </div>
           </div>
@@ -109,7 +144,11 @@
               <div class="carousel-caption text-right" style="color:black">
                   <h1>Sueño dorado</h1>
                   <p>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti</p>
-                <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                  {% else %}
+                      <p><a class="btn btn-lg btn-primary" href="{{path('register')}}" role="button">Resgístrate</a></p>
+                  {% endif %}
+
               </div>
             </div>
           </div>
