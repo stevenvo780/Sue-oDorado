@@ -22,7 +22,7 @@ class EventoType extends AbstractType
                  'years' => range(19,30),
                  'widget' => 'single_text',
             ])
-            ->add('descripcion', TextType::class, ['label' => 'Descipcion', 'attr'  => ['class' => 'form-control form-control-lg']])
+            ->add('descripcion', TextType::class, ['label' => 'Descipción', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('duracionInicio', TimeType::class, [
                 'label' => 'Hora de inicio de evento',
                  'attr'  => ['class' => 'form-control form-control-lg']
