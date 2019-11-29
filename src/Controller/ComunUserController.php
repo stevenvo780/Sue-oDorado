@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserType;
 use App\Entity\User;
 use App\Entity\UserUser;
+use App\Entity\Moneda;
 
 class ComunUserController extends AbstractController
 {
@@ -17,13 +18,12 @@ class ComunUserController extends AbstractController
     public function index(EntityManagerInterface $em)
     {
         $user = $this->getUser();
-        $userUser = $em->getRepository(UserUser::class)->findAll();
+        $monedas = $em->getRepository(Moneda::class)->findByDueño($user);
         return $this->render('user/index.html.twig', [
             'user' => $user,
-            'userUsers' => $userUser,
+            'monedas' => $monedas,
         ]);
     }
-
 
     public function edit($id, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {

@@ -5,7 +5,7 @@
 {% block body %}
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-  <a class="navbar-brand mr-1" href="index.html">Sueño dorado</a>
+  <img  href="{{path('dasboard_user')}}" src="{{ asset('assets/suenodoradopng.png') }}" class="img-fluid pull-xs-left" alt="..." width="20%">
 
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
     <i class="fas fa-bars"></i>
@@ -24,7 +24,7 @@
         {{app.user.nombre}} <i class="fas fa-user-circle fa-fw"></i>
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">Configuracion de perfil</a>
+        <a class="dropdown-item" href="{{ path('edit_profile',{'id': app.user.id} )}}">Configuracion de perfil</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesion</a>
       </div>
@@ -43,17 +43,7 @@
         <span>Perfil</span>
       </a>
     </li>
-    <li class="nav-item ">
-      <a class="nav-link" href="{{ path('edit_profile',{'id': user.id} )}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Editar perfil</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-code-branch"></i>
-        <span>Posición</span></a>
-    </li>
+
     <li class="nav-item">
       <a class="nav-link" href="#">
         <i class="fas fa-envelope-square"></i>
@@ -76,68 +66,25 @@
     <div class="container-fluid">
       <!-- DataTables Example -->
       <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          Usuarios</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Telefono movil</th>
-                  <th>Referido</th>
-                  <th>Pais</th>
-                  <th>Correo</th>
-                  <th>Ciudad</th>
-                  <th>Monedas Bitcoin</th>
-                  <th>Monedas Marketcoin</th>
-                  <th>Veces recibidas</th>
-                </tr>
-              </thead>
-              <tfoot>
-              </tfoot>
-              <tbody>
-                  <tr>
-                    <td>{{ user.nombre }}</td>
-                    <td>{{ user.telmovil }}</td>
-                    {% set ahireferido = false %}
-                    <td>
-                    {% for userUser in userUsers  %}
-                        {% if userUser.id >= 0 %}
-                            {% if userUser.usuario.id == user.id %}
-                                {{ userUser.referido.nombre }}
-                                {% set ahireferido = false %}
-                            {% endif %}
-                        {% else %}
-                        {% endif %}
-                    {% endfor %}
-                    </td>
-
-                    <td>{{ user.pais }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.ciudad }}</td>
-                    <td>{{ user.monedasBitcoin }}</td>
-                    <td>{{ user.monedasMarketcoin }}</td>
-                    <td>{{ user.vecesRecividas }}</td>
-                  </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <ul class="list-group">
+            {% for moneda in monedas %}
+                <li class="list-group-item"><a class="btn btn-default" href="{{ path('moneda',{'id': moneda.id} )}}">mi moneda
+                {% if moneda.rango == 0 %}
+                    <i class="fab fa-bitcoin"></i> oro a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 1 %}
+                    <i class="fab fa-bitcoin"></i> Ruby a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 2 %}
+                    <i class="fab fa-bitcoin"></i> Esmeralda a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 3 %}
+                    <i class="fab fa-bitcoin"></i> Diamante a recibido {{ moneda.vecesRecibidas }} veces
+                {% endif %}
+                </a>
+                </li>
+            {% endfor %}
+          </ul>
       </div>
 
     </div>
-    <!-- /.container-fluid -->
-
-    <!-- Sticky Footer -->
-    <footer class="sticky-footer">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright © Your Website 2019</span>
-        </div>
-      </div>
-    </footer>
 
   </div>
   <!-- /.content-wrapper -->
@@ -168,22 +115,6 @@
     </div>
 </div>
 
-<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div id="BotonBorrar" class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="">Borrar</a>
-      </div>
-    </div>
-</div>
-</div>
 </div>
 {% endblock %}
 {% block javascripts %}

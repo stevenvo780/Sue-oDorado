@@ -6,7 +6,7 @@
  {% if app.user %}
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-  <a class="navbar-brand mr-1" href="index.html">Sueño dorado</a>
+  <img  href="{{path('dasboard_user')}}" src="{{ asset('assets/suenodoradopng.png') }}" class="img-fluid pull-xs-left" alt="..." width="20%">
 
   <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
     <i class="fas fa-bars"></i>
@@ -71,17 +71,6 @@
       <i class="fas fa-child"></i>
       <span>Perfil</span>
     </a>
-  </li>
-  <li class="nav-item ">
-          <a class="nav-link" href="{{ path('edit_profile',{'id': app.user.id} )}}">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
-      <span>Editar perfil</span>
-    </a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">
-      <i class="fas fa-code-branch"></i>
-      <span>Posición</span></a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">

@@ -21,3 +21,27 @@ posiciones_user:
 proyecto_user:
     path: /proyecto
     controller: App\Controller\AdminController::proyecto
+
+moneda:
+    path: /moneda/{id}
+    controller: App\Controller\MonedaController::index
+
+list_monedas:
+    path: /listmonedas/{id}
+    controller: App\Controller\MonedaController::listArbolDeMonedas
+
+list_all_monedas:
+    path: /listallmonedas
+    controller: App\Controller\MonedaController::listAllMonedas
+
+edit_moneda:
+    path: /editmoneda
+    controller: App\Controller\MonedaController::edit
+
+new_moneda:
+    path: /newmoneda
+    controller: App\Controller\MonedaController::new
+
+delete_moneda:
+    path: /deletemoneda/{id}
+    controller: App\Controller\MonedaController::delete
