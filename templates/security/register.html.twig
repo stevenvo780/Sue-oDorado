@@ -1,6 +1,6 @@
 {% extends 'security/base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Registro{% endblock %}
 
 {% block body %}
 
@@ -32,6 +32,7 @@
               {{ form_row(form.ciudad) }}
               <br>
               {{ form_row(form.plainPassword.first) }}
+              <br>
               {{ form_row(form.plainPassword.second) }}
               <br>
               <button class="btn btn-warning" type="submit">Registrarse</button>
@@ -40,7 +41,7 @@
           <div class="col-md-6 col-lg-6 col-xl-6 mx-auto">
             <br>
             <br>
-    
+
             <img src="{{ asset('assets/logo.png') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
           </div>
         </div>

@@ -16,17 +16,17 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, ['data' => 'Correo', 'label' => false, 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('nombre', TextType::class, ['data' => 'Nombre completo', 'label' => false, 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('telmovil', TextType::class, ['data' => 'Telefono movil', 'label' => false, 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('pais', TextType::class, ['data' => 'Pais', 'label' => false, 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('ciudad', TextType::class, ['data' => 'Ciudad', 'label' => false, 'attr'  => ['class' => 'form-control form-control-lg']])
+            ->add('email', EmailType::class, ['label' => false, 'attr'  => ['placeholder' => "Correo", 'class' => 'form-control form-control-lg']])
+            ->add('nombre', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Nombre completo", 'class' => 'form-control form-control-lg']])
+            ->add('telmovil', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Telefono movil", 'class' => 'form-control form-control-lg']])
+            ->add('pais', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Pais",'class' => 'form-control form-control-lg']])
+            ->add('ciudad', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Ciudad", 'class' => 'form-control form-control-lg']])
             ->add('plainPassword', RepeatedType::class, array(
                 'required' => false,
                 'type' => PasswordType::class,
-                'first_options'  => array('data' => 'Ciudad', 'label' => 'Contraseña'),
-                'second_options' => array('label' => 'Repita contraseña'),
-                'options' => array('attr' => array('class' => 'form-control form-control-lg', 'autocomplete' => 'off')),
+                'first_options'  => array('label' => false, 'attr' => ['placeholder' => 'Contraseña','class' => 'form-control form-control-lg', 'autocomplete' => 'off']),
+                'second_options' => array('label' => false,'attr' => ['placeholder' => 'Repita contraseña','class' => 'form-control form-control-lg', 'autocomplete' => 'off']),
+
             ))
         ;
     }
