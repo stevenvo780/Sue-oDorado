@@ -22,6 +22,7 @@ class ComunUserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'monedas' => $monedas,
+            'invitados' => null,
         ]);
     }
 

@@ -32,6 +32,8 @@ class MonedaController extends AbstractController
         switch ($moneda->getRango()) {
             case 0:
                 $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
+                dump($monedaMonedas);
+                dump($moneda);
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 1) {
                     $rubi = $monedaMonedas[0]->getMonedaPropietario();
                 }
@@ -78,12 +80,9 @@ class MonedaController extends AbstractController
         return new Response($serializer->serialize($data, 'json'));
     }
 
-
-
     public function new(Request $request, EntityManagerInterface $em)
     {
         $moneda = new Moneda();
-
         $moneda->setDueño($this->getUser());
         $moneda->setVecesRecibidas(0);
         $moneda->setRango(0);
@@ -120,63 +119,40 @@ class MonedaController extends AbstractController
         return new Response($serializer->serialize($monedas, 'json'));
     }
 
-    /*
-    public function edit($id, EntityManagerInterface $em, Request $request)
+    public function invitar(int $idRuby, EntityManagerInterface $em, Request $request)
     {
-        $monedas = $em->getRepository(Moneda::class)->find($id);
-        $form = $this->createForm(UserEditType::class, $monedas);
-
-        $json = $request->request->all();
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if (array_key_exists('referidos', $json['user_edit'])) {
-                if (count($json['user_edit']['referidos'])) {
-                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByUsuario($monedas->getId());
-                    for ($i=0; $i < count($userUsers); $i++) {
-                        $em->remove($userUsers[$i]);
-                        $em->flush();
-                    }
-                    for ($i=0; $i < count($json['user_edit']['referidos']); $i++) {
-                        $userReferido = $em->getRepository(Moneda::class)->find($json['user_edit']['referidos'][$i]);
-                        if ($userReferido) {
-                            $userUser = new MonedaMoneda;
-                            $userReferido = $em->getRepository(Moneda::class)->find($json['user_edit']['referidos'][$i]);
-                            $userUser->setUsuario($monedas);
-                            $userUser->setReferido($userReferido);
-                            $em->persist($userUser);
-                        }
-                    }
-                }
-            } else {
-                $userUsers = $em->getRepository(UserUser::class)->findByUsuario($monedas->getId());
-                foreach ($userUsers as &$userUser) {
-                    $em->remove($userUser);
-                }
+        $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($idRuby);
+        if (count($monedaMonedas) >= 2) {
+            $invitados = [];
+            foreach ($monedaMonedas as $key => $monedaMoneda) {
+                array_push($invitados, $monedaMoneda->getMonedaInvitado()->getDueño());
             }
-            $em->flush();
-            if (array_key_exists('user_rol', $json['user_edit'])) {
-                $user->setRoles(['ROLE_ADMIN']);
-            } else {
-                $user->setRoles(['ROLE_USER']);
-            }
-            $em->persist($user);
-            $em->flush();
-
-            return $this->redirectToRoute('dasboard');
+            $user = $this->getUser();
+            $monedas = $em->getRepository(Moneda::class)->findByDueño($user);
+            return $this->render('user/index.html.twig', [
+                'user' => $user,
+                'monedas' => $monedas,
+                'invitados' => $invitados,
+            ]);
         }
+        $monedaRuby = $em->getRepository(Moneda::class)->find($idRuby);
+        $monedaNuevaInvitada = new Moneda();
+        $monedaNuevaInvitada->setDueño($this->getUser());
+        $monedaNuevaInvitada->setVecesRecibidas(0);
+        $monedaNuevaInvitada->setRango(0);
+        $monedaMoneda = new MonedaMoneda();
 
-        $usuarios = $em->getRepository(User::class)->findAll();
-        $userUsers = $em->getRepository(UserUser::class)->findAll();
-        return $this->render(
-            'admin/editUser.html.twig',
-            ['form' => $form->createView(),
-            'usuarios' => $usuarios,
-            'userUsers' => $userUsers,
-            'user' => $user,
-            ]
-        );
+        $monedaMoneda->setMonedaPropietario($monedaRuby);
+        $monedaMoneda->setMonedaInvitado($monedaNuevaInvitada);
+        $em->persist($monedaMoneda);
+        $em->persist($monedaNuevaInvitada);
+        $em->flush();
+        dump(count($monedaMonedas));
+
+
+
+        return $this->redirectToRoute('dasboard_user');
     }
-    */
 
     private function arbolDeMoneda($diamanteMoneda)
     {

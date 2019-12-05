@@ -45,3 +45,7 @@ new_moneda:
 delete_moneda:
     path: /deletemoneda/{id}
     controller: App\Controller\MonedaController::delete
+
+invitar_moneda:
+    path: /invitar/{idRuby}
+    controller: App\Controller\MonedaController::invitar

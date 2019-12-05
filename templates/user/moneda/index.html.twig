@@ -46,12 +46,7 @@
     <li class="nav-item">
       <a class="nav-link" href="#">
         <i class="fas fa-code-branch"></i>
-        <span>Posición</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-envelope-square"></i>
-        <span>Mensajes</span></a>
+        <span>Extructura</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="{{path('eventos_user')}}">
@@ -61,25 +56,21 @@
     <li class="nav-item">
       <a class="nav-link" href="{{path('proyecto')}}">
         <i class="fas fa-question"></i>
-        <span>Proyecto</span></a>
+        <span>Quienes somos</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">
+        <i class="fas fa-envelope-square"></i>
+        <span>Soporte</span></a>
     </li>
   </ul>
 
   <div id="content-wrapper">
 
     <div class="container-fluid">
-        {% if moneda.rango == 1 %}
-        <form action="ejemplo.php" method="get">
-        <h4>Añadir oros</h4>
-        <select id="añadir_oro" class="custom-select"  multiple></select>
-        <div>
-            <br>
-            <button class="btn btn-success" type="submit">Añadir</button>
-        </div>
+    <div id="añadirOro" class="">
 
-        </form>
-        <br>
-        {% endif %}
+    </div>
       <!-- DataTables Example -->
       <div class="card mb-3">
         <div class="card-header">
@@ -93,6 +84,7 @@
                 <th>Dueño</th>
                 <th>invito a</th>
                 <th>Rango</th>
+                <th width="3%">Dono</th>
                 </tr>
               </thead>
               <tfoot>
@@ -172,21 +164,12 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body">
-              <form action="ejemplo.php" method="get">
-              <h4>Añadir oros</h4>
-              <select id="añadir_oro" class="custom-select" style='width:100%; height:100%' multiple></select>
-              <div>
-                  <br>
-                  <button class="btn btn-success" type="submit">Añadir</button>
-              </div>
+          <div id="modalAñadirOros" class="modal-body">
 
-              </form>
-              <br>
+
         </div>
           <div id="agregarOroBoton" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Borrar</a>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
           </div>
         </div>
     </div>
@@ -195,17 +178,12 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-
 <script type="text/javascript">
-
+var arbol = new Array();
 $(document).ready(function() {
-
         usersList();
     });
-
-var arbol = [];
 function usersList() {
-
     var misCabeceras = new Headers();
     var miInit = { method: 'POST',
            headers: misCabeceras,
@@ -214,6 +192,16 @@ function usersList() {
   fetch('{{ path('list_monedas',{'id': moneda.id} )}}',miInit)
     .then(response => response.json())
     .then(myJson => {
+        if ({{ moneda.rango }} == 1) {
+            for (var o = 0; o < myJson.length; o++) {
+                if (myJson[o][0]['Padre'].id == {{ moneda.id }}) {
+                    if (myJson[o].length <= 2) {
+                        var content = `<h3>Link para invitar {{ url('invitar_moneda',{'idRuby': moneda.id} )}}</h3>`;
+                        document.getElementById("añadirOro").innerHTML = content;
+                    }
+                }
+            }
+        }
         var table = $('#Monedas').DataTable({
         "order": [[ 0, 'desc' ]],
         "pageLength": 15,
@@ -237,8 +225,7 @@ function usersList() {
          }
         });
      table.clear();
-     //console.log(myJson);
-
+     // console.log(myJson);
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
@@ -246,38 +233,65 @@ function usersList() {
              } else if (myJson[i].length == 3) {
                  var invto = "" + myJson[i][1].dueño.nombre + " y " + myJson[i][2].dueño.nombre;
              }
-
          }else {
              invto = "";
          }
          var rango = "";
+         var estado = "";
          switch (myJson[i][0]['Padre'].rango) {
             case 0:
                 rango = "Oro";
+                var estado = "No";
                 break;
             case 1:
-                var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
-                var boton = `<button type='button' style='width:100%; height:100% id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+            var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
+                if ({{ moneda.rango }} == 3) {
+                    if ( myJson[i].length < 3) {
+                        var boton = `<button type='button' style='width:100%; height:100% id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+                    }
+                    else {
+                        boton = "Rubi";
+                    }
+                }else if ({{ moneda.rango }} == 2) {
+                    for (var o = 0; o < myJson.length; o++) {
+                        if (myJson[o][0]['Padre'].id == {{ moneda.id }}) {
+                            if (myJson[i][0]['Padre'].id == myJson[o][1].id || myJson[i][0]['Padre'].id == myJson[o][2].id) {
+                                console.log(myJson[i]);
+                                if ( myJson[i].length < 3) {
+                                    var boton = `<button type='button' style='width:100%; height:100% id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+                                }
+                                else {
+                                    boton = "Rubi";
+                                }
+                            }else {
+                                boton = "Rubi";
+                            }
+                        }
+                    }
+                }else if ({{ moneda.rango }} == 1 || {{ moneda.rango }} == 0) {
+                    boton = "Rubi";
+                }
                 rango = boton;
+                estado = "Si"
                 break;
             case 2:
                 rango = "Esmeralda";
+                estado = "Si"
                 break;
             case 3:
                 rango = "Diamante";
+                estado = "Si"
                 break;
          }
-
          table.row.add([
              myJson[i][0]['Padre'].rango,
              myJson[i][0]['Padre'].dueño.nombre,
              invto,
-             rango
+             rango,
+             estado
          ]);
          arbol.push(myJson[i][0]['Padre']);
      }
-
-
      table.draw();
     })
     .catch(function(err) {
@@ -291,28 +305,11 @@ function usersList() {
 
 function modalAñadir(id)
 {
-    var misCabeceras = new Headers();
-    var miInit = { method: 'POST',
-           headers: misCabeceras,
-           mode: 'cors',
-           cache: 'default' };
-      fetch('{{ path('list_all_monedas') }}',miInit)
-        .then(response => response.json())
-        .then(monedasJson => {
-            var select = document.getElementById("añadir_oro");
-            for (var i = 0; i < monedasJson.length; i++) {
-                var monedaIgual = arbol.find(moneda => moneda.id == monedasJson[i].id);
-                if (monedaIgual == null) {
-                    var newOption = new Option(monedasJson[i].dueño.nombre, monedasJson[i].id, false, false);
-
-                    $('#añadir_oro').append(newOption).trigger('change');
-                }
-            }
-        })
-        .catch(function(err) {
-           console.log(err);
-        });
     $('#agregarOro').modal('show');
+    var content = `<h3>Link para invitar {{ url('invitar_moneda',{'idRuby': 'id'} )}}</h3>`;
+    content = content.replace('id', id);
+    document.getElementById("modalAñadirOros").innerHTML = content;
+
 }
 
 function modalBorrar(id)
