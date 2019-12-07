@@ -68,35 +68,27 @@
   <div id="content-wrapper">
 
     <div class="container-fluid">
+        <a class="btn btn-success" href="{{path('new_moneda',{'id': user.id} )}}">Añadir moneda</a>
+        <br>
+        <br>
       <!-- DataTables Example -->
       <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          Usuarios</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Nombre</th>
-                  <th>Teléfono movil</th>
-                  <th>Referido</th>
-                  <th>País</th>
-                  <th>Ciudad</th>
-                  <th>BTC</th>
-                  <th>MLM</th>
-                  <th>Veces Recibidas</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tfoot>
-              </tfoot>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
-        </div>
+          <ul class="list-group">
+            {% for moneda in monedas %}
+                <li class="list-group-item"><a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id} )}}">moneda
+                {% if moneda.rango == 0 %}
+                    <i class="fab fa-bitcoin"></i> oro a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 1 %}
+                    <i class="fab fa-bitcoin"></i> Ruby a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 2 %}
+                    <i class="fab fa-bitcoin"></i> Esmeralda a recibido {{ moneda.vecesRecibidas }} veces
+                {% elseif moneda.rango == 3 %}
+                    <i class="fab fa-bitcoin"></i> Diamante a recibido {{ moneda.vecesRecibidas }} veces
+                {% endif %}
+                </a>
+                </li>
+            {% endfor %}
+          </ul>
       </div>
 
     </div>
@@ -168,50 +160,6 @@ $(document).ready(function() {
         console.log("Docuemnto listo");
     });
 
-function usersList() {
-    
-  fetch('{{ path('list_Users') }}',{method: 'GET'})
-    .then(response => response.json())
-    .then(myJson => {
-        var table = $('#Usuarios').DataTable({
-         "destroy": true,
-        });
-     table.clear();
-     console.log(myJson);
-    for (var i = 0; i < myJson[0].length; i++) {
-        var id = myJson[0][i].id
-        var x = "modalBorrar("+id+")";
-        var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
-        uri = uri.replace('id', id);
-        var boton = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
-        var contador = 0;
-        var referido = [];
-
-        for (var o = 0; o < myJson[1].length; o++) {
-            if (myJson[1][o]['usuario'].id == myJson[0][i].id) {
-                referido[contador] = myJson[1][o]['referido'].nombre
-                contador++;
-            }
-        }
-        table.row.add([
-            myJson[0][i].nombre,
-            myJson[0][i].telmovil,
-            referido.join(),
-            myJson[0][i].pais,
-            myJson[0][i].ciudad,
-            myJson[0][i].monedasBitcoin,
-            myJson[0][i].monedasMarketcoin,
-            myJson[0][i].vecesRecividas,
-            boton,
-        ]);
-     }
-     table.draw();
-    })
-    .catch(function(err) {
-       console.log(err);
-
-    });
-}
 
 function modalBorrar(id)
 {

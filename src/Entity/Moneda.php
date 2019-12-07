@@ -31,6 +31,11 @@ class Moneda
      */
     private $rango;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $dono;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +73,18 @@ class Moneda
     public function setRango(?int $rango): self
     {
         $this->rango = $rango;
+
+        return $this;
+    }
+
+    public function getDono(): ?int
+    {
+        return $this->dono;
+    }
+
+    public function setDono(?int $dono): self
+    {
+        $this->dono = $dono;
 
         return $this;
     }

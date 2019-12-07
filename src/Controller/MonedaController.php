@@ -12,19 +12,11 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Moneda;
+use App\Entity\User;
 use App\Entity\MonedaMoneda;
 
 class MonedaController extends AbstractController
 {
-
-    public function index(int $id, EntityManagerInterface $em)
-    {
-        $moneda = $em->getRepository(Moneda::class)->find($id);
-        return $this->render('user/moneda/index.html.twig', [
-            'moneda' => $moneda
-        ]);
-    }
-
     public function listArbolDeMonedas(int $id, EntityManagerInterface $em)
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
@@ -32,8 +24,6 @@ class MonedaController extends AbstractController
         switch ($moneda->getRango()) {
             case 0:
                 $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                dump($monedaMonedas);
-                dump($moneda);
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 1) {
                     $rubi = $monedaMonedas[0]->getMonedaPropietario();
                 }
@@ -46,7 +36,6 @@ class MonedaController extends AbstractController
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
                     $diamante = $monedaMonedas[0]->getMonedaPropietario();
                 }
-
                 $data = $this->arbolDeMoneda($diamante);
                 break;
             case 1:
@@ -58,7 +47,6 @@ class MonedaController extends AbstractController
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
                     $diamante = $monedaMonedas[0]->getMonedaPropietario();
                 }
-
                 $data = $this->arbolDeMoneda($diamante);
                 break;
             case 2:
@@ -66,7 +54,6 @@ class MonedaController extends AbstractController
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
                     $diamante = $monedaMonedas[0]->getMonedaPropietario();
                 }
-
                 $data = $this->arbolDeMoneda($diamante);
                 break;
             case 3:
@@ -80,16 +67,58 @@ class MonedaController extends AbstractController
         return new Response($serializer->serialize($data, 'json'));
     }
 
-    public function new(Request $request, EntityManagerInterface $em)
+    public function findInvitados(int $id, EntityManagerInterface $em)
     {
+        $invitados = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($id);
+
+        $data = [];
+        foreach ($invitados as $key => $invitado) {
+            array_push($data, $invitado->getMonedaInvitado());
+        }
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+
+        $serializer = new Serializer($normalizers, $encoders);
+        return new Response($serializer->serialize($data, 'json'));
+    }
+
+    public function editInvitados(int $id, EntityManagerInterface $em, Request $request)
+    {
+        $moneda = $em->getRepository(Moneda::class)->find($id);
+        $invitados = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($id);
+        $json = $request->request->all();
+        for ($i=0; $i < count($invitados); $i++) {
+                        $em->remove($invitados[$i]);
+                        $em->flush();
+        }
+        if (array_key_exists('monedas', $json)) {
+            foreach ($json['monedas'] as $key => $monedaId) {
+                dump($moneda);
+                $monedaInvitado = $em->getRepository(Moneda::class)->find($monedaId);
+                $monedaMoneda = new MonedaMoneda();
+                $monedaMoneda->setMonedaPropietario($moneda);
+                $monedaMoneda->setMonedaInvitado($monedaInvitado);
+                $em->persist($monedaMoneda);
+                $em->flush();
+            }
+        }
+        return new Response(0);
+    }
+
+    public function new(int $id, Request $request, EntityManagerInterface $em)
+    {
+        $user = $em->getRepository(User::class)->find($id);
         $moneda = new Moneda();
-        $moneda->setDueño($this->getUser());
+        $moneda->setDueño($user);
         $moneda->setVecesRecibidas(0);
         $moneda->setRango(0);
+        $moneda->setDono(false);
         $em->persist($moneda);
         $em->flush();
 
-        return $this->redirectToRoute('dasboard_user');
+        return $this->redirectToRoute('user_list_monedas', [
+            'id' => $id
+        ]);
     }
 
     public function delete($id, EntityManagerInterface $em, Request $request)
@@ -104,12 +133,15 @@ class MonedaController extends AbstractController
         }
         $em->remove($moneda);
         $em->flush();
-        return $this->redirectToRoute('dasboard_user');
+
+        return $this->redirectToRoute('user_list_monedas', [
+            'id' => $id
+        ]);
     }
 
     public function listAllMonedas(EntityManagerInterface $em, Request $request)
     {
-        $monedas = $em->getRepository(Moneda::class)->findAll();
+        $monedas = $em->getRepository(Moneda::class)->findByRango(0);
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
@@ -140,6 +172,7 @@ class MonedaController extends AbstractController
         $monedaNuevaInvitada->setDueño($this->getUser());
         $monedaNuevaInvitada->setVecesRecibidas(0);
         $monedaNuevaInvitada->setRango(0);
+        $monedaNuevaInvitada->setDono(false);
         $monedaMoneda = new MonedaMoneda();
 
         $monedaMoneda->setMonedaPropietario($monedaRuby);

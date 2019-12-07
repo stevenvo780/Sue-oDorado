@@ -156,12 +156,8 @@ $(document).ready(function() {
     });
 
 function eventosList() {
-    var misCabeceras = new Headers();
-    var miInit = { method: 'POST',
-           headers: misCabeceras,
-           mode: 'cors',
-           cache: 'default' };
-  fetch('{{ path('list_evento_user') }}',miInit)
+
+  fetch('{{ path('list_evento_user') }}',{method: 'GET'})
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Eventos').DataTable({

@@ -16,15 +16,15 @@ list_evento_user:
 
 posiciones_user:
     path: /posiciones
-    controller: App\Controller\AdminController::posiciones
+    controller: App\Controller\ComunUserController::posiciones
 
 proyecto_user:
     path: /proyecto
-    controller: App\Controller\AdminController::proyecto
+    controller: App\Controller\ComunUserController::proyecto
 
 moneda:
     path: /moneda/{id}
-    controller: App\Controller\MonedaController::index
+    controller: App\Controller\ComunUserController::indexMoneda
 
 list_monedas:
     path: /listmonedas/{id}
@@ -33,18 +33,6 @@ list_monedas:
 list_all_monedas:
     path: /listallmonedas
     controller: App\Controller\MonedaController::listAllMonedas
-
-edit_moneda:
-    path: /editmoneda
-    controller: App\Controller\MonedaController::edit
-
-new_moneda:
-    path: /newmoneda
-    controller: App\Controller\MonedaController::new
-
-delete_moneda:
-    path: /deletemoneda/{id}
-    controller: App\Controller\MonedaController::delete
 
 invitar_moneda:
     path: /invitar/{idRuby}

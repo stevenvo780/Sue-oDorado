@@ -26,6 +26,14 @@ class ComunUserController extends AbstractController
         ]);
     }
 
+    public function indexMoneda(int $id, EntityManagerInterface $em)
+    {
+        $moneda = $em->getRepository(Moneda::class)->find($id);
+        return $this->render('user/moneda/index.html.twig', [
+            'moneda' => $moneda
+        ]);
+    }
+
     public function edit($id, EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder, Request $request)
     {
         $user = $em->getRepository(User::class)->find($id);
