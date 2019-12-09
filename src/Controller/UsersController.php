@@ -24,11 +24,10 @@ class UsersController extends AbstractController
     public function list(EntityManagerInterface $em)
     {
         $user = $em->getRepository(User::class)->findAll();
-        $userUser = $em->getRepository(UserUser::class)->findAll();
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
-        $data = [$user,$userUser];
+        $data = [$user];
         $serializer = new Serializer($normalizers, $encoders);
 
         return new Response($serializer->serialize($data, 'json'));

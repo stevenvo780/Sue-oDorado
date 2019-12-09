@@ -15,8 +15,8 @@ list_evento_user:
    controller: App\Controller\EventoController::list
 
 posiciones_user:
-    path: /posiciones
-    controller: App\Controller\ComunUserController::posiciones
+    path: /posiciones/{id}
+    controller: App\Controller\MonedaController::posiciones
 
 proyecto_user:
     path: /proyecto

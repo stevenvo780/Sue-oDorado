@@ -53,6 +53,10 @@ edit_invitados_moneda:
     path: /editmonedainvitados/{id}
     controller: App\Controller\MonedaController::editInvitados
 
+edit_moneda:
+    path: /editmoneda/{id}
+    controller: App\Controller\MonedaController::editMoneda
+
 new_moneda:
     path: /newmoneda/{id}
     controller: App\Controller\MonedaController::new

@@ -46,7 +46,7 @@
     <li class="nav-item active">
       <a class="nav-link" href="{{path('posiciones_admin')}}">
         <i class="fas fa-code-branch"></i>
-        <span>Posición</span></a>
+        <span>Extructura</span></a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="#">
@@ -145,6 +145,7 @@ var cy = cytoscape({
   style: cytoscape.stylesheet()
     .selector('node')
       .style({
+        'background-color': 'data(color)',
         'content': 'data(id)',
         'weight': 0.1,
       })
@@ -159,17 +160,17 @@ var cy = cytoscape({
 
   elements: {
       nodes: [
-          {% for usuario in usuarios %}
-            { data: { id: '{{usuario.nombre}}'}},
+          {% for moneda in monedas %}
+            { data: { id: '{{moneda.dueño.nombre}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
           {% endfor %}
       ],
 
       edges: [
 
-          {% for usuario in usuarios %}
-              {% for userUser in userUsers  %}
-                  {% if userUser.usuario.id == usuario.id %}
-                  { data: { id: '{{usuario.nombre}}{{userUser.referido.nombre}}', source: '{{usuario.nombre}}', target: '{{userUser.referido.nombre}}' } },
+          {% for moneda in monedas %}
+              {% for monedaMoneda in monedaMonedas  %}
+                  {% if monedaMoneda.monedaPropietario.id == moneda.id %}
+                  { data: { id: '{{moneda.dueño.nombre}}{{monedaMoneda.monedaInvitado.dueño.nombre}}', source: '{{moneda.dueño.nombre}}', target: '{{monedaMoneda.monedaInvitado.dueño.nombre}}' } },
                   {% endif %}
               {% endfor %}
           {% endfor %}
@@ -178,8 +179,8 @@ var cy = cytoscape({
   layout: {
     name: 'cose',
     fit: true,
-    padding: 10,
-    spacingFactor: 10,
+    padding: 1,
+    spacingFactor: 2,
   }
 });
 </script>

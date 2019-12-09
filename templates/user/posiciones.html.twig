@@ -35,69 +35,42 @@
 
 <div id="wrapper">
 
-  <!-- Sidebar -->
-  <ul class="sidebar navbar-nav">
-    <li class="nav-item active">
-      <a class="nav-link" href="{{path('dasboard')}}">
-        <i class="fas fa-child"></i>
-        <span>Perfiles</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('posiciones_admin')}}">
-        <i class="fas fa-code-branch"></i>
-        <span>Extructura</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">
-        <i class="fas fa-envelope-square"></i>
-        <span>Mensajes</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('eventos_admin')}}">
-        <i class="fas fa-calendar-week"></i>
-        <span>Eventos</span></a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="{{path('proyecto')}}">
-        <i class="fas fa-question"></i>
-        <span>Quienes somos</span></a>
-    </li>
-  </ul>
+    <!-- Sidebar -->
+    <ul class="sidebar navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="{{path('dasboard_user')}}">
+          <i class="fas fa-child"></i>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-code-branch"></i>
+          <span>Extructura</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('eventos_user')}}">
+          <i class="fas fa-calendar-week"></i>
+          <span>Eventos</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('proyecto')}}">
+          <i class="fas fa-question"></i>
+          <span>Quienes somos</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">
+          <i class="fas fa-envelope-square"></i>
+          <span>Soporte</span></a>
+      </li>
+    </ul>
+    </ul>
 
   <div id="content-wrapper">
 
     <div class="container-fluid">
       <!-- DataTables Example -->
-      <div class="card mb-3">
-        <div class="card-header">
-          <i class="fas fa-table"></i>
-          Usuarios</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th width="3%">Id</th>
-                  <th>Nombre</th>
-                  <th width="10%">Teléfono movil</th>
-                  <th width="10%">País</th>
-                  <th width="10%">Ciudad</th>
-                  <th width="3%">BTC</th>
-                  <th width="3%">MLM</th>
-                  <th width="3%">Veces Recibidas</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tfoot>
-              </tfoot>
-              <tbody>
-
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+      <div style="height: 80%; width: 80%; position: absolute; left: 10; top: 10;" id="cy"></div>
 
     </div>
     <!-- /.container-fluid -->
@@ -157,64 +130,60 @@
 </div>
 </div>
 </div>
+
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
 
 <script type="text/javascript">
+console.log("cy");
+var cy = cytoscape({
+  container: document.getElementById('cy'),
 
-$(document).ready(function() {
-        usersList();
-    });
+  boxSelectionEnabled: false,
+  autounselectify: true,
 
-function usersList() {
+  style: cytoscape.stylesheet()
+    .selector('node')
+      .style({
+        'background-color': 'data(color)',
+        'content': 'data(id)',
+        'weight': 0.1,
+      })
+    .selector('edge')
+      .style({
+        'curve-style': 'bezier',
+        'target-arrow-shape': 'triangle',
+        'width': 1,
+        'line-color': '#ddd',
+        'target-arrow-color': '#ddd'
+      }),
 
-  fetch('{{ path('list_Users') }}',{method: 'GET'})
-    .then(response => response.json())
-    .then(myJson => {
-        var table = $('#Usuarios').DataTable({
-         "destroy": true,
-        });
-     table.clear();
-     console.log(myJson);
-    for (var i = 0; i < myJson[0].length; i++) {
-        var id = myJson[0][i].id
-        var x = "modalBorrar("+id+")";
-        var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
-        uri = uri.replace('id', id);
-        var boton = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
+  elements: {
+      nodes: [
+          {% for moneda in monedas %}
+            { data: { id: '{{moneda.dueño.nombre}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
+          {% endfor %}
+      ],
 
-        table.row.add([
-            myJson[0][i].id,
-            myJson[0][i].nombre,
-            myJson[0][i].telmovil,
-            myJson[0][i].pais,
-            myJson[0][i].ciudad,
-            myJson[0][i].monedasBitcoin,
-            myJson[0][i].monedasMarketcoin,
-            myJson[0][i].vecesRecividas,
-            boton,
-        ]);
-     }
-     table.draw();
-    })
-    .catch(function(err) {
-       console.log(err);
+      edges: [
 
-    });
-}
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
-
-
+          {% for moneda in monedas %}
+              {% for monedaMoneda in monedaMonedas  %}
+                  {% if monedaMoneda.monedaPropietario.id == moneda.id %}
+                  { data: { id: '{{moneda.dueño.nombre}}{{monedaMoneda.monedaInvitado.dueño.nombre}}', source: '{{moneda.dueño.nombre}}', target: '{{monedaMoneda.monedaInvitado.dueño.nombre}}' } },
+                  {% endif %}
+              {% endfor %}
+          {% endfor %}
+      ]
+    },
+  layout: {
+    name: 'cose',
+    fit: true,
+    padding: 50,
+    spacingFactor: 2,
+  }
+});
 </script>
 
 {% endblock %}

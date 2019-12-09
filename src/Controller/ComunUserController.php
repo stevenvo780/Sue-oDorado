@@ -9,8 +9,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserType;
 use App\Entity\User;
+use App\Controller\MonedaController;
 use App\Entity\UserUser;
 use App\Entity\Moneda;
+use App\Entity\MonedaMoneda;
 
 class ComunUserController extends AbstractController
 {
@@ -62,4 +64,6 @@ class ComunUserController extends AbstractController
             ]
         );
     }
+
+
 }
