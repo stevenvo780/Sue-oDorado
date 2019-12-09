@@ -77,26 +77,6 @@
                 {{ form_row(form.email) }}
                 {{ form_row(form.nombre) }}
                 {{ form_row(form.telmovil) }}
-                <br>
-                <p>Invitados</p>
-                <select  name="user_edit[referidos][]" class="custom-select" id="user_edit_referido" multiple size="2">
-                {% set referido = ""  %}
-                {% for userUser in userUsers  %}
-                    {% if userUser.usuario.id == user.id %}
-                        <option value="{{ userUser.referido.id }}" selected >{{ userUser.referido.nombre }}</option>
-                        {% set referido = userUser.referido %}
-                    {% endif %}
-                {% endfor %}
-                {% for usuario in usuarios %}
-                    {% if user != usuario %}
-                        {% if referido != usuario %}
-                            <option value="{{ usuario.id }}">{{ usuario.nombre }}</option>
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                </select>
-                <br>
-                <br>
                 {{ form_row(form.pais) }}
                 {{ form_row(form.ciudad) }}
                 {{ form_row(form.monedasBitcoin) }}
