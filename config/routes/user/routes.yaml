@@ -31,7 +31,7 @@ list_monedas:
     controller: App\Controller\MonedaController::listArbolDeMonedas
 
 list_all_monedas:
-    path: /listallmonedas
+    path: /listallmonedas/{id}
     controller: App\Controller\MonedaController::listAllMonedas
 
 invitar_moneda:

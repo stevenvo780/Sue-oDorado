@@ -147,7 +147,7 @@ var cy = cytoscape({
     .selector('node')
       .style({
         'background-color': 'data(color)',
-        'content': 'data(id)',
+        'content': 'data(name)',
         'weight': 0.1,
       })
     .selector('edge')
@@ -162,16 +162,15 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for moneda in monedas %}
-            { data: { id: '{{moneda.dueño.nombre}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
+            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombre}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
           {% endfor %}
       ],
-
       edges: [
 
           {% for moneda in monedas %}
               {% for monedaMoneda in monedaMonedas  %}
                   {% if monedaMoneda.monedaPropietario.id == moneda.id %}
-                  { data: { id: '{{moneda.dueño.nombre}}{{monedaMoneda.monedaInvitado.dueño.nombre}}', source: '{{moneda.dueño.nombre}}', target: '{{monedaMoneda.monedaInvitado.dueño.nombre}}' } },
+                  { data: { id: '{{moneda.id}}-{{monedaMoneda.monedaInvitado.id}}', source: '{{moneda.id}}', target: '{{monedaMoneda.monedaInvitado.id}}' } },
                   {% endif %}
               {% endfor %}
           {% endfor %}
@@ -179,9 +178,10 @@ var cy = cytoscape({
     },
   layout: {
     name: 'cose',
-    fit: true,
-    padding: 50,
-    spacingFactor: 2,
+    padding: 100,
+    idealEdgeLength: function( edge ){ return 50; },
+    edgeElasticity: function( edge ){ return 100; },
+    nodeRepulsion: function( node ){ return 2048; },
   }
 });
 </script>

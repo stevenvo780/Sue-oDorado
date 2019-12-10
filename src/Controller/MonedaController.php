@@ -156,16 +156,31 @@ class MonedaController extends AbstractController
         ]);
     }
 
-    public function listAllMonedas(EntityManagerInterface $em, Request $request)
+    public function listAllMonedas(int $id, EntityManagerInterface $em, Request $request)
     {
-        $monedas = $em->getRepository(Moneda::class)->findByRango(0);
+        $moneda = $em->getRepository(Moneda::class)->find($id);
+
+        if ($moneda->getRango() == 3) {
+            $monedas = $em->getRepository(Moneda::class)->findByRango(2);
+        } elseif ($moneda->getRango() == 2) {
+            $monedas = $em->getRepository(Moneda::class)->findByRango(1);
+        } elseif ($moneda->getRango() == 1) {
+            $monedas = $em->getRepository(Moneda::class)->findByRango(0);
+        }
+        $data = [];
+        foreach ($monedas as $key => $moneda) {
+            $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
+            if ($monedaMonedas == null) {
+                array_push($data, $moneda);
+            }
+        }
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
 
         $serializer = new Serializer($normalizers, $encoders);
 
-        return new Response($serializer->serialize($monedas, 'json'));
+        return new Response($serializer->serialize($data, 'json'));
     }
 
     public function invitar(int $idRuby, EntityManagerInterface $em, Request $request)
@@ -255,12 +270,19 @@ class MonedaController extends AbstractController
                 array_push($relaciones, $monedaMoneda);
             }
         }
-        dump($monedas);
-        dump($relaciones);
-        return $this->render('user/posiciones.html.twig', [
-            'monedas' => $monedas,
-            'monedaMonedas' => $relaciones,
-        ]);
+        $rol = $this->getUser()->getRoles();
+
+        if ($rol[0] == "ROLE_ADMIN") {
+            return $this->render('admin/posicionesUser.html.twig', [
+                'monedas' => $monedas,
+                'monedaMonedas' => $relaciones,
+            ]);
+        } elseif ($rol[0] == "ROLE_USER") {
+            return $this->render('user/posiciones.html.twig', [
+                'monedas' => $monedas,
+                'monedaMonedas' => $relaciones,
+            ]);
+        }
     }
 
     public function arbolDeMoneda($diamanteMoneda)

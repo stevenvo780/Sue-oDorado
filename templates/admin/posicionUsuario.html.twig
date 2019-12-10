@@ -44,7 +44,7 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="{{path('posiciones_admin')}}">
+      <a class="nav-link" href="{{ path('posiciones_user',{'id': moneda.id} )}}">
         <i class="fas fa-code-branch"></i>
         <span>Extructura</span></a>
     </li>
@@ -246,7 +246,6 @@ $(document).ready(function() {
     });
 function usersList() {
     arbol = [];
-    console.log(arbol);
   fetch('{{ path('list_monedas',{'id': moneda.id} )}}',{method: 'GET'})
     .then(response => response.json())
     .then(myJson => {
@@ -358,10 +357,13 @@ function editInvitado(id)
 }
 function modalAñadir(id)
 {
-    $("#añadir_oro").val([]);
+    $("#añadir_oro").val('');
+    $('#añadir_oro').empty();
     var x = "editInvitado("+id+")";
     $('#botonEditInvitados').attr('onclick', `${x}`);
-    fetch('{{ path('list_all_monedas',{'id': moneda.id} )}}',{method: 'GET'})
+    var uri  = "{{ path('list_all_monedas',{'id': 'id'} )}}"
+    uri = uri.replace('id', id);
+    fetch(uri,{method: 'GET'})
         .then(response => response.json())
         .then(myJson => {
             myJson.forEach(function(monedaG){
