@@ -4,29 +4,3 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-MonedaController	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^class MonedaController extends AbstractController$/;"	class	line:17
-index	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^    public function index(int $id, EntityManagerInterface $em)$/;"	function	line:20
-moneda	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $moneda = $em->getRepository(Moneda::class)->find($id);$/;"	variable	line:22
-list	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^    public function list(int $id, EntityManagerInterface $em)$/;"	function	line:28
-moneda	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $moneda = $em->getRepository(Moneda::class)->find($id);$/;"	variable	line:30
-monedaMonedas	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($moneda);$/;"	variable	line:31
-esmeraldas	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                $esmeraldas = [$monedaMonedas[0]->getInvitado(),$monedaMonedas[1]->getInvitado()];$/;"	variable	line:45
-encoders	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $encoders = [new XmlEncoder(), new JsonEncoder()];$/;"	variable	line:55
-normalizers	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $normalizers = [new ObjectNormalizer()];$/;"	variable	line:56
-serializer	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $serializer = new Serializer($normalizers, $encoders);$/;"	variable	line:58
-new	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^    public function new(Request $request, EntityManagerInterface $em)$/;"	function	line:63
-moneda	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $moneda = new Moneda();$/;"	variable	line:65
-delete	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^    public function delete($id, EntityManagerInterface $em, Request $request)$/;"	function	line:76
-moneda	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $moneda = $em->getRepository(Moneda::class)->find($id);$/;"	variable	line:78
-monedaMonedas	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($moneda);$/;"	variable	line:79
-edit	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^    public function edit($id, EntityManagerInterface $em, Request $request)$/;"	function	line:91
-monedas	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $monedas = $em->getRepository(Moneda::class)->find($id);$/;"	variable	line:93
-form	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $form = $this->createForm(UserEditType::class, $monedas);$/;"	variable	line:94
-json	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $json = $request->request->all();$/;"	variable	line:96
-monedaMonedas	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByUsuario($monedas->getId());$/;"	variable	line:101
-userReferido	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                        $userReferido = $em->getRepository(Moneda::class)->find($json['user_edit']['referidos'][$i]);$/;"	variable	line:107
-userUser	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                            $userUser = new MonedaMoneda;$/;"	variable	line:109
-userReferido	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                            $userReferido = $em->getRepository(Moneda::class)->find($json['user_edit']['referidos'][$i]);$/;"	variable	line:110
-userUsers	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^                $userUsers = $em->getRepository(UserUser::class)->findByUsuario($monedas->getId());$/;"	variable	line:118
-usuarios	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $usuarios = $em->getRepository(User::class)->findAll();$/;"	variable	line:135
-userUsers	/home/steven/Documentos/repos/SueñoDorado/SuenoDorado/src/Controller/MonedaController.php	/^        $userUsers = $em->getRepository(UserUser::class)->findAll();$/;"	variable	line:136
