@@ -237,7 +237,7 @@ class MonedaController extends AbstractController
                 if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
                     $diamante = $monedaMonedas[0]->getMonedaPropietario();
                 }
-
+                $data = $this->arbolDeMoneda($diamante);
                 break;
             case 1:
                 $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
