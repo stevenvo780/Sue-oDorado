@@ -4,18 +4,17 @@
 
 {% block body %}
 <div class="container-fluid">
-  
+
     <div class="card mb-3">
         <div class="card-header">
             {{ form_start(form) }}
                 {{ form_row(form.email) }}
-                {{ form_row(form.nombre) }}
+                {{ form_row(form.nombres) }}
                 {{ form_row(form.telmovil) }}
                 {{ form_row(form.pais) }}
                 {{ form_row(form.ciudad) }}
                 {{ form_row(form.monedasBitcoin) }}
                 {{ form_row(form.monedasMarketcoin) }}
-                {{ form_row(form.vecesRecividas) }}
                 <br>
                 {% if user.roles[0] == "ROLE_ADMIN" %}
                     <label><input type="checkbox" name="user_edit[user_rol]" id="user_edit_rol" value="true" checked>Administrador</label>

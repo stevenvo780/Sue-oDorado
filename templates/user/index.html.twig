@@ -8,7 +8,7 @@
     {% if invitados %}
     <h4>El ruby que te invito ya invito a
      {% for invitado in invitados %}
-         {{invitado.nombre}}
+         {{invitado.nombres}}
          {% if loop.length > loop.index %}
             y
          {% endif %}

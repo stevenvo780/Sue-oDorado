@@ -39,7 +39,7 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for moneda in monedas %}
-            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombre}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
+            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
           {% endfor %}
       ],
       edges: [

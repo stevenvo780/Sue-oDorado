@@ -20,7 +20,6 @@
               <th width="10%">Ciudad</th>
               <th width="3%">BTC</th>
               <th width="3%">MLM</th>
-              <th width="3%">Veces Recibidas</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -79,13 +78,12 @@ function usersList() {
 
         table.row.add([
             myJson[0][i].id,
-            myJson[0][i].nombre,
+            myJson[0][i].nombres,
             myJson[0][i].telmovil,
             myJson[0][i].pais,
             myJson[0][i].ciudad,
             myJson[0][i].monedasBitcoin,
             myJson[0][i].monedasMarketcoin,
-            myJson[0][i].vecesRecividas,
             boton,
         ]);
      }

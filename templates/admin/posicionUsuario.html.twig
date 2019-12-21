@@ -64,7 +64,7 @@
             </div>
           </form>
     </div>
-    
+
     <div class="card mb-3">
         <div class="card-header">
           <i class="fas fa-table"></i>Monedas</div>
@@ -172,9 +172,9 @@ function usersList() {
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
-                 var invto = "" + myJson[i][1].dueño.nombre;
+                 var invto = "" + myJson[i][1].dueño.nombres;
              } else if (myJson[i].length == 3) {
-                 var invto = "" + myJson[i][1].dueño.nombre + " y " + myJson[i][2].dueño.nombre;
+                 var invto = "" + myJson[i][1].dueño.nombres + " y " + myJson[i][2].dueño.nombres;
              }
          }else {
              invto = "";
@@ -223,7 +223,7 @@ function usersList() {
          }
          table.row.add([
              myJson[i][0]['Padre'].rango,
-             myJson[i][0]['Padre'].dueño.nombre,
+             myJson[i][0]['Padre'].dueño.nombres,
              invto,
              rango,
              estado
@@ -265,7 +265,7 @@ function modalAñadir(id)
             myJson.forEach(function(monedaG){
                 var coincidencia = arbol.find(moneda => moneda.id == monedaG.id);
                 if (coincidencia == null) {
-                    var newOption = new Option(monedaG.dueño.nombre, monedaG.id, false, false);
+                    var newOption = new Option(monedaG.dueño.nombres, monedaG.id, false, false);
                     $('#añadir_oro').append(newOption).trigger('change');
                 }
             });
@@ -280,7 +280,7 @@ function modalAñadir(id)
         .then(response => response.json())
         .then(myJson => {
             myJson.forEach(function(monedaG){
-                var newOption = new Option(monedaG.dueño.nombre, monedaG.id, false, true);
+                var newOption = new Option(monedaG.dueño.nombres, monedaG.id, false, true);
                 $('#añadir_oro').append(newOption).trigger('change');
             });
         })

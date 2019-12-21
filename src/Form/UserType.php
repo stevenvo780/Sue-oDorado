@@ -17,7 +17,8 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, ['label' => false, 'attr'  => ['placeholder' => "Correo", 'class' => 'form-control form-control-lg']])
-            ->add('nombre', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Nombre completo", 'class' => 'form-control form-control-lg']])
+            ->add('nombres', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Nombre completo", 'class' => 'form-control form-control-lg']])
+            ->add('apellidos', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Nombre completo", 'class' => 'form-control form-control-lg']])
             ->add('telmovil', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Telefono movil", 'class' => 'form-control form-control-lg']])
             ->add('pais', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Pais",'class' => 'form-control form-control-lg']])
             ->add('ciudad', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Ciudad", 'class' => 'form-control form-control-lg']])

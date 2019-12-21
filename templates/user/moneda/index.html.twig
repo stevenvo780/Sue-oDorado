@@ -7,7 +7,7 @@
 <div id="añadirOro" class="">
 
 </div>
-  
+
 <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>Monedas</div>
@@ -120,9 +120,9 @@ function usersList() {
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
-                 var invto = "" + myJson[i][1].dueño.nombre;
+                 var invto = "" + myJson[i][1].dueño.nombres;
              } else if (myJson[i].length == 3) {
-                 var invto = "" + myJson[i][1].dueño.nombre + " y " + myJson[i][2].dueño.nombre;
+                 var invto = "" + myJson[i][1].dueño.nombres + " y " + myJson[i][2].dueño.nombres;
              }
          }else {
              invto = "";
@@ -176,7 +176,7 @@ function usersList() {
          }
          table.row.add([
              myJson[i][0]['Padre'].rango,
-             myJson[i][0]['Padre'].dueño.nombre,
+             myJson[i][0]['Padre'].dueño.nombres,
              invto,
              rango,
              estado

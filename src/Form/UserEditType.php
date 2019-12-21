@@ -23,8 +23,7 @@ class UserEditType extends AbstractType
             ->add('ciudad', TextType::class, ['label' => 'Ciudad', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('monedasBitcoin', NumberType::class, ['label' => 'BTC', 'attr'  => ['class' => 'form-control form-control-lg']])
             ->add('monedasMarketcoin', NumberType::class, ['label' => 'MLM', 'attr'  => ['class' => 'form-control form-control-lg']])
-            ->add('vecesRecividas', NumberType::class, ['label' => 'Veces recibidas', 'attr'  => ['class' => 'form-control form-control-lg']])
-        ;
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
