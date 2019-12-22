@@ -1,10 +1,9 @@
+
 {% extends 'layouts/user.html.twig' %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-
     {% if invitados %}
     <h4>El ruby que te invito ya invito a
      {% for invitado in invitados %}
@@ -15,25 +14,51 @@
      {% endfor %}
      en esta posicion</h4>
     {% endif %}
-    <div class="card mb-3">
-      <ul class="list-group">
-        {% for moneda in monedas %}
-            <li class="list-group-item"><a class="btn btn-default" href="{{ path('moneda',{'id': moneda.id} )}}">mi moneda
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Posicion</th>
+        <th scope="col">Moneda</th>
+        <th scope="col">Veces recibidas</th>
+        <th scope="col">Oros completos</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for moneda in monedas %}
+      <tr>
+        <td>{{loop.index}}</td>
+        <td>
+            <div class="card mb-3" style="
+            background-color:
             {% if moneda.rango == 0 %}
-                <i class="fab fa-bitcoin"></i> oro a recibido {{ moneda.vecesRecibidas }} veces
+            #D4B678
             {% elseif moneda.rango == 1 %}
-                <i class="fab fa-bitcoin"></i> Ruby a recibido {{ moneda.vecesRecibidas }} veces
+            #F36F6F
             {% elseif moneda.rango == 2 %}
-                <i class="fab fa-bitcoin"></i> Esmeralda a recibido {{ moneda.vecesRecibidas }} veces
+            #6EED91
             {% elseif moneda.rango == 3 %}
-                <i class="fab fa-bitcoin"></i> Diamante a recibido {{ moneda.vecesRecibidas }} veces
+            #6CAFFB
             {% endif %}
-            </a>
-            </li>
-        {% endfor %}
-      </ul>
-    </div>
-</div>
+            ">
+                <a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id} )}}">
+                    <i class="fab fa-bitcoin"></i>{% if moneda.rango == 0 %}
+                        oro
+                    {% elseif moneda.rango == 1 %}
+                        Ruby
+                    {% elseif moneda.rango == 2 %}
+                        Esmeralda
+                    {% elseif moneda.rango == 3 %}
+                        Diamante
+                    {% endif %}
+                </a>
+          </div>
+      </td>
+      <td>{{moneda.vecesRecibidas}}</td>
+      <td>0</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

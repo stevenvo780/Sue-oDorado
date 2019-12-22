@@ -3,12 +3,14 @@
 {% block title %}Configuracion{% endblock %}
 
 {% block body %}
+
 <div class="container-fluid">
 
     <div class="col-md-12 col-lg-8 col-xl-7 mx-auto">
         {{ form_start(form) }}
             {{ form_row(form.email) }}
             {{ form_row(form.nombres) }}
+            {{ form_row(form.apellidos) }}
             {{ form_row(form.telmovil) }}
             {{ form_row(form.pais) }}
             {{ form_row(form.ciudad) }}
@@ -25,6 +27,4 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-
-
 {% endblock %}
