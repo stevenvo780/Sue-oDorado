@@ -3,7 +3,7 @@
 {% block title %}Eventos{% endblock %}
 
 {% block body %}
-
+<div class="container-fluid">
 <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>
@@ -31,6 +31,7 @@
     </div>
 </div>
 <a class='btn btn-success' href='{{path('new_evento')}}'>Crear evento</a>
+</div>
 {% endblock %}
 {% block modal %}
     <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -38,9 +39,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el evento?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                        </button>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                    </button>
                 </div>
                 <div id="BotonBorrar" class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -69,8 +70,29 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Eventos').DataTable({
-         "order": [[ 1, 'desc' ]],
-         "destroy": true,
+            "language": {
+                 "decimal": "",
+                 "emptyTable": "No hay información",
+                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                 "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                 "infoPostFix": "",
+                 "thousands": ",",
+                 "lengthMenu": "Mostrar _MENU_ Entradas",
+                 "loadingRecords": "Cargando...",
+                 "processing": "Procesando...",
+                 "search": "Buscar:",
+                 "zeroRecords": "Sin resultados encontrados",
+                 "paginate": {
+                     "first": "Primero",
+                     "last": "Ultimo",
+                     "next": "Siguiente",
+                     "previous": "Anterior"
+                 }
+            },
+            "responsive": true,
+            "order": [[ 1, 'desc' ]],
+            "destroy": true,
         });
      table.clear();
     var options = { year: 'numeric', month: 'long', day: 'numeric' };

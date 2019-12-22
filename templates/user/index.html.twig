@@ -40,7 +40,7 @@
             #6CAFFB
             {% endif %}
             ">
-                <a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id} )}}">
+                <a class="btn btn-default" href="{{ path('moneda',{'id': moneda.id} )}}">
                     <i class="fab fa-bitcoin"></i>{% if moneda.rango == 0 %}
                         oro
                     {% elseif moneda.rango == 1 %}

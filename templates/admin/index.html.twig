@@ -65,6 +65,27 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Usuarios').DataTable({
+        "language": {
+             "decimal": "",
+             "emptyTable": "No hay información",
+             "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+             "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+             "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+             "infoPostFix": "",
+             "thousands": ",",
+             "lengthMenu": "Mostrar _MENU_ Entradas",
+             "loadingRecords": "Cargando...",
+             "processing": "Procesando...",
+             "search": "Buscar:",
+             "zeroRecords": "Sin resultados encontrados",
+             "paginate": {
+                 "first": "Primero",
+                 "last": "Ultimo",
+                 "next": "Siguiente",
+                 "previous": "Anterior"
+             }
+        },
+        "responsive": true,
          "destroy": true,
         });
      table.clear();
@@ -75,7 +96,6 @@ function usersList() {
         var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
         uri = uri.replace('id', id);
         var boton = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
-
         table.row.add([
             myJson[0][i].id,
             myJson[0][i].nombres,

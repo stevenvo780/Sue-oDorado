@@ -5,7 +5,7 @@
 {% block body %}
 <div class="container-fluid">
     {{ form_start(form) }}
-    {{ form_row(form.nombres) }}
+    {{ form_row(form.nombre) }}
     {{ form_row(form.fecha) }}
     {{ form_row(form.descripcion) }}
     {{ form_row(form.duracionInicio) }}
@@ -17,11 +17,11 @@
 
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="ModalBorrar" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
+                    <h5 class="modal-title" id="ModalBorrar">¿Seguro que desea borrar el usuario?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -55,7 +55,28 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Usuarios').DataTable({
-         "destroy": true,
+            "language": {
+                 "decimal": "",
+                 "emptyTable": "No hay información",
+                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                 "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                 "infoPostFix": "",
+                 "thousands": ",",
+                 "lengthMenu": "Mostrar _MENU_ Entradas",
+                 "loadingRecords": "Cargando...",
+                 "processing": "Procesando...",
+                 "search": "Buscar:",
+                 "zeroRecords": "Sin resultados encontrados",
+                 "paginate": {
+                     "first": "Primero",
+                     "last": "Ultimo",
+                     "next": "Siguiente",
+                     "previous": "Anterior"
+                 }
+            },
+            "responsive": true,
+            "destroy": true,
         });
      table.clear();
      console.log(myJson);
