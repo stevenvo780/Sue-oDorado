@@ -23,9 +23,12 @@ var cy = cytoscape({
   style: cytoscape.stylesheet()
     .selector('node')
       .style({
-        'background-color': 'data(color)',
+        'background-image': 'data(rango)',
+        'background-fit': 'contain',
         'content': 'data(name)',
         'weight': 0.1,
+        'width': 50,
+        'height': 50,
       })
     .selector('edge')
       .style({
@@ -40,7 +43,19 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for moneda in monedas %}
-            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %} '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB'{% endif %}}},
+            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', rango:
+             {% if moneda.rango == 0 %}
+                 {% if moneda.dono == true %}
+                  '{{ asset('img/monedas/Dorado2.png') }}'
+                  {% else %}
+                  '{{ asset('img/monedas/Dorado1.png') }}'
+                 {% endif %}
+             {% elseif moneda.rango == 1 %}'{{ asset('img/monedas/Ruby.png') }}'
+             {% elseif moneda.rango == 2 %}'{{ asset('img/monedas/Esmeralda.png') }}'
+             {% elseif moneda.rango == 3 %}'{{ asset('img/monedas/Diamante.png') }}'
+             {% elseif moneda.rango == 4 %}'{{ asset('img/monedas/DiamanteDeApoyo.png') }}'
+             {% endif %}}
+            },
           {% endfor %}
       ],
       edges: [
@@ -48,7 +63,7 @@ var cy = cytoscape({
           {% for moneda in monedas %}
               {% for monedaMoneda in monedaMonedas  %}
                   {% if monedaMoneda.monedaPropietario.id == moneda.id %}
-                  { data: { id: '{{moneda.id}}-{{monedaMoneda.monedaInvitado.id}}', source: '{{moneda.id}}', target: '{{monedaMoneda.monedaInvitado.id}}' } },
+                  { data: { id: '{{moneda.id}}-{{monedaMoneda.monedaInvitado.id}}', source: '{{moneda.id}}', target: '{{monedaMoneda.monedaInvitado.id}}'}},
                   {% endif %}
               {% endfor %}
           {% endfor %}
@@ -56,7 +71,7 @@ var cy = cytoscape({
     },
   layout: {
     name: 'cose',
-    padding: 100,
+    spacingFactor: 1,
     idealEdgeLength: function( edge ){ return 50; },
     edgeElasticity: function( edge ){ return 100; },
     nodeRepulsion: function( node ){ return 2048; },
@@ -64,10 +79,14 @@ var cy = cytoscape({
 });
 
 cy.bind('click', 'node', function(evt) {
-    var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
-    uri = uri.replace('id', evt.target.id());
-    location.href=uri;
-  console.log('node clicked: ', evt.target.id());
+  //   var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
+  //   uri = uri.replace('id', evt.target.id());
+  //   location.href=uri;
+  // console.log('node clicked: ', evt.target.id());
+  layout.on();
+  cy.layout({
+       gravity: 1,
+}).run();
 });
 </script>
 

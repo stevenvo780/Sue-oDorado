@@ -21,9 +21,12 @@ var cy = cytoscape({
   style: cytoscape.stylesheet()
     .selector('node')
       .style({
-        'background-color': 'data(color)',
+        'background-image': 'data(rango)',
+        'background-fit': 'contain',
         'content': 'data(name)',
-        'weight': 1,
+        'weight': 0.1,
+        'width': 50,
+        'height': 50,
       })
     .selector('edge')
       .style({
@@ -37,8 +40,19 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for moneda in monedas %}
-            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', color: {% if moneda.rango == 0 %} '#D4B678' {% elseif moneda.rango == 1 %}
-             '#F36F6F' {% elseif moneda.rango == 2 %} '#6EED91' {% elseif moneda.rango == 3 %}'#6CAFFB' {% elseif moneda.rango == 4 %} '#91c2f7' {% endif %}}},
+            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', rango:
+             {% if moneda.rango == 0 %}
+                 {% if moneda.dono == true %}
+                  '{{ asset('img/monedas/Dorado2.png') }}'
+                  {% else %}
+                  '{{ asset('img/monedas/Dorado1.png') }}'
+                 {% endif %}
+             {% elseif moneda.rango == 1 %}'{{ asset('img/monedas/Ruby.png') }}'
+             {% elseif moneda.rango == 2 %}'{{ asset('img/monedas/Esmeralda.png') }}'
+             {% elseif moneda.rango == 3 %}'{{ asset('img/monedas/Diamante.png') }}'
+             {% elseif moneda.rango == 4 %}'{{ asset('img/monedas/DiamanteDeApoyo.png') }}'
+             {% endif %}}
+            },
           {% endfor %}
       ],
       edges: [
