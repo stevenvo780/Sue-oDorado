@@ -79,14 +79,11 @@ var cy = cytoscape({
 });
 
 cy.bind('click', 'node', function(evt) {
-  //   var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
-  //   uri = uri.replace('id', evt.target.id());
-  //   location.href=uri;
-  // console.log('node clicked: ', evt.target.id());
-  layout.on();
-  cy.layout({
-       gravity: 1,
-}).run();
+    var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
+    uri = uri.replace('id', evt.target.id());
+    location.href=uri;
+  console.log('node clicked: ', evt.target.id());
+
 });
 </script>
 
