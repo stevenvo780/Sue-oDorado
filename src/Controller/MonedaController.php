@@ -68,12 +68,14 @@ class MonedaController extends AbstractController
 
     public function editMoneda(int $id, Request $request, EntityManagerInterface $em)
     {
-        $moneda = $em->getRepository(Moneda::class)->find($id);
+        dump($id);
+        $monedaSave = $em->getRepository(Moneda::class)->find($id);
+        dump($monedaSave);
         $json = $request->request->all();
         $contador = 0;
         if (array_key_exists('dono', $json)) {
-            $moneda->setDono(true);
-            $arbol = $this->findArbol($moneda);
+            $monedaSave->setDono(true);
+            $arbol = $this->findArbol($monedaSave);
             $monedas = [];
             foreach ($arbol as $key => $moneda) {
                 array_push($monedas, $moneda[0]['Padre']);
@@ -86,13 +88,16 @@ class MonedaController extends AbstractController
                 }
                 if ($contador == 8) {
                     $this->validarRecibida($monedas);
+                    return new Response(0);
                 }
             }
         } else {
-            $moneda->setDono(false);
+            $monedaSave->setDono(false);
         }
-        $moneda->setRango($json['rango']);
-        $em->persist($moneda);
+        $monedaSave->setRango($json['rango']);
+        $monedaSave->setVecesRecibidas($json['vecesRecividas']);
+        dump($monedaSave);
+        $em->persist($monedaSave);
         $em->flush();
 
         return new Response(0);
@@ -252,7 +257,6 @@ class MonedaController extends AbstractController
                 $monedaSave = $em->getRepository(Moneda::class)->find($moneda->getId());
                 $monedaSave->setRango(1);
             }
-            dump($monedaSave);
             $em->persist($monedaSave);
             $em->flush();
         }

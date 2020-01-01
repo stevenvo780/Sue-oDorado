@@ -6,6 +6,28 @@
 
 
 <div class="container-fluid">
+    <div style=" text-align: center;"class="">
+        <a class="btn btn-default" href="{{ path('user_list_monedas',{'id': moneda.dueño.id} )}}">
+        {% if moneda.rango == 0 %}
+            {% if moneda.dono == true %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+            {% else %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+            {% endif %}
+            {% elseif moneda.rango == 1 %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 2 %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 3 %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 4 %}
+             <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+            {% endif %}
+            <br>
+            <h3> {{ moneda.dueño.nombres }}</h3>
+        </a>
+    </div>
+
     <div id="añadirOro" class="">
         <form id="formSaveMoneda">
             <div class="form-group row">
@@ -15,13 +37,14 @@
                         <tr>
                         <th width="2%">Rango</th>
                         <th  width="2%">Dono</th>
+                        <th  width="2%">Veces recibidas</th>
                         <th  width="10%">Acciones</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                             <td>
-                                <select class="" name="rango">
+                                    <select class="custom-select" name="rango">
                                     {% if moneda.rango == 0 %}
                                     <option selected value="0">Oro</option>
                                     <option value="1">Rubi</option>
@@ -58,11 +81,12 @@
                             </td>
                             <td>
                             {% if moneda.dono == 0 %}
-                                <input style="display: block;margin-left: auto;margin-right: auto;" class="form-check-input" name="dono" type="checkbox" value="1" id="donacion">
+                                <input style="display: block;margin-left: auto;margin-right: auto;" class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
                             {% elseif moneda.dono == 1 %}
-                                <input style="display: block;margin-left: auto;margin-right: auto;" checked class="form-check-input" name="dono" type="checkbox" value="1" id="donacion">
+                                <input style="display: block;margin-left: auto;margin-right: auto;" checked class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
                             {% endif %}
                             </td>
+                            <td> <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas"></td>
                             <td>
                                 <button type='button' id='ButtonEditar' onclick='guardarMoneda({{moneda.id}})' class='btn btn-success'><span class='hidden-xs'>Guardar</span></button>
                                 <button type='button' id='ButtonBorrar' onclick='modalBorrar({{moneda.id}})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>
