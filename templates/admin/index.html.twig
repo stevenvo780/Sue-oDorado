@@ -16,11 +16,11 @@
               <th width="3%">Id</th>
               <th>Nombre</th>
               <th width="10%">Teléfono movil</th>
-              <th width="10%">País</th>
-              <th width="10%">Ciudad</th>
+              <th width="10%">País y Ciudad</th>
               <th width="3%">BTC</th>
               <th width="3%">MLM</th>
-              <th>Acciones</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tfoot>
@@ -95,16 +95,19 @@ function usersList() {
         var x = "modalBorrar("+id+")";
         var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
         uri = uri.replace('id', id);
-        var boton = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
+        var botonList = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span>`;
+        var botonborrar = `<button type='button' id='ButtonBorrar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
+
+        var paisCiudad = "" + myJson[0][i].pais +" - "+ myJson[0][i].ciudad;
         table.row.add([
             myJson[0][i].id,
             myJson[0][i].nombres,
             myJson[0][i].telmovil,
-            myJson[0][i].pais,
-            myJson[0][i].ciudad,
+            paisCiudad,
             myJson[0][i].monedasBitcoin,
             myJson[0][i].monedasMarketcoin,
-            boton,
+            botonList,
+            botonborrar,
         ]);
      }
      table.draw();
