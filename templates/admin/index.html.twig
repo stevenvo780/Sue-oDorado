@@ -3,14 +3,13 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div  class="container-fluid">
   <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>
       Usuarios</div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered" id="Usuarios" width="100%" cellspacing="0">
+    <div style="z-index:0;" class="card-body">
+        <table class="table nowrap dt-responsive responsive" id="Usuarios" width="100%" cellspacing="0">
           <thead>
             <tr>
               <th width="3%">Id</th>
@@ -19,8 +18,8 @@
               <th width="10%">País y Ciudad</th>
               <th width="3%">BTC</th>
               <th width="3%">MLM</th>
-              <th></th>
-              <th></th>
+              <th width="20%"></th>
+              <th width="20%"></th>
             </tr>
           </thead>
           <tfoot>
@@ -28,7 +27,6 @@
           <tbody>
           </tbody>
         </table>
-      </div>
     </div>
   </div>
 </div>
@@ -65,7 +63,7 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Usuarios').DataTable({
-        "language": {
+        language: {
              "decimal": "",
              "emptyTable": "No hay información",
              "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
@@ -85,18 +83,31 @@ function usersList() {
                  "previous": "Anterior"
              }
         },
-        "responsive": true,
-         "destroy": true,
+        columns: [
+            null,
+            { "orderable": false },
+            { "orderable": false },
+            { "orderable": false },
+            { "orderable": false },
+            { "orderable": false },
+            { "orderable": false },
+            { "orderable": false }
+        ],
+        responsive: true,
+        rowReorder: {
+            selector: 'td:nth-child(2)'
+        },
+        destroy: true,
         });
+
      table.clear();
-     console.log(myJson);
     for (var i = 0; i < myJson[0].length; i++) {
         var id = myJson[0][i].id
         var x = "modalBorrar("+id+")";
         var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
         uri = uri.replace('id', id);
-        var botonList = `<a class='btn btn-success' href='${uri}'>Monedas</a>&nbsp; &nbsp; </span>`;
-        var botonborrar = `<button type='button' id='ButtonBorrar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
+        var botonList = `<a class='botonAcccion btn btn-success' href='${uri}'><span class='hidden-xs'>Monedas</span></a>`;
+        var botonborrar = `<button type='button' id='ButtonBorrar' onclick='${x}' class='botonAcccion btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
 
         var paisCiudad = "" + myJson[0][i].pais +" - "+ myJson[0][i].ciudad;
         table.row.add([

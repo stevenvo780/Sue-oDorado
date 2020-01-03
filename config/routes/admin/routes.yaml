@@ -68,3 +68,7 @@ delete_moneda:
 user_find_invitados:
    path: /userfindinvitados/{id}
    controller: App\Controller\MonedaController::findInvitados
+
+find_oros:
+   path: /findoros/{id}/{nivel}
+   controller: App\Controller\MonedaController::findOros

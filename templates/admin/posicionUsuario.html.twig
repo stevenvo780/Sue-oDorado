@@ -113,9 +113,9 @@
                   <tr>
                   <th width="1%">Orden</th>
                   <th>Dueño</th>
-                  <th width="3%" class="invitoA">invito a</th>
-                  <th>Rango</th>
                   <th width="3%">Dono</th>
+                  <th>Rango</th>
+                  <th width="3%" class="invitoA">invito a</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -209,7 +209,8 @@ function usersList() {
                      "previous": "Anterior"
                  }
             },
-        "responsive": true,
+        responsive: true,
+        rowReorder: true,
         "order": [[ 0, 'desc' ]],
         "pageLength": 15,
          "destroy": true,
@@ -238,7 +239,7 @@ function usersList() {
              if (myJson[i].length == 2) {
                  var invto = "" + myJson[i][1].dueño.nombres;
              } else if (myJson[i].length == 3) {
-                 var invto = "" + myJson[i][1].dueño.nombres + " y " + myJson[i][2].dueño.nombres;
+                 var invto = "" + myJson[i][1].dueño.nombres + "<br> - <br>" + myJson[i][2].dueño.nombres;
              }
          }else {
              invto = "";
@@ -290,9 +291,9 @@ function usersList() {
          table.row.add([
              myJson[i][0]['Padre'].rango,
              nombre,
-             invto,
+             estado,
              rango,
-             estado
+             invto,
          ]);
          arbol.push(myJson[i][0]['Padre']);
      }

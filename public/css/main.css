@@ -6,11 +6,18 @@
     width:3%;
     height: 50%;
 }
+.botonAcccion{
+    width:100%;
+}
+
 @media (orientation: portrait) {
     .arbol{
         zoom:130%;
     }
 
+    .logo{
+        width: 80%;
+    }
 
  }
  .navbar-brand {
