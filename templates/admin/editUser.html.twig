@@ -4,28 +4,54 @@
 
 {% block body %}
 <div class="container-fluid">
-
     <div class="card mb-3">
         <div class="card-header">
-            {{ form_start(form) }}
-                {{ form_row(form.email) }}
-                {{ form_row(form.nombres) }}
-                {{ form_row(form.apellidos) }}
-                {{ form_row(form.telmovil) }}
-                {{ form_row(form.pais) }}
-                {{ form_row(form.ciudad) }}
-                {{ form_row(form.monedasBitcoin) }}
-                {{ form_row(form.monedasMarketcoin) }}
-                <br>
-                {% if user.roles[0] == "ROLE_ADMIN" %}
-                    <label><input type="checkbox" name="user_edit[user_rol]" id="user_edit_rol" value="true" checked>Administrador</label>
-                {% else %}
-                    <label><input type="checkbox" name="user_edit[user_rol]" id="user_edit_rol" value="true">Administrador</label>
-                {% endif %}
-                <br>
-                <br>
-                <button class="btn btn-success" type="submit">Guardar</button>
-            {{ form_end(form) }}
+            <h3>Editar datos personales</h3>
+        </div>
+          <div class="card-body">
+              {{ form_start(form) }}
+                  {{ form_row(form.email) }}
+                  <br>
+                  {{ form_row(form.nombres) }}
+                  <br>
+                  {{ form_row(form.apellidos) }}
+                  <br>
+                  {{ form_row(form.telmovil) }}
+                  <br>
+                  {{ form_row(form.pais) }}
+                  <br>
+                  {{ form_row(form.ciudad) }}
+                  <br>
+                  {% if user.roles[0] == "ROLE_ADMIN" %}
+                      <label><input type="checkbox" name="user_edit[user_rol]" id="user_edit_rol" value="true" checked>Administrador</label>
+                  {% else %}
+                      <label><input type="checkbox" name="user_edit[user_rol]" id="user_edit_rol" value="true">Administrador</label>
+                  {% endif %}
+                  <br>
+                  <br>
+                  <button class="btn btn-success" type="submit">Guardar</button>
+              {{ form_end(form) }}
+              <br>
+              <br>
+              <button type='button' id='ButtonBorrar'  class='botonAcccion btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>
+          </div>
+    </div>
+</div>
+{% endblock %}
+{% block modal %}
+<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="BorrarUsuario" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="BorrarUsuario">¿Seguro que desea borrar el usuario?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div id="BotonBorrar" class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="">Borrar</a>
+          </div>
         </div>
     </div>
 </div>
@@ -37,8 +63,23 @@ $(document).ready(function() {
 var search = $('#user_edit_referido').select2({
     maximumSelectionLength: 2
 });
-console.log(search);
+
+const boton = document.querySelector("#ButtonBorrar");
+
+boton.addEventListener("click", function(evento){
+	modalBorrar({{user.id}});
 });
 
+function modalBorrar(id)
+{
+    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
+    uri = uri.replace('id', id);
+    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
+        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
+    document.getElementById("BotonBorrar").innerHTML = content;
+    $('#borrarModal').modal('show');
+}
+
+});
 </script>
 {% endblock %}

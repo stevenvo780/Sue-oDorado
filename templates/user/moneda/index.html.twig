@@ -177,6 +177,13 @@ function usersList() {
                     }
                 }else if ({{ moneda.rango }} == 1 || {{ moneda.rango }} == 0) {
                     boton = "Rubi";
+                }else if ({{ moneda.rango }} == 4) {
+                    if ( myJson[i].length < 3) {
+                        var boton = `<button type='button' style='width:100%; height:100% id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+                    }
+                    else {
+                        boton = "Rubi";
+                    }
                 }
                 rango = boton;
                 estado = "Si"

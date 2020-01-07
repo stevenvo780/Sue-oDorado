@@ -44,8 +44,8 @@
                         <a class="badge badge-pill badge-dark" href="{{path('proyecto')}}">
                         <span><h1><i class="fas fa-question"></i> Quienes somos</h1></span></a>
                         <br>
-                        <a class="badge badge-pill badge-dark" href="{{ path('edit_profile',{'id': app.user.id} )}}">
-                            <span><h1><i class="fas fa-wrench"></i> Configuracion de perfil</h1></span>
+                        <a class="badge badge-pill badge-dark" href="{{ path('edit_user_password',{'id': app.user.id} )}}">
+                            <span><h1><i class="fas fa-wrench"></i> Cambiar contraseña</h1></span>
                         </a>
                         <br>
                         <a class="badge badge-pill badge-danger" href="#" data-toggle="modal" data-target="#logoutModal">
@@ -92,7 +92,7 @@
                 <li class="nav-item active">
                   <a class="nav-link" href="#">
                     <i class="fas fa-envelope-square"></i>
-                    <span>Mensajes</span></a>
+                    <span>Soporte</span></a>
                 </li>
                 <li class="nav-item active">
                   <a class="nav-link" href="{{path('eventos_admin')}}">
@@ -106,10 +106,10 @@
                 </li>
               <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  {{app.user.nombres}} <i class="fas fa-user-circle fa-fw"></i>
+                  <i class="fas fa-user-circle fa-fw"></i>{{app.user.nombres}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ path('edit_profile',{'id': app.user.id} )}}">Configuracion de perfil</a>
+                  <a class="dropdown-item" href="{{ path('edit_user_password',{'id': app.user.id} )}}">Cambiar contraseña</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesion</a>
                 </div>
@@ -148,21 +148,6 @@
         </div>
         {% block modal %}{% endblock %}
         {% block javascripts %}
-
-        <script>
-        /* Open the sidenav */
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "100%";
-            document.getElementById("botonBarra").innerHTML = "<button onclick='closeNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
-        }
-
-        /* Close/hide the sidenav */
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            document.getElementById("botonBarra").innerHTML = "<button onclick='openNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
-        }
-        </script>
-
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('node_modules/cytoscape/dist/cytoscape.min.js') }}"></script>
         <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -170,6 +155,18 @@
         <script src="{{ asset('vendor/DataTables/datatables.min.js') }}"></script>
         <script src="{{ asset('js/sb-admin.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        <script>
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "100%";
+            document.getElementById("botonBarra").innerHTML = "<button onclick='closeNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
+        }
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("botonBarra").innerHTML = "<button onclick='openNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
+        }
+
+        </script>
         {% endblock %}
     </body>
 </html>

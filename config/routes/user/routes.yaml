@@ -2,10 +2,6 @@ dasboard_user:
    path: /
    controller: App\Controller\ComunUserController::index
 
-edit_profile:
-   path: /edituser/{id}
-   controller: App\Controller\ComunUserController::edit
-
 eventos_user:
    path: /eventos
    controller: App\Controller\EventoController::userView

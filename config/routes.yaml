@@ -13,3 +13,11 @@ register:
 proyecto:
    path: /informacion
    controller: App\Controller\ProyectoController::index
+
+edit_user:
+   path: /edituser/{id}
+   controller: App\Controller\UsersController::edit
+
+edit_user_password:
+   path: /edituserpassword/{id}
+   controller: App\Controller\UsersController::editPassword

@@ -50,15 +50,6 @@ class User implements UserInterface
      */
     private $pais;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $monedasBitcoin;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $monedasMarketcoin;
 
     /**
      * @ORM\Column(type="date")
@@ -133,30 +124,6 @@ class User implements UserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
-        return $this;
-    }
-
-    public function getMonedasBitcoin(): ?int
-    {
-        return $this->monedasBitcoin;
-    }
-
-    public function setMonedasBitcoin(int $monedasBitcoin): self
-    {
-        $this->monedasBitcoin = $monedasBitcoin;
-
-        return $this;
-    }
-
-    public function getMonedasMarketcoin(): ?int
-    {
-        return $this->monedasMarketcoin;
-    }
-
-    public function setMonedasMarketcoin(int $monedasMarketcoin): self
-    {
-        $this->monedasMarketcoin = $monedasMarketcoin;
 
         return $this;
     }

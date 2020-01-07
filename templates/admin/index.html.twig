@@ -16,8 +16,6 @@
               <th>Nombre</th>
               <th width="10%">Teléfono movil</th>
               <th width="10%">País y Ciudad</th>
-              <th width="3%">BTC</th>
-              <th width="3%">MLM</th>
               <th width="20%"></th>
               <th width="20%"></th>
             </tr>
@@ -29,25 +27,6 @@
         </table>
     </div>
   </div>
-</div>
-
-{% endblock %}
-{% block modal %}
-<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div id="BotonBorrar" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Borrar</a>
-          </div>
-        </div>
-    </div>
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -89,8 +68,6 @@ function usersList() {
             { "orderable": false },
             { "orderable": false },
             { "orderable": false },
-            { "orderable": false },
-            { "orderable": false },
             { "orderable": false }
         ],
         responsive: true,
@@ -106,19 +83,20 @@ function usersList() {
         var x = "modalBorrar("+id+")";
         var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
         uri = uri.replace('id', id);
-        var botonList = `<a class='botonAcccion btn btn-success' href='${uri}'><span class='hidden-xs'>Monedas</span></a>`;
-        var botonborrar = `<button type='button' id='ButtonBorrar' onclick='${x}' class='botonAcccion btn btn-danger'><span class='hidden-xs'>Borrar usuario</span></button>`;
+        var botonList = `<a class='botonAcccion btn btn-success' href='${uri}'><span class='hidden-xs'>Estructuras</span></a>`;
+        uri = "{{ path('edit_user',{'id': 'id'} )}}";
+        uri = uri.replace('id', id);
+        var botonEdit = `<a class='botonAcccion btn btn-warning' href='${uri}'><span class='hidden-xs'>Editar</span></a>`;
 
-        var paisCiudad = "" + myJson[0][i].pais +" - "+ myJson[0][i].ciudad;
+        var paisCiudad = "" + myJson[0][i].pais + " - "+ myJson[0][i].ciudad;
+        var nombreCompleto = "" + myJson[0][i].nombres + " " + myJson[0][i].apellidos;
         table.row.add([
             myJson[0][i].id,
-            myJson[0][i].nombres,
+            nombreCompleto,
             myJson[0][i].telmovil,
             paisCiudad,
-            myJson[0][i].monedasBitcoin,
-            myJson[0][i].monedasMarketcoin,
             botonList,
-            botonborrar,
+            botonEdit,
         ]);
      }
      table.draw();
@@ -128,18 +106,6 @@ function usersList() {
 
     });
 }
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
-
-
 </script>
 
 {% endblock %}

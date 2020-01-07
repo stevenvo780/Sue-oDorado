@@ -22,13 +22,6 @@ class UserType extends AbstractType
             ->add('telmovil', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Telefono movil", 'class' => 'form-control form-control-lg']])
             ->add('pais', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Pais",'class' => 'form-control form-control-lg']])
             ->add('ciudad', TextType::class, ['label' => false, 'attr'  => ['placeholder' => "Ciudad", 'class' => 'form-control form-control-lg']])
-            ->add('plainPassword', RepeatedType::class, array(
-                'required' => false,
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => false, 'attr' => ['placeholder' => 'Contraseña','class' => 'form-control form-control-lg', 'autocomplete' => 'off']),
-                'second_options' => array('label' => false,'attr' => ['placeholder' => 'Repita contraseña','class' => 'form-control form-control-lg', 'autocomplete' => 'off']),
-
-            ))
         ;
     }
 

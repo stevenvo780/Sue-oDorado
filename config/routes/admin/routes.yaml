@@ -6,9 +6,6 @@ posiciones_admin:
     path: /posiciones
     controller: App\Controller\AdminController::posiciones
 #Usuarios
-edit_user:
-   path: /edituser/{id}
-   controller: App\Controller\UsersController::edit
 
 delete_User:
    path: /delete/{id}
