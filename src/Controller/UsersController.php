@@ -80,6 +80,12 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
         if ($userLogueado->getRoles()[0] == "ROLE_ADMIN") {
             if ($form->isSubmitted() && $form->isValid()) {
+                if ( array_key_exists("user_edit", $json)) {
+                    $user->setRoles(["ROLE_ADMIN"]);
+                } else {
+                    $user->setRoles(["ROLE_USER"]);
+                }
+                
                 $em->persist($user);
                 $em->flush();
 
