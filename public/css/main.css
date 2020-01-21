@@ -10,6 +10,10 @@
     width:100%;
 }
 
+.monedacontent{
+  width: 30%;
+}
+
 @media (orientation: portrait) {
     .arbol{
         zoom:130%;
@@ -17,6 +21,18 @@
 
     .logo{
         width: 80%;
+    }
+    .bodyContent
+    {
+      zoom:230%;
+    }
+    .monedacontent
+    {
+      width: 100%;
+     
+    }
+    .modalcontent{
+      zoom:200%;
     }
 
  }
