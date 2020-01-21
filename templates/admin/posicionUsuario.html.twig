@@ -41,6 +41,7 @@
                           <th width="2%">Rango</th>
                           <th  width="2%">Dono</th>
                           <th  width="2%">Veces recibidas</th>
+                          <th  width="2%">Diamante de apoyo</th>
                           <th  width="10%">Acciones</th>
                           </tr>
                         </thead>
@@ -108,14 +109,16 @@
             <i class="fas fa-table"></i>Monedas</div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-bordered" id="Monedas" width="100%" cellspacing="0">
+              <table class="table " id="Monedas" width="100%" cellspacing="0">
                 <thead>
                   <tr>
                   <th width="1%">Orden</th>
                   <th>Dueño</th>
                   <th width="3%">Dono</th>
                   <th>Rango</th>
-                  <th width="3%" class="invitoA">invito a</th>
+                    {% if moneda.rango != 4 %}
+                    <th width="3%" class="invitoA">invito a</th>
+                    {% endif %}
                   </tr>
                 </thead>
                 <tfoot>
@@ -233,13 +236,14 @@ function usersList() {
          }
         });
      table.clear();
-      //console.log(myJson);
+     console.log(myJson);
      for (var i = 0; i < myJson.length; i++) {
+         
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
                  var invto = "" + myJson[i][1].dueño.nombres;
              } else if (myJson[i].length == 3) {
-                 var invto = "" + myJson[i][1].dueño.nombres + "<br> - <br>" + myJson[i][2].dueño.nombres;
+                 var invto = "" + myJson[i][1].dueño.nombres + " - " + myJson[i][2].dueño.nombres;
              }
          }else {
              invto = "";
@@ -286,8 +290,9 @@ function usersList() {
                 }
                 break;
          }
-         var y = "verUsuario("+myJson[i][0]['Padre'].dueño.id+")";
+         var y = "verUsuario("+myJson[i][0]['Padre'].id+")";
          var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres}</a>`;
+         
          table.row.add([
              myJson[i][0]['Padre'].rango,
              nombre,
@@ -308,14 +313,14 @@ function usersList() {
 function verUsuario(id)
 {
     console.log("verUsuario");
-    var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
+    var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
     uri = uri.replace('id', id);
     location.href=uri;
 }
 
 function editInvitado(id)
 {
-    var uri  = "{{ path('edit_invitados_moneda',{'id': 'id'} )}}"
+    var uri  = "{{ path('edit_invitados_moneda',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     const data = new FormData(document.getElementById('fromEditinvitados'));
     fetch(uri,{method: 'POST',body: data})

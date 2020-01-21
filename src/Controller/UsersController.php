@@ -40,14 +40,18 @@ class UsersController extends AbstractController
         return $this->redirectToRoute('dasboard');
     }
 
-    public function new(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $em)
+    public function new(
+        Request $request, 
+        UserPasswordEncoderInterface $passwordEncoder, 
+        EntityManagerInterface $em)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+            $password = $passwordEncoder->
+            encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setVecesRecividas(0);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
@@ -127,7 +131,8 @@ class UsersController extends AbstractController
         if ($userLogueado->getRoles()[0] == "ROLE_ADMIN") {
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($user->getPlainPassword()) {
-                    $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                    $password = $passwordEncoder->
+                    encodePassword($user, $user->getPlainPassword());
                     $user->setPassword($password);
                 }
                 $em->persist($user);
@@ -147,7 +152,8 @@ class UsersController extends AbstractController
             if ($userLogueado->getId() == $id) {
                 if ($form->isSubmitted() && $form->isValid()) {
                     if ($user->getPlainPassword()) {
-                        $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
+                        $password = $passwordEncoder->
+                        encodePassword($user, $user->getPlainPassword());
                         $user->setPassword($password);
                     }
                     $em->persist($user);
