@@ -67,5 +67,5 @@ user_find_invitados:
    controller: App\Controller\MonedaController::findInvitados
 
 find_oros:
-   path: /findoros/{id}/{nivel}
-   controller: App\Controller\MonedaController::findOros
+   path: /findoros/{id}
+   controller: App\Controller\MonedaController::findOrosDApoyo
