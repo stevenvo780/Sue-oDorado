@@ -19,47 +19,7 @@ class MonedaController extends AbstractController
 {
     public function listArbolDeMonedas(int $id, EntityManagerInterface $em)
     {
-        $moneda = $em->getRepository(Moneda::class)->find($id);
-        $monedasAllArbol = [];
-        switch ($moneda->getRango()) {
-            case 0:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 1) {
-                    $rubi = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($rubi);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
-                    $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->
-                findByMonedaInvitado($esmeralda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $data = $this->arbolDeMoneda($diamante);
-                break;
-            case 1:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
-                    $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($esmeralda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $data = $this->arbolDeMoneda($diamante);
-                break;
-            case 2:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $data = $this->arbolDeMoneda($diamante);
-                break;
-            case 3:
-                $data = $this->arbolDeMoneda($moneda);
-                break;
-        }
+        $data = $this->findArbol($id);
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
 
@@ -108,19 +68,41 @@ class MonedaController extends AbstractController
 
     public function editMoneda(int $id, Request $request, EntityManagerInterface $em)
     {
-        $moneda = $em->getRepository(Moneda::class)->find($id);
+        dump($id);
+        $monedaSave = $em->getRepository(Moneda::class)->find($id);
+        dump($monedaSave);
         $json = $request->request->all();
+        $contador = 0;
         if (array_key_exists('dono', $json)) {
-            $moneda->setDono(true);
+            $monedaSave->setDono(true);
+            $arbol = $this->findArbol($monedaSave);
+            $monedas = [];
+            foreach ($arbol as $key => $moneda) {
+                array_push($monedas, $moneda[0]['Padre']);
+            }
+            foreach ($monedas as $key => $moneda) {
+                if ($moneda->getRango() == 0) {
+                    if ($moneda->getDono() == true) {
+                        $contador++;
+                    }
+                }
+                if ($contador == 8) {
+                    $this->validarRecibida($monedas);
+                    return new Response(0);
+                }
+            }
         } else {
-            $moneda->setDono(false);
+            $monedaSave->setDono(false);
         }
-        $moneda->setRango($json['rango']);
-        $em->persist($moneda);
+        $monedaSave->setRango($json['rango']);
+        $monedaSave->setVecesRecibidas($json['vecesRecividas']);
+        dump($monedaSave);
+        $em->persist($monedaSave);
         $em->flush();
-        dump($moneda);
+
         return new Response(0);
     }
+
 
     public function new(int $id, Request $request, EntityManagerInterface $em)
     {
@@ -212,55 +194,14 @@ class MonedaController extends AbstractController
         $em->persist($monedaMoneda);
         $em->persist($monedaNuevaInvitada);
         $em->flush();
-        dump(count($monedaMonedas));
-
-
 
         return $this->redirectToRoute('dasboard_user');
     }
 
     public function posiciones(int $id, EntityManagerInterface $em)
     {
-        $moneda = $em->getRepository(Moneda::class)->find($id);
-        switch ($moneda->getRango()) {
-            case 0:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 1) {
-                    $rubi = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($rubi);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
-                    $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->
-                findByMonedaInvitado($esmeralda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
+        $data = $this->findArbol($id);
 
-                break;
-            case 1:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
-                    $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($esmeralda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $data = $this->arbolDeMoneda($diamante);
-                break;
-            case 2:
-                $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
-                if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
-                    $diamante = $monedaMonedas[0]->getMonedaPropietario();
-                }
-                $data = $this->arbolDeMoneda($diamante);
-                break;
-            case 3:
-                $data = $this->arbolDeMoneda($moneda);
-                break;
-        }
         $monedas = [];
         $relaciones = [];
         foreach ($data as $key => $monedaa) {
@@ -271,18 +212,106 @@ class MonedaController extends AbstractController
             }
         }
         $rol = $this->getUser()->getRoles();
-
+        $moneda = $em->getRepository(Moneda::class)->find($id);
         if ($rol[0] == "ROLE_ADMIN") {
             return $this->render('admin/posicionesUser.html.twig', [
+                'moneda' => $moneda,
                 'monedas' => $monedas,
                 'monedaMonedas' => $relaciones,
             ]);
         } elseif ($rol[0] == "ROLE_USER") {
             return $this->render('user/posiciones.html.twig', [
+                'moneda' => $moneda,
                 'monedas' => $monedas,
                 'monedaMonedas' => $relaciones,
             ]);
         }
+    }
+
+    public function validarRecibida($arbol)
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach ($arbol as $key => $moneda) {
+            if ($moneda->getRango() == 3) {
+                $user = $em->getRepository(User::class)->find($moneda->getDueño()->getId());
+                $monedaNew = new Moneda();
+                $monedaNew->setDueño($user);
+                $monedaNew->setVecesRecibidas(0);
+                $monedaNew->setRango(0);
+                $monedaNew->setDono(false);
+                $em->persist($monedaNew);
+                $em->flush();
+                $monedaSave = $em->getRepository(Moneda::class)->find($moneda->getId());
+                $monedaSave->setVecesRecibidas(1);
+                $monedaSave->setRango(4);
+            }
+            if ($moneda->getRango() == 2) {
+                $monedaSave = $em->getRepository(Moneda::class)->find($moneda->getId());
+                $monedaSave->setRango(3);
+            }
+            if ($moneda->getRango() == 1) {
+                $monedaSave = $em->getRepository(Moneda::class)->find($moneda->getId());
+                $monedaSave->setRango(2);
+            }
+            if ($moneda->getRango() == 0) {
+                $monedaSave = $em->getRepository(Moneda::class)->find($moneda->getId());
+                $monedaSave->setRango(1);
+            }
+            $em->persist($monedaSave);
+            $em->flush();
+        }
+    }
+
+    private function findArbol($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $moneda = $em->getRepository(Moneda::class)->find($id);
+        $invitado = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($id);
+
+        $data = [];
+        if ($invitado | $moneda->getRango() == 3) {
+            switch ($moneda->getRango()) {
+                case 0:
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 1) {
+                        $rubi = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($rubi);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
+                        $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->
+                    findByMonedaInvitado($esmeralda);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
+                        $diamante = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $data = $this->arbolDeMoneda($diamante);
+                    break;
+                case 1:
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 2) {
+                        $esmeralda = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($esmeralda);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
+                        $diamante = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $data = $this->arbolDeMoneda($diamante);
+                    break;
+                case 2:
+                    $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaInvitado($moneda);
+                    if ($monedaMonedas[0]->getMonedaPropietario()->getRango() == 3) {
+                        $diamante = $monedaMonedas[0]->getMonedaPropietario();
+                    }
+                    $data = $this->arbolDeMoneda($diamante);
+                    break;
+                case 3:
+                    $data = $this->arbolDeMoneda($moneda);
+                    break;
+            }
+        }
+
+        return $data;
     }
 
     public function arbolDeMoneda($diamanteMoneda)

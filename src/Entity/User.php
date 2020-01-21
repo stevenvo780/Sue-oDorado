@@ -26,15 +26,19 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=180)
      */
-    private $nombre;
+    private $nombres;
+
+    /**
+     * @ORM\Column(type="string", length=180)
+     */
+    private $apellidos;
 
     /**
      * @ORM\Column(type="string", length=180)
      */
     private $telmovil;
-
 
     /**
      * @ORM\Column(type="string", length=180)
@@ -46,20 +50,6 @@ class User implements UserInterface
      */
     private $pais;
 
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $monedasBitcoin;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $monedasMarketcoin;
-
-    /**
-     * @ORM\Column(type="integer", nullable=false)
-     */
-    private $vecesRecividas;
 
     /**
      * @ORM\Column(type="date")
@@ -89,14 +79,26 @@ class User implements UserInterface
     }
 
 
-    public function getNombre(): ?string
+    public function getNombres(): ?string
     {
-        return $this->nombre;
+        return $this->nombres;
     }
 
-    public function setNombre(string $nombre): self
+    public function setNombres(string $nombres): self
     {
-        $this->nombre = $nombre;
+        $this->nombres = $nombres;
+
+        return $this;
+    }
+
+    public function getApellidos(): ?string
+    {
+        return $this->apellidos;
+    }
+
+    public function setApellidos(string $apellidos): self
+    {
+        $this->apellidos = $apellidos;
 
         return $this;
     }
@@ -126,32 +128,6 @@ class User implements UserInterface
         return $this;
     }
 
-
-
-    public function getMonedasBitcoin(): ?int
-    {
-        return $this->monedasBitcoin;
-    }
-
-    public function setMonedasBitcoin(int $monedasBitcoin): self
-    {
-        $this->monedasBitcoin = $monedasBitcoin;
-
-        return $this;
-    }
-
-    public function getMonedasMarketcoin(): ?int
-    {
-        return $this->monedasMarketcoin;
-    }
-
-    public function setMonedasMarketcoin(int $monedasMarketcoin): self
-    {
-        $this->monedasMarketcoin = $monedasMarketcoin;
-
-        return $this;
-    }
-
     public function getPais(): ?string
     {
         return $this->pais;
@@ -176,18 +152,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getVecesRecividas(): ?int
-    {
-        return $this->vecesRecividas;
-    }
-
-    public function setVecesRecividas(int $vecesRecividas): self
-    {
-        $this->vecesRecividas = $vecesRecividas;
-
-        return $this;
-    }
-
     public function getFechaCreacion(): ?DateTime
     {
         return $this->fechaCreacion;
@@ -202,7 +166,7 @@ class User implements UserInterface
 
     public function getUsername(): ?string
     {
-        return $this->nombre;
+        return $this->nombres;
     }
 
     /**

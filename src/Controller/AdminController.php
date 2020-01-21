@@ -22,7 +22,6 @@ class AdminController extends AbstractController
 
     public function monedasUsuario(int $id, EntityManagerInterface $em)
     {
-
         $user = $em->getRepository(User::class)->find($id);
         $monedas = $em->getRepository(Moneda::class)->findByDueño($id);
         return $this->render('admin/monedasUsuario.html.twig', [
