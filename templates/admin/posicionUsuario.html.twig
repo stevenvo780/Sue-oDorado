@@ -34,72 +34,90 @@
       <div id="añadirOro" class="">
           <form id="formSaveMoneda">
               <div class="form-group row">
-                  <div class="col-sm-12">
-                      <table class="table table-bordered" id="" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                          <th width="2%">Rango</th>
-                          <th  width="2%">Dono</th>
-                          <th  width="2%">Veces recibidas</th>
-                          <th  width="2%">Diamante de apoyo</th>
-                          <th  width="10%">Acciones</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                              <td>
-                                      <select class="custom-select" name="rango">
-                                      {% if moneda.rango == 0 %}
-                                      <option selected value="0">Oro</option>
-                                      <option value="1">Rubi</option>
-                                      <option value="2">Esmeralda</option>
-                                      <option value="3">Diamante</option>
-                                      <option value="4">Diamante de apoyo</option>
-                                      {% elseif moneda.rango == 1 %}
-                                      <option value="0">Oro</option>
-                                      <option selected value="1">Rubi</option>
-                                      <option value="2">Esmeralda</option>
-                                      <option value="3">Diamante</option>
-                                      <option value="4">Diamante de apoyo</option>
-                                      {% elseif moneda.rango == 2 %}
-                                      <option value="0">Oro</option>
-                                      <option value="1">Rubi</option>
-                                      <option selected value="2">Esmeralda</option>
-                                      <option value="3">Diamante</option>
-                                      <option value="4">Diamante de apoyo</option>
-                                      {% elseif moneda.rango == 3 %}
-                                      <option value="0">Oro</option>
-                                      <option value="1">Rubi</option>
-                                      <option value="2">Esmeralda</option>
-                                      <option selected value="3">Diamante</option>
-                                      <option value="4">Diamante de apoyo</option>
-                                      {% elseif moneda.rango == 4 %}
-                                      <option value="0">Oro</option>
-                                      <option value="1">Rubi</option>
-                                      <option value="2">Esmeralda</option>
-                                      <option value="3">Diamante</option>
-                                      <option selected value="4">Diamante de apoyo</option>
-                                      {% endif %}
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 ">
+                        <div class="card" style="height: 10rem;" style="height: 10rem;">
+                            <div class="card-header">
+                            <h5>Rango</h5>
+                            </div>
+                            <div class="card-body">
+                                 <select class="custom-select" name="rango">
+                                    {% if moneda.rango == 0 %}
+                                    <option selected value="0">Oro</option>
+                                    <option value="1">Rubi</option>
+                                    <option value="2">Esmeralda</option>
+                                    <option value="3">Diamante</option>
+                                    <option value="4">Diamante de apoyo</option>
+                                    {% elseif moneda.rango == 1 %}
+                                    <option value="0">Oro</option>
+                                    <option selected value="1">Rubi</option>
+                                    <option value="2">Esmeralda</option>
+                                    <option value="3">Diamante</option>
+                                    <option value="4">Diamante de apoyo</option>
+                                    {% elseif moneda.rango == 2 %}
+                                    <option value="0">Oro</option>
+                                    <option value="1">Rubi</option>
+                                    <option selected value="2">Esmeralda</option>
+                                    <option value="3">Diamante</option>
+                                    <option value="4">Diamante de apoyo</option>
+                                    {% elseif moneda.rango == 3 %}
+                                    <option value="0">Oro</option>
+                                    <option value="1">Rubi</option>
+                                    <option value="2">Esmeralda</option>
+                                    <option selected value="3">Diamante</option>
+                                    <option value="4">Diamante de apoyo</option>
+                                    {% elseif moneda.rango == 4 %}
+                                    <option value="0">Oro</option>
+                                    <option value="1">Rubi</option>
+                                    <option value="2">Esmeralda</option>
+                                    <option value="3">Diamante</option>
+                                    <option selected value="4">Diamante de apoyo</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                        <div class="card" style="height: 10rem;">
+                        <div class="card-header">
+                            <h5>Dono</h5>
+                        </div>
+                             <div class="card-body">
+                                {% if moneda.dono == 0 %}
+                                    <input style="display: block;margin-left: auto;margin-right: auto;" class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
+                                {% elseif moneda.dono == 1 %}
+                                    <input style="display: block;margin-left: auto;margin-right: auto;" checked class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                         <div class="card" style="height: 10rem;">
+                        <div class="card-header">
+                            <h5>Veces recibidas</h5>
+                        </div>
+                             <div class="card-body">
+                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                        <div class="card" style="height: 10rem;">
+                        <div class="card-header">
+                           <h5>Diamante de apoyo</h5>
+                        </div>
+                             <div class="card-body">
+                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <div class=" col-lg-12">
 
-                                  </select>
-                              </td>
-                              <td>
-                              {% if moneda.dono == 0 %}
-                                  <input style="display: block;margin-left: auto;margin-right: auto;" class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
-                              {% elseif moneda.dono == 1 %}
-                                  <input style="display: block;margin-left: auto;margin-right: auto;" checked class="form-control form-control-lg" name="dono" type="checkbox" value="1" id="donacion">
-                              {% endif %}
-                              </td>
-                              <td> <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas"></td>
-                              <td>
-                                  <button type='button' id='ButtonEditar' onclick='guardarMoneda({{moneda.id}})' class='btn btn-success'><span class='hidden-xs'>Guardar</span></button>
-                                  <button type='button' id='ButtonBorrar' onclick='modalBorrar({{moneda.id}})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>
-                              </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                  </div>
-              </div>
+                        <button type='button' id='ButtonEditar' onclick='guardarMoneda({{moneda.id}})' class='btn btn-success'><span class='hidden-xs'>Guardar</span></button>
+                        <button type='button' id='ButtonBorrar' onclick='modalBorrar({{moneda.id}})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>
+                    </div>
+                </div>
             </form>
       </div>
   </div>

@@ -123,7 +123,7 @@
         </nav>
         <br>
 
-        <div id="content">
+        <div id="content" class="bodyContent">
             {% block body %}{% endblock %}
         </div>
 
@@ -150,7 +150,10 @@
                 </div>
             </div>
         </div>
-        {% block modal %}{% endblock %}
+        <div class="modalcontent">
+         {% block modal %}{% endblock %}
+         </div>
+       
         {% block javascripts %}
         <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('node_modules/cytoscape/dist/cytoscape.min.js') }}"></script>
