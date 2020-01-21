@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use App\Form\UserEditPasswordType;
 use App\Form\UserType;
+use App\Form\UserTypeRegister;
 use App\Entity\User;
 use DateTime;
 
@@ -46,7 +47,7 @@ class UsersController extends AbstractController
         EntityManagerInterface $em)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserTypeRegister::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
