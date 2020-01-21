@@ -54,7 +54,6 @@ class UsersController extends AbstractController
             $password = $passwordEncoder->
             encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
-            $user->setVecesRecividas(0);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
 
             $em->persist($user);
