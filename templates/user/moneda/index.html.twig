@@ -35,17 +35,7 @@
 
     <div class="row">
     {% if moneda.rango == 0 %}
-               <div class="col-6" style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-                <div class="card-header">
-                    <h5>Veces recibidas</h5>
-                </div>
-                <div class="card-body">
-                   {{ moneda.vecesRecibidas }}
-                </div>
-            </div>
-        </div>
-        <div class="col-6" style="padding:10px;">
+        <div class="col-12" style="padding:10px;">
             <div class="card" style="height: 10rem;">
             <div class="card-header">
                 <h5>Dono</h5>
@@ -59,8 +49,8 @@
                 </div>
             </div>
         </div>
-    {% else %}
-        <div class="col-4" style="padding:10px;">
+    {% elseif moneda.rango == 1 %}
+        <div class="col-12" style="padding:10px;">
             <div class="card" style="height: 10rem;">
                 <div class="card-header">
                 <h5>Diamante de apoyo</h5>
@@ -72,27 +62,27 @@
                     </div>
             </div>
         </div>
-        <div class="col-4" style="padding:10px;">
+    {% elseif moneda.rango == 2 %}
+        <div class="col-12" style="padding:10px;">
+            <div class="card" style="height: 10rem;">
+                <div class="card-header">
+                <h5>Diamante de apoyo</h5>
+                </div>
+                    <div class="card-body">
+                    {% if monedaDeApoyo is defined %}
+                        {{ monedaDeApoyo }}
+                    {% endif %}
+                    </div>
+            </div>
+        </div>
+    {% elseif moneda.rango == 3 %}
+                <div class="col-12" style="padding:10px;">
             <div class="card" style="height: 10rem;">
                 <div class="card-header">
                     <h5>Veces recibidas</h5>
                 </div>
                 <div class="card-body">
                    {{ moneda.vecesRecibidas }}
-                </div>
-            </div>
-        </div>
-        <div class="col-4   " style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-            <div class="card-header">
-                <h5>Dono</h5>
-            </div>
-                    <div class="card-body">
-                    {% if moneda.dono == 0 %}
-                        No
-                    {% elseif moneda.dono == 1 %}
-                       Si
-                    {% endif %}
                 </div>
             </div>
         </div>
