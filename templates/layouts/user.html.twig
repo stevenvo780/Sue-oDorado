@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Sueño dorado{% endblock %}</title>
         {% block stylesheets %}
+        <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
         <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
         <link href="{{ asset('vendor/DataTables/datatables.min.css') }}" rel="stylesheet">
@@ -20,31 +21,31 @@
                     <h1 style="color:white"><i class="fas fa-user-circle fa-fw"></i>{{app.user.nombres}} </h1>
                     <br>
                         <a class="badge badge-pill badge-dark" href="{{path('dasboard_user')}}">
-                            <span><h1><i class="fas fa-child"></i> Perfiles</h1></span>
+                            <span><h3><i class="fas fa-child"></i> Perfil</h3></span>
                         </a>
                         <br>
                         {% if moneda is defined %}
                         <a class="badge badge-pill badge-dark" href="{{ path('posiciones_user',{'id': moneda.id} )}}">
-                            <span><h1><i class="fas fa-code-branch"></i> Estructura</h1> </span>
+                            <span><h3><i class="fas fa-code-branch"></i> Estructura</h3> </span>
                         </a>
                         <br>
                         {% endif %}
                         <a class="badge badge-pill badge-dark" href="#">
-                        <span><h1><i class="fas fa-envelope-square"></i> Mensajes</h1> </span></a>
+                        <span><h3><i class="fas fa-envelope-square"></i> Mensajes</h3> </span></a>
                         <br>
                         <a class="badge badge-pill badge-dark" href="{{path('eventos_user')}}">
 
-                        <span> <h1><i class="fas fa-calendar-week"></i> Eventos</h1></span></a>
+                        <span> <h3><i class="fas fa-calendar-week"></i> Eventos</h3></span></a>
                         <br>
                         <a class="badge badge-pill badge-dark" href="{{path('proyecto')}}">
-                        <span><h1><i class="fas fa-question"></i> Quienes somos</h1></span></a>
+                        <span><h3><i class="fas fa-question"></i> Quienes somos</h3></span></a>
                         <br>
                         <a class="badge badge-pill badge-dark" href="{{ path('edit_user',{'id': app.user.id} )}}">
-                            <span><h1><i class="fas fa-wrench"></i> Configuracion de perfil</h1></span>
+                            <span><h3><i class="fas fa-wrench"></i> Configuracion de perfil</h3></span>
                         </a>
                         <br>
                         <a class="badge badge-pill badge-danger" href="#" data-toggle="modal" data-target="#logoutModal">
-                            <span><h1><i class="fas fa-sign-out-alt"></i> Cerrar sesion</h1></span>
+                            <span><h3><i class="fas fa-sign-out-alt"></i> Cerrar sesion</h3></span>
                         </a>
                 </div>
             </div>
