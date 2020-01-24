@@ -3,8 +3,8 @@
 {% block title %}Estructura{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-  <div style="height: 100%; width: 100%; position: absolute; top: 10;" id="cy"></div>
+<div class="container-fluid" >
+  <div style="height: 80%; width: 80%; position: absolute; left: 10; top: 10;" id="cy"></div>
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -40,7 +40,7 @@ var cy = cytoscape({
   elements: {
       nodes: [
           {% for moneda in monedas %}
-            { data: { id: '{{ moneda.id }', name: '{{ moneda.dueño.nombres }}', rango:
+            { data: { id: '{{ moneda.id }}', name: '{{ moneda.dueño.nombres }}', rango:
              {% if moneda.rango == 0 %}
                  {% if moneda.dono == true %}
                   '{{ asset('img/monedas/Dorado2.png') }}'

@@ -4,45 +4,101 @@
 
 {% block body %}
 <div class="container-fluid" id="contentBody">
-<div id="añadirOro" class=""></div>
-<div class="card mb-3">
-    <div class="card-header">
-      <i class="fas fa-table"></i>Monedas</div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table table-bordered" id="Monedas" width="100%" cellspacing="0">
-          <thead>
-            <tr>
-            <th width="3%">Orden</th>
-            <th>Dueño</th>
-            <th>invito a</th>
-            <th>Rango</th>
-            <th width="3%">Dono</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-{% endblock %}
-{% block modal %}
-<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div id="BotonBorrar" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Borrar</a>
-          </div>
+    <div id="añadirOro" class=""></div>
+
+    <div class="row">
+        <div id="editMoneda" class="col-12 ml-md-auto mr-auto">
+            <div style=" text-align: center;"class="">
+                <a class="btn btn-default" href="{{ path('dasboard_user') }}">
+                {% if moneda.rango == 0 %}
+                    {% if moneda.dono == true %}
+                    <img src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+                    {% else %}
+                    <img src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+                    {% endif %}
+                    {% elseif moneda.rango == 1 %}
+                    <img src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+                    {% elseif moneda.rango == 2 %}
+                    <img src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+                    {% elseif moneda.rango == 3 %}
+                    <img src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+                    {% elseif moneda.rango == 4 %}
+                    <img src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+                    {% endif %}
+                    <br>
+                    <h3> {{ moneda.dueño.nombres }}</h3>
+                </a>
+            </div>
         </div>
     </div>
+    
+
+    <div class="row">
+        <div class="col-4" style="padding:10px;">
+            <div class="card" style="height: 10rem;">
+                <div class="card-header">
+                <h5>Diamante de apoyo</h5>
+                </div>
+                    <div class="card-body">
+                    {% if monedaDeApoyo is defined %}
+                        {{ monedaDeApoyo }}
+                    {% endif %}
+                    </div>
+            </div>
+        </div>
+        <div class="col-4" style="padding:10px;">
+            <div class="card" style="height: 10rem;">
+                <div class="card-header">
+                    <h5>Veces recibidas</h5>
+                </div>
+                <div class="card-body">
+                   {{ moneda.vecesRecibidas }}
+                </div>
+            </div>
+        </div>
+        <div class="col-4   " style="padding:10px;">
+            <div class="card" style="height: 10rem;">
+            <div class="card-header">
+                <h5>Dono</h5>
+            </div>
+                    <div class="card-body">
+                    {% if moneda.dono == 0 %}
+                        No
+                    {% elseif moneda.dono == 1 %}
+                       Si
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="padding:10px;">
+            <div class="card">
+                <div class="card-header"><i class="fas fa-table"></i>Monedas</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table " id="Monedas" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                            <th width="3%">Orden</th>
+                            <th>Dueño</th>
+                            <th>invito a</th>
+                            <th>Rango</th>
+                            <th width="3%">Dono</th>
+                            </tr>
+                        </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
 </div>
+    
+{% endblock %}
+{% block modal %}
 
 <div class="modal fade" id="agregarOro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -82,7 +138,7 @@ function usersList() {
             for (var o = 0; o < myJson.length; o++) {
                 if (myJson[o][0]['Padre'].id == {{ moneda.id }}) {
                     if (myJson[o].length <= 2) {
-                        var content = `<h3>Link para invitar {{ url('invitar_moneda',{'idRuby': moneda.id} )}}</h3>`;
+                        var content = `Link para invitar <br> <h3 id="urlCopi" >{{ url('invitar_moneda',{'idRuby': moneda.id}) }}</h3> <a class='btn btn-secondary' href='javascript:getlink();'>Copiar URL</a> `;
                         document.getElementById("añadirOro").innerHTML = content;
                     }
                 }
@@ -163,7 +219,7 @@ function usersList() {
                     for (var o = 0; o < myJson.length; o++) {
                         if (myJson[o][0]['Padre'].id == {{ moneda.id }}) {
                             if (myJson[i][0]['Padre'].id == myJson[o][1].id || myJson[i][0]['Padre'].id == myJson[o][2].id) {
-                                console.log(myJson[i]);
+                                
                                 if ( myJson[i].length < 3) {
                                     var boton = `<button type='button' style='width:100%; height:100% id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
                                 }
@@ -216,25 +272,34 @@ function usersList() {
         maximumSelectionLength: 2
     });
 }
+function getlink() {
+    // Crea un campo de texto "oculto"
+  var aux = document.createElement("input");
+
+  // Asigna el contenido del elemento especificado al valor del campo
+  aux.setAttribute("value", document.getElementById("urlCopi").innerHTML);
+
+  // Añade el campo a la página
+  document.body.appendChild(aux);
+
+  // Selecciona el contenido del campo
+  aux.select();
+
+  // Copia el texto seleccionado
+  document.execCommand("copy");
+
+  // Elimina el campo de la página
+  document.body.removeChild(aux);
+}
 
 function modalAñadir(id)
 {
     $('#agregarOro').modal('show');
-    var content = `<h3>Link para invitar {{ url('invitar_moneda',{'idRuby': 'id'} )}}</h3>`;
-    content = content.replace('id', id);
+    var content = `Link para invitar <br> <h3 id='urlCopi' >{{ url('invitar_moneda',{'idRuby': moneda.id}) }}</h3> <a class='btn btn-secondary' href='javascript:getlink();'>Copiar URL</a>`;
     document.getElementById("modalAñadirOros").innerHTML = content;
 
 }
 
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
 </script>
 
 {% endblock %}

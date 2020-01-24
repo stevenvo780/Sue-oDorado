@@ -152,6 +152,13 @@
             document.getElementById("botonBarra").innerHTML = "<button onclick='openNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
         }
 
+        if (screen.width >= 450) {
+          document.getElementById("contentBody").className = "container";
+        }
+        else {
+          document.getElementById("contentBody").className = "container-fluid";
+        }
+
         </script>
         {% endblock %}
     </body>

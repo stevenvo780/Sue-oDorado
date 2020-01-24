@@ -11,6 +11,7 @@ use App\Form\UserType;
 use App\Entity\User;
 use App\Controller\MonedaController;
 use App\Entity\Moneda;
+use App\Entity\MonedaApoyo;
 use App\Entity\MonedaMoneda;
 
 class ComunUserController extends AbstractController
@@ -22,6 +23,7 @@ class ComunUserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'monedas' => $monedas,
+
             'invitados' => null,
         ]);
     }
@@ -29,8 +31,18 @@ class ComunUserController extends AbstractController
     public function indexMoneda(int $id, EntityManagerInterface $em)
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
+        $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
+        findOneByMoneda($moneda);
+        if (!$diamanteApoyo) {
+            $diamanteApoyo = "Sin diamante de apoyo";
+        }
+        else {
+            $diamanteApoyo = $diamanteApoyo->
+            getMonedaDApoyo()->getDueño()->getNombres();
+        }
         return $this->render('user/moneda/index.html.twig', [
-            'moneda' => $moneda
+            'moneda' => $moneda,
+            'monedaDeApoyo' => $diamanteApoyo,
         ]);
     }
 

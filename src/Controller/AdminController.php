@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use App\Entity\MonedaMoneda;
 use App\Entity\Moneda;
+use App\Entity\MonedaApoyo;
 
 class AdminController extends AbstractController
 {
@@ -34,8 +35,18 @@ class AdminController extends AbstractController
     public function monedasPosicion(int $id, EntityManagerInterface $em)
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
+        $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
+        findOneByMoneda($moneda);
+        if (!$diamanteApoyo) {
+            $diamanteApoyo = "Sin diamante de apoyo";
+        }
+        else {
+            $diamanteApoyo = $diamanteApoyo->getMonedaDApoyo()->getDueño()->getNombres();
+        }
+        
         return $this->render('admin/posicionUsuario.html.twig', [
-            'moneda' => $moneda
+            'moneda' => $moneda,
+            'monedaDeApoyo' => $diamanteApoyo,
         ]);
     }
 

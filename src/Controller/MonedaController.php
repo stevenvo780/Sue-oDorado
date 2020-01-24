@@ -317,6 +317,7 @@ class MonedaController extends AbstractController
         }
         $rol = $this->getUser()->getRoles();
         $moneda = $em->getRepository(Moneda::class)->find($id);
+
         if ($rol[0] == "ROLE_ADMIN") {
             return $this->render('admin/posicionesUser.html.twig', [
                 'moneda' => $moneda,
@@ -481,7 +482,7 @@ class MonedaController extends AbstractController
                 case 4:
                     $findOros = $em->getRepository(MonedaApoyo::class)->
                     findByMonedaDApoyo($moneda->getId());
-                    dump($findOros);
+
                     $oros = [];
                     foreach ($findOros as $key => $oro) {
                         array_push($oros, [['Padre' => $oro->getMoneda()]]);

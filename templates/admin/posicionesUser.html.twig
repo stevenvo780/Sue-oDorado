@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class="container-fluid" id="contentBody">
-    <div style="height: 100%; width: 100%; position: absolute; top: 10;" id="cy"></div>
+    <div style="height: 80%; width: 80%; position: absolute; left: 10; top: 10;" id="cy"></div>
 </div>
 {% endblock %}
 {% block javascripts %}
@@ -77,7 +77,7 @@ var cy = cytoscape({
 });
 
 cy.bind('click', 'node', function(evt) {
-    var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
+    var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
     uri = uri.replace('id', evt.target.id());
     location.href=uri;
   console.log('node clicked: ', evt.target.id());
