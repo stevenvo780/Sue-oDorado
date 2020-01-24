@@ -3,7 +3,7 @@
 {% block title %}Eventos{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid" id="contentBody">
 <div class="card mb-3">
     <div class="card-header">
       <i class="fas fa-table"></i>
@@ -30,7 +30,7 @@
       </div>
     </div>
 </div>
-<a class='btn btn-success' href='{{path('new_evento')}}'>Crear evento</a>
+<a class='btn btn-success' href='{{ path('new_evento') }}'>Crear evento</a>
 </div>
 {% endblock %}
 {% block modal %}
@@ -99,7 +99,7 @@ function usersList() {
     for (var i = 0; i < myJson.length; i++) {
         var id = myJson[i].id
         var x = "modalBorrar("+id+")";
-        var uri = "{{ path('edit_evento',{'id': 'id'} )}}";
+        var uri = "{{ path('edit_evento',{'id': 'id'}) }}";
         uri = uri.replace('id', id);
         var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
         table.row.add([
@@ -121,7 +121,7 @@ function usersList() {
 
 function modalBorrar(id)
 {
-    var uri  = "{{ path('delete_evento',{'id': 'id'} )}}"
+    var uri  = "{{ path('delete_evento',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
         <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
@@ -131,7 +131,7 @@ function modalBorrar(id)
 
 function deleteUser(id)
 {
-    var uri  = "{{ path('delete_evento',{'id': 'id'} )}}"
+    var uri  = "{{ path('delete_evento',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     fetch(uri, {
             method: 'POST',

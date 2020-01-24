@@ -4,6 +4,8 @@
 
 {% block body %}
 
+<div id="indexBody">
+
 <nav class="navbar navbar-light bg-light static-top">
   <div class="container">
     <a class="navbar-brand" href="{{ path('proyecto') }}">¿Qué es Sueño Dorado?</a>
@@ -11,43 +13,44 @@
   </div>
 </nav>
 
-<header class="masthead text-white text-center">
-  <div class="overlay"></div>
-  <div class="container">
-    <div class=" row">
-      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-          <form method="post">
-              {% if error %}
-                  <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-              {% endif %}
-              {% if app.user %}
-                  <div class="mb-3">
-                      You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                  </div>
-              {% endif %}
-              <img src="{{ asset('assets/logo.png') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
-              <br>
-              <br>
-              <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Correo" class="form-control form-control-lg" required autofocus>
-              <br>
-              <input type="password" name="password" id="inputPassword" placeholder="Contraseña" class="form-control form-control-lg" required>
+  <header class="masthead text-white text-center">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class=" row">
+        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                <img src="{{ asset('assets/logo.png') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
+                <br>
+                <br>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Correo" class="form-control form-control-lg" required autofocus>
+                <br>
+                <input type="password" name="password" id="inputPassword" placeholder="Contraseña" class="form-control form-control-lg" required>
 
-              <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-              <br>
-                  <div class="checkbox mb-3">
-                      <label>
-                          <input type="checkbox" name="_remember_me"> Recuerdame
-                      </label>
-                  </div>
-              <button class="btn btn-block btn-lg btn-warning" type="submit">
-                  Iniciar sesion
-              </button>
-          </form>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <br>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Recuerdame
+                        </label>
+                    </div>
+                <button class="btn btn-block btn-lg btn-warning" type="submit">
+                    Iniciar sesion
+                </button>
+            </form>
+        </div>
       </div>
+      <br>
     </div>
-    <br>
-  </div>
-</header>
+  </header>
+</div>
 
 
 {% endblock %}

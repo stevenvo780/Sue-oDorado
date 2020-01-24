@@ -3,28 +3,25 @@
 {% block title %}Estructura{% endblock %}
 
 {% block body %}
-
-
-<div class="container-fluid">
-
+<div class="container-fluid" id="contentBody">
 <div class="row">
   <div id="editMoneda" class="col-12 ml-md-auto mr-auto">
       <div style=" text-align: center;"class="">
-          <a class="btn btn-default" href="{{ path('user_list_monedas',{'id': moneda.dueño.id} )}}">
+          <a class="btn btn-default" href="{{ path('user_list_monedas',{'id': moneda.dueño.id}) }}">
           {% if moneda.rango == 0 %}
               {% if moneda.dono == true %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
               {% else %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
               {% endif %}
               {% elseif moneda.rango == 1 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
               {% elseif moneda.rango == 2 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
               {% elseif moneda.rango == 3 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
               {% elseif moneda.rango == 4 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
               {% endif %}
               <br>
               <h3> {{ moneda.dueño.nombres }}</h3>
@@ -34,7 +31,7 @@
       <div id="añadirOro" class="">
           <form id="formSaveMoneda">
               <div class="form-group row">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3 ">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="padding:10px;" style="padding:10px;">
                         <div class="card" style="height: 10rem;" style="height: 10rem;">
                             <div class="card-header">
                             <h5>Rango</h5>
@@ -74,9 +71,9 @@
                                     {% endif %}
                                 </select>
                             </div>
-                        </div> 
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="padding:10px;">
                         <div class="card" style="height: 10rem;">
                         <div class="card-header">
                             <h5>Dono</h5>
@@ -90,23 +87,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="padding:10px;">
                          <div class="card" style="height: 10rem;">
                         <div class="card-header">
                             <h5>Veces recibidas</h5>
                         </div>
                              <div class="card-body">
-                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas">
+                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{ moneda.vecesRecibidas }}" id="vecesRecividas">
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="padding:10px;">
                         <div class="card" style="height: 10rem;">
                         <div class="card-header">
                            <h5>Diamante de apoyo</h5>
                         </div>
                              <div class="card-body">
-                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{moneda.vecesRecibidas}}" id="vecesRecividas">
+                                <input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="vecesRecividas" type="text" value="{{ moneda.vecesRecibidas }}" id="vecesRecividas">
                             </div>
                         </div>
                     </div>
@@ -114,8 +111,8 @@
                 <div class="form-group row">
                   <div class=" col-lg-12">
 
-                        <button type='button' id='ButtonEditar' onclick='guardarMoneda({{moneda.id}})' class='btn btn-success'><span class='hidden-xs'>Guardar</span></button>
-                        <button type='button' id='ButtonBorrar' onclick='modalBorrar({{moneda.id}})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>
+                        <button type='button' id='ButtonEditar' onclick='guardarMoneda({{ moneda.id }})' class='btn btn-success'><span class='hidden-xs'>Guardar</span></button>
+                        <button type='button' id='ButtonBorrar' onclick='modalBorrar({{ moneda.id }})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>
                     </div>
                 </div>
             </form>
@@ -206,7 +203,7 @@ $(document).ready(function() {
     });
 function usersList() {
     arbol = [];
-  fetch('{{ path('list_monedas',{'id': moneda.id} )}}',{method: 'GET'})
+  fetch('{{ path('list_monedas',{'id': moneda.id}) }}',{method: 'GET'})
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Monedas').DataTable({
@@ -231,7 +228,6 @@ function usersList() {
                  }
             },
         responsive: true,
-        
         "order": [[ 0, 'desc' ]],
         "pageLength": 15,
          "destroy": true,
@@ -256,7 +252,6 @@ function usersList() {
      table.clear();
      console.log(myJson);
      for (var i = 0; i < myJson.length; i++) {
-         
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
                  var invto = "" + myJson[i][1].dueño.nombres;
@@ -310,7 +305,6 @@ function usersList() {
          }
          var y = "verUsuario("+myJson[i][0]['Padre'].id+")";
          var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres}</a>`;
-         
          table.row.add([
              myJson[i][0]['Padre'].rango,
              nombre,
@@ -355,7 +349,7 @@ function modalAñadir(id)
     $('#añadir_oro').empty();
     var x = "editInvitado("+id+")";
     $('#botonEditInvitados').attr('onclick', `${x}`);
-    var uri  = "{{ path('list_all_monedas',{'id': 'id'} )}}"
+    var uri  = "{{ path('list_all_monedas',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     fetch(uri,{method: 'GET'})
         .then(response => response.json())
@@ -372,7 +366,7 @@ function modalAñadir(id)
            console.log(err);
        });
 
-    var uri  = "{{ path('user_find_invitados',{'id': 'id'} )}}"
+    var uri  = "{{ path('user_find_invitados',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     fetch(uri,{method: 'GET'})
         .then(response => response.json())
@@ -392,7 +386,7 @@ function modalAñadir(id)
 
 function modalBorrar(id)
 {
-    var uri  = "{{ path('delete_moneda',{'id': 'id'} )}}"
+    var uri  = "{{ path('delete_moneda',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
         <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
@@ -401,7 +395,7 @@ function modalBorrar(id)
 }
 function guardarMoneda(id)
 {
-    var uri  = "{{ path('edit_moneda',{'id': 'id'} )}}"
+    var uri  = "{{ path('edit_moneda',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
     const data = new FormData(document.getElementById('formSaveMoneda'));
     fetch(uri,{method: 'POST',body: data})

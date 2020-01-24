@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +20,7 @@ use App\Form\UserType;
 use App\Form\UserTypeRegister;
 use App\Entity\User;
 use DateTime;
+
 
 class UsersController extends AbstractController
 {
@@ -55,9 +59,17 @@ class UsersController extends AbstractController
             encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
-
             $em->persist($user);
+
+            try {
             $em->flush();
+            } catch (\Doctrine\DBAL\DBALException  $e) {
+                return $this->render(
+                'security/register.html.twig',[
+                'form' => $form->createView(),
+                'error' => true
+                 ]);
+            }
 
             return $this->redirectToRoute('app_login');
         }
@@ -87,7 +99,16 @@ class UsersController extends AbstractController
                 }
                 
                 $em->persist($user);
-                $em->flush();
+
+                try {
+                    $em->flush();
+                } catch (\Doctrine\DBAL\DBALException  $e) {
+                    return $this->render(
+                    'bundles/TwigBundle/viws/Exception/error409.html.twig',[
+                    'form' => $form->createView(),
+                    'error' => true
+                    ]);
+                }
 
                 return $this->redirectToRoute('dasboard');
             }
@@ -122,7 +143,7 @@ class UsersController extends AbstractController
         }
         return $this->redirectToRoute('dasboard');
     }
-
+    
     public function editPassword(
         $id,
         EntityManagerInterface $em,

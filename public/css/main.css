@@ -22,17 +22,19 @@
     .logo{
         width: 80%;
     }
-    .bodyContent
-    {
-      zoom:200%;
-    }
+
     .monedacontent
     {
-      width: 100%;
+      width: 20%;
      
     }
     .modalcontent{
-      zoom:200%;
+      zoom: 250%;
+
+    }
+    body
+    {
+      zoom: 200%;
     }
 
  }

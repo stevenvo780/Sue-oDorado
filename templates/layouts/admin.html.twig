@@ -123,7 +123,7 @@
         </nav>
         <br>
 
-        <div id="content" class="bodyContent">
+        <div id="content">
             {% block body %}{% endblock %}
         </div>
 
@@ -134,8 +134,8 @@
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+        <div  class="modal fade bd-example-modal-lg" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea cerrar sesion?</h5>
@@ -150,7 +150,7 @@
                 </div>
             </div>
         </div>
-        <div class="modalcontent">
+        <div>
          {% block modal %}{% endblock %}
          </div>
        
@@ -172,7 +172,12 @@
             document.getElementById("mySidenav").style.width = "0";
             document.getElementById("botonBarra").innerHTML = "<button onclick='openNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
         }
-
+        if (screen.width >= 450) {
+          document.getElementById("contentBody").className = "container";
+        }
+        else {
+          document.getElementById("contentBody").className = "container-fluid";
+        }
         </script>
         {% endblock %}
     </body>

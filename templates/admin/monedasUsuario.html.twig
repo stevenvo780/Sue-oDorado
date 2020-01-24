@@ -3,59 +3,68 @@
 {% block title %}Monedas{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
-    <a class="btn btn-success" href="{{path('new_moneda',{'id': user.id} )}}">Añadir moneda</a>
+<div class="container-fluid" id="contentBody">
+    <a class="btn btn-success" href="{{ path('new_moneda',{'id': user.id}) }}">Añadir moneda</a>
     <br>
     <br>
+     <div class="arbol col-12 ml-md-auto mr-auto">
+      <div class="card mb-3">
+          <div class="card-header">
+            <i class="fas fa-table"></i> Extructuras</div>
+          <div class="card-body">
+             <div class="table-responsive">
+        <table id="tablaMonedas" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Estructura</th>
+            <th scope="col">Posicion</th>
+            <th scope="col">Veces recibidas</th>
+          </tr>
+        </thead>
+          <tbody>
+          {% for moneda in monedas %}
+            <tr>
+              <td>
+                  <a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id}) }}">
+                      {% if moneda.rango == 0 %}
+                          {% if moneda.dono == true %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
+                          {% else %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
+                          {% endif %}
+                          <br>
+                              oro
+                          {% elseif moneda.rango == 1 %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
+                          <br>
+                              Ruby
+                          {% elseif moneda.rango == 2 %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
+                          <br>
+                              Esmeralda
+                          {% elseif moneda.rango == 3 %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
+                          <br>
+                              Diamante
+                          {% elseif moneda.rango == 4 %}
+                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
+                          <br>
+                              Diamante de apoyo
+                          {% endif %}
+                            </a>
+                </td>
+                 <td>{{ loop.index }}</td>
+                <td>{{ moneda.vecesRecibidas }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Posicion</th>
-        <th width="20%" scope="col">Estructura</th>
-        <th scope="col">Veces recibidas</th>
-        <th scope="col">Oros completos</th>
-      </tr>
-    </thead>
-    <tbody>
-    {% for moneda in monedas %}
-      <tr>
-        <td>{{loop.index}}</td>
-        <td>
-            <a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id} )}}">
-                {% if moneda.rango == 0 %}
-                    {% if moneda.dono == true %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
-                    {% else %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
-                    {% endif %}
-                    <br>
-                        oro
-                    {% elseif moneda.rango == 1 %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
-                     <br>
-                        Ruby
-                    {% elseif moneda.rango == 2 %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
-                     <br>
-                        Esmeralda
-                    {% elseif moneda.rango == 3 %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
-                     <br>
-                        Diamante
-                    {% elseif moneda.rango == 4 %}
-                     <img  href="{{ path('user_list_posicion',{'id': moneda.id} )}}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
-                     <br>
-                        Diamante de apoyo
-                    {% endif %}
-          </a>
-      </td>
-      <td>{{moneda.vecesRecibidas}}</td>
-      <td>0</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-</table>
+
 
 {% endblock %}
 {% block modal %}
@@ -80,35 +89,32 @@
 {{ parent() }}
 
 <script type="text/javascript">
-
-$(document).ready(function() {
-        usersList();
-        console.log("Docuemnto listo");
-    });
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
-}
-
-function deleteUser(id)
-{
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    fetch(uri, {
-            method: 'POST',
-        })
-    .then(response => {
-        console.log(response);
-    })
-    .catch((error) => console.log(error));
-
-}
+  $(document).ready(function() {
+          $('#tablaMonedas').DataTable( {
+           "language": {
+                 "decimal": "",
+                 "emptyTable": "No hay información",
+                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                 "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                 "infoPostFix": "",
+                 "thousands": ",",
+                 "lengthMenu": "Mostrar _MENU_ Entradas",
+                 "loadingRecords": "Cargando...",
+                 "processing": "Procesando...",
+                 "search": "Buscar:",
+                 "zeroRecords": "Sin resultados encontrados",
+                 "paginate": {
+                     "first": "Primero",
+                     "last": "Ultimo",
+                     "next": "Siguiente",
+                     "previous": "Anterior"
+                 }
+            },
+        responsive: true,
+  } );
+});
 </script>
+
 
 {% endblock %}
