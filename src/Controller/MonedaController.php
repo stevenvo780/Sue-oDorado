@@ -88,20 +88,45 @@ class MonedaController extends AbstractController
         EntityManagerInterface $em,
         Request $request)
     {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
         $moneda = $em->getRepository(Moneda::class)->find($id);
         $invitados = $em->getRepository(MonedaMoneda::class)->
         findByMonedaPropietario($id);
+
         $json = $request->request->all();
+
         for ($i=0; $i < count($invitados); $i++) {
-                        $em->remove($invitados[$i]);
-                        $em->flush();
+            if (array_key_exists('monedas', $json)) {
+                $indice = in_array($invitados[$i]->getMonedaInvitado()->getId(), $json['monedas']);
+            }else{
+                $indice = false;
+            }
+                
+            if ($indice == false) {
+                $invitadosinvitado = $em->getRepository(MonedaMoneda::class)->
+                findByMonedaPropietario($invitados[$i]->
+                getMonedaInvitado()->getId());
+                
+                for ($o=0; $o < count($invitadosinvitado); $o++) {
+                    $em->remove($invitadosinvitado[$o]);
+                    $em->flush();
+                }
+            }
+
+            $em->remove($invitados[$i]);
+            $em->flush();
         }
         if (array_key_exists('monedas', $json)) {
             foreach ($json['monedas'] as $key => $monedaId) {
+              
                 $monedaInvitado = $em->getRepository(Moneda::class)->find($monedaId);
                 $monedaMoneda = new MonedaMoneda();
                 $monedaMoneda->setMonedaPropietario($moneda);
                 $monedaMoneda->setMonedaInvitado($monedaInvitado);
+
                 $em->persist($monedaMoneda);
                 $em->flush();
 
@@ -124,7 +149,6 @@ class MonedaController extends AbstractController
                     $em->persist($monedaDApoyo);
                     $em->flush();
                 }
-                
             }
         }
         return new Response(0);
@@ -188,21 +212,42 @@ class MonedaController extends AbstractController
 
     public function delete($id, EntityManagerInterface $em, Request $request)
     {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+
+        $serializer = new Serializer($normalizers, $encoders);
+
         $moneda = $em->getRepository(Moneda::class)->find($id);
+
         $monedaMonedas = $em->getRepository(MonedaMoneda::class)->
         findByMonedaPropietario($moneda);
+
+        $monedaMonedasRelExtructura = $em->getRepository(MonedaMoneda::class)->
+        findByMonedaInvitado($moneda);
+
+        if($monedaMonedasRelExtructura)
+        {
+            $error  = 'ERROR ESTA MONEDA ESTA RELACIONADA EN UNA EXTRUCTURA';
+            return new Response($serializer->serialize($error, 'json'));
+        }
+
         for ($i=0; $i < count($monedaMonedas); $i++) {
             if ($monedaMonedas) {
                 $em->remove($monedaMonedas[i]);
                 $em->flush();
             }
         }
+        $monedaApoyo = $em->getRepository(MonedaApoyo::class)->
+        findByMoneda($moneda);
+        
+        if ($monedaApoyo) {
+            $em->remove($monedaApoyo);
+        }
         $em->remove($moneda);
+     
         $em->flush();
 
-        return $this->redirectToRoute('user_list_monedas', [
-            'id' => $moneda->getDueño()->getId(),
-        ]);
+        return new Response(0);
     }
 
     /**
@@ -346,21 +391,6 @@ class MonedaController extends AbstractController
         foreach ($arbol as $key => $moneda) {
             if ($moneda->getRango() == 3) {
                 $diamante = $moneda;
-                $user = $em->getRepository(User::class)->
-                find($moneda->getDueño()->getId());
-                $monedaNew = new Moneda();
-                $monedaNew->setDueño($user);
-                $monedaNew->setVecesRecibidas(0);
-                $monedaNew->setRango(0);
-                $monedaNew->setDono(false);
-                $em->persist($monedaNew);
-                $em->flush();
-                
-                $monedaDApoyo = new MonedaApoyo;
-                $monedaDApoyo->setMoneda($monedaNew);
-                $monedaDApoyo->setMonedaDApoyo($moneda);
-                $em->persist($monedaDApoyo);
-                $em->flush();
 
                 $monedaSave = $em->getRepository(Moneda::class)->
                 find($moneda->getId());
@@ -385,6 +415,16 @@ class MonedaController extends AbstractController
                         $em->flush();
                     }
                 }
+                $user = $em->getRepository(User::class)->
+                find($moneda->getDueño()->getId());
+                $monedaNew = new Moneda();
+                $monedaNew->setDueño($user);
+                $monedaNew->setVecesRecibidas(0);
+                $monedaNew->setRango(0);
+                $monedaNew->setDono(false);
+                $em->persist($monedaNew);
+                $em->flush();
+
             }
             if ($moneda->getRango() == 1) {
                 $monedaSave = $em->getRepository(Moneda::class)->find

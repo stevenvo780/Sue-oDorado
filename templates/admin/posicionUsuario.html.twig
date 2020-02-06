@@ -5,28 +5,28 @@
 {% block body %}
 <div class="container-fluid" id="contentBody">
 <div class="row">
-  <div id="editMoneda" class="col-12 ml-md-auto mr-auto">
+    <div id="editMoneda" class="col-12 ml-md-auto mr-auto">
       <div style=" text-align: center;"class="">
-          <a class="btn btn-default" href="{{ path('user_list_monedas',{'id': moneda.dueño.id}) }}">
-          {% if moneda.rango == 0 %}
-              {% if moneda.dono == true %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
-              {% else %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
-              {% endif %}
-              {% elseif moneda.rango == 1 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
-              {% elseif moneda.rango == 2 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
-              {% elseif moneda.rango == 3 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
-              {% elseif moneda.rango == 4 %}
-               <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
-              {% endif %}
-              <br>
-              <h3> {{ moneda.dueño.nombres }}</h3>
-          </a>
-      </div>
+        <a class="btn btn-default" href="{{ path('user_list_monedas',{'id': moneda.dueño.id}) }}">
+        {% if moneda.rango == 0 %}
+            {% if moneda.dono == true %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+            {% else %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+            {% endif %}
+            {% elseif moneda.rango == 1 %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 2 %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 3 %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+            {% elseif moneda.rango == 4 %}
+            <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+            {% endif %}
+            <br>
+            <h3> {{ moneda.dueño.nombres }}</h3>
+        </a>
+    </div>
 
       <div id="añadirOro" class="">
           <form id="formSaveMoneda">
@@ -337,13 +337,29 @@ function editInvitado(id)
     uri = uri.replace('id', id);
     const data = new FormData(document.getElementById('fromEditinvitados'));
     fetch(uri,{method: 'POST',body: data})
+        .then(response => response.json())
+        .then(myJson => {
+                if(myJson.length > 1){
+                     var content = `<div class="alert alert-danger" role="alert">
+                                ${ myJson }
+                    </div>`
+                     document.getElementById("error").innerHTML = content;
+                }
+                else{
+                    location.reload(true);
+                }
+               
+        })
         .catch(function(err) {
-           console.log(err);
+                var content = `<div class="alert alert-danger" role="alert">
+                                Ocurrio un error al generar la relacion
+                </div>`
+               document.getElementById("error").innerHTML = content;
+               
        });
-
-    location.reload(true);
-
+   
 }
+
 function modalAñadir(id)
 {
     $("#añadir_oro").val('');
@@ -389,11 +405,11 @@ function modalBorrar(id)
 {
     var uri  = "{{ path('delete_moneda',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
+    var content = `<button type='button' id='ButtonBorrar' onclick='borrarMoneda(${id})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>`
     document.getElementById("BotonBorrar").innerHTML = content;
     $('#borrarModal').modal('show');
 }
+
 function guardarMoneda(id)
 {
     var uri  = "{{ path('edit_moneda',{'id': 'id'}) }}"
@@ -405,6 +421,39 @@ function guardarMoneda(id)
        });
 
     location.reload(true);
+}
+
+function borrarMoneda(id)
+{
+    var uri  = "{{ path('delete_moneda',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+
+    fetch(uri,{method: 'POST'})
+        .then(response => response.json())
+        .then(myJson => {
+                if(myJson.length > 1){
+                     var content = `<div class="alert alert-danger" role="alert">
+                                ${ myJson }
+                    </div>`
+                     document.getElementById("error").innerHTML = content;
+                }
+                else{
+                    idDueño = "{{ moneda.dueño.id }}";
+                    var uri  = "{{ path('user_list_monedas',{'id': 'id'}) }}"
+                    uri = uri.replace('id', idDueño);
+                    window.location=uri;
+                }
+               
+        })
+        .catch(function(err) {
+                var content = `<div class="alert alert-danger" role="alert">
+                                Ocurrio un error al borrar la moneda
+                </div>`
+               document.getElementById("error").innerHTML = content;
+               
+       });
+    $('#borrarModal').modal('hide');
+   
 }
 
 </script>
