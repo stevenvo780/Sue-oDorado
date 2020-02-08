@@ -13,8 +13,8 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Correo</th>
               <th>Teléfono movil</th>
+              <th>Correo</th>
               <th>País y Ciudad</th>
               <th></th>
               <th></th>
@@ -32,9 +32,12 @@
 {% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
+window.onload = function() {
+    usersList();
+};
 $(document).ready(function() {
         usersList();
-    });
+});
 
 function usersList() {
 
@@ -63,12 +66,12 @@ function usersList() {
              }
         },
         columns: [
-            { "orderable": true },
-            { "orderable": false },
-            { "orderable": false },
-            { "orderable": false },
-            { "orderable": false },
-            { "orderable": false }
+            { responsivePriority: 1, "orderable": true },
+            { responsivePriority: 3, "orderable": false },
+            { responsivePriority: 4, "orderable": false },
+            { responsivePriority: 4, "orderable": false },
+            { responsivePriority: 2, "orderable": false },
+            { responsivePriority: 2, "orderable": false }
         ],
         responsive: true,
         destroy: true,

@@ -199,6 +199,9 @@
 {{ parent() }}
 <script type="text/javascript">
 var arbol = new Array();
+window.onload = function() {
+     usersList();
+};
 $(document).ready(function() {
         usersList();
     });
@@ -374,7 +377,8 @@ function modalAñadir(id)
             myJson.forEach(function(monedaG){
                 var coincidencia = arbol.find(moneda => moneda.id == monedaG.id);
                 if (coincidencia == null) {
-                    var newOption = new Option(monedaG.dueño.nombres, monedaG.id, false, false);
+                    var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                    var newOption = new Option(nombreCompleto, monedaG.id, false, false);
                     $('#añadir_oro').append(newOption).trigger('change');
                 }
             });
@@ -389,7 +393,8 @@ function modalAñadir(id)
         .then(response => response.json())
         .then(myJson => {
             myJson.forEach(function(monedaG){
-                var newOption = new Option(monedaG.dueño.nombres, monedaG.id, false, true);
+                var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                var newOption = new Option(nombreCompleto, monedaG.id, false, true);
                 $('#añadir_oro').append(newOption).trigger('change');
             });
         })
@@ -403,8 +408,6 @@ function modalAñadir(id)
 
 function modalBorrar(id)
 {
-    var uri  = "{{ path('delete_moneda',{'id': 'id'}) }}"
-    uri = uri.replace('id', id);
     var content = `<button type='button' id='ButtonBorrar' onclick='borrarMoneda(${id})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>`
     document.getElementById("BotonBorrar").innerHTML = content;
     $('#borrarModal').modal('show');

@@ -15,11 +15,12 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Fecha</th>
+              <th style="width:300px">Fecha</th>
               <th>Descipción</th>
-              <th>Inicia a las</th>
-              <th>Finaliza a las</th>
-              <th>Acciones</th>
+              <th>Inicia</th>
+              <th>Finaliza</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tfoot>
@@ -54,6 +55,9 @@
 {% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
+window.onload = function() {
+     usersList();
+};
 $(document).ready(function() {
         usersList();
         console.log("Docuemnto listo");
@@ -91,6 +95,15 @@ function usersList() {
                  }
             },
             "responsive": true,
+            columns: [
+            { responsivePriority: 1, "orderable": true },
+            { responsivePriority: 3, "orderable": false },
+            { responsivePriority: 4, "orderable": false },
+            { responsivePriority: 5, "orderable": false },
+            { responsivePriority: 5, "orderable": false },
+            { responsivePriority: 2, "orderable": false },
+            { responsivePriority: 2, "orderable": false },
+        ],
             "order": [[ 1, 'desc' ]],
             "destroy": true,
         });
@@ -101,14 +114,16 @@ function usersList() {
         var x = "modalBorrar("+id+")";
         var uri = "{{ path('edit_evento',{'id': 'id'}) }}";
         uri = uri.replace('id', id);
-        var boton = `<a class='btn btn-success' href='${uri}'>Editar</a> &nbsp; &nbsp; </span><button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
+        var botonEdit = `<a class='btn btn-success' href='${uri}'>Editar</a>`;
+        var botonDelete = `<button type='button' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Borrar</span></button>`;
         table.row.add([
             myJson[i].nombre,
             myJson[i].fecha,
             myJson[i].descripcion,
             myJson[i].duracionInicio,
             myJson[i].duracionFin,
-            boton,
+            botonEdit,
+            botonDelete,
         ]);
      }
      table.draw();

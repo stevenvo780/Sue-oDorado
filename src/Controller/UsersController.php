@@ -19,6 +19,9 @@ use App\Form\UserEditPasswordType;
 use App\Form\UserType;
 use App\Form\UserTypeRegister;
 use App\Entity\User;
+use App\Entity\Moneda;
+use App\Entity\MonedaMoneda;
+use App\Entity\MonedaApoyo;
 use DateTime;
 
 
@@ -39,10 +42,43 @@ class UsersController extends AbstractController
 
     public function delete($id, EntityManagerInterface $em, Request $request)
     {
+        $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
         $user = $em->getRepository(User::class)->find($id);
+        $moneda = $em->getRepository(Moneda::class)->findOneByDueño($id);
+        $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($moneda);
+        foreach ($monedaMonedas as $key => $monedaMoneda) {
+            $em->remove($monedaMoneda);
+            
+        }
+        $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($id);
+        dump($monedaDApoyo);
+        if ($monedaDApoyo) {
+            $em->remove($monedaDApoyo);
+            
+        }
+        if ($moneda) {
+            $em->remove($moneda);
+            
+        }
+        
+        try {
+            $em->flush();
+        } catch (\Throwable $th) {
+            $error  = 'OCURRIO UN ERROR AL BORRAR LAS RELACIONES CON LAS MONEDAS';
+            return new Response($serializer->serialize($error, 'json'));
+        }
         $em->remove($user);
-        $em->flush();
-        return $this->redirectToRoute('dasboard');
+        try {
+            $em->flush();
+        } catch (\Throwable $th) {
+            $error  = 'OCURRIO UN ERROR AL BORRAR EL USUARIO';
+            return new Response($serializer->serialize($error, 'json'));
+        }
+
+        return new Response(0);
     }
 
     public function new(

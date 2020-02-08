@@ -49,7 +49,6 @@
             </button>
           </div>
           <div id="BotonBorrar" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             <a class="btn btn-primary" href="">Borrar</a>
           </div>
         </div>
@@ -66,18 +65,54 @@ var search = $('#user_edit_referido').select2({
 
 const boton = document.querySelector("#ButtonBorrar");
 
+
 boton.addEventListener("click", function(evento){
-	modalBorrar({{user.id}});
+	modalBorrar({{ user.id }});
 });
 
+
+var estadoBorrar;
 function modalBorrar(id)
 {
-    var uri  = "{{ path('delete_User',{'id': 'id'} )}}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
+    var content = `<button type='button' id='ButtonBorrarUsuario'  class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>`
     document.getElementById("BotonBorrar").innerHTML = content;
     $('#borrarModal').modal('show');
+    const botonUsuario = document.querySelector("#ButtonBorrarUsuario");
+ 
+    botonUsuario.addEventListener("click", function(evento){
+        console.log("ejecutando borrar");
+	    borrarUsuario({{ user.id }});
+    });
+}
+
+
+function borrarUsuario(id)
+{
+    var uri  = "{{ path('delete_User',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+    console.log(uri);
+    fetch(uri,{method: 'POST'})
+        .then(response => response.json())
+        .then(myJson => {
+            console.log(myJson);
+                if(myJson.length > 1){
+                     var content = `<div class="alert alert-danger" role="alert">
+                                ${ myJson }
+                    </div>`
+                     document.getElementById("error").innerHTML = content;
+                }
+                else{
+                    var uri  = "{{ path('dasboard') }}";
+                    window.location=uri;
+                }
+        })
+        .catch(function(err) {
+                var content = `<div class="alert alert-danger" role="alert">
+                                Ocurrio un error al borrar la moneda
+                </div>`
+               document.getElementById("error").innerHTML = content;
+       });
+    $('#borrarModal').modal('hide');
 }
 
 });
