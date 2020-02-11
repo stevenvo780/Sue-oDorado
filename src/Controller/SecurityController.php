@@ -16,8 +16,8 @@ class SecurityController extends AbstractController
     {
 
         if ($this->getUser()) {
-            $user =$this->getUser()->getRoles();
-            
+            $user = $this->getUser()->getRoles();
+
             if ($user[0] == "ROLE_ADMIN") {
                 return $this->redirectToRoute('dasboard');
             } elseif ($user[0] == "ROLE_USER") {
@@ -31,7 +31,7 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername, 
+            'last_username' => $lastUsername,
             'error' => $error]);
     }
 
@@ -41,6 +41,6 @@ class SecurityController extends AbstractController
     public function logout()
     {
         throw new \Exception
-        ('This method can be blank - it will be intercepted by the logout key on your firewall');
+            ('This method can be blank - it will be intercepted by the logout key on your firewall');
     }
 }

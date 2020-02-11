@@ -2,17 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Form\UserType;
-use App\Entity\User;
-use App\Controller\MonedaController;
 use App\Entity\Moneda;
 use App\Entity\MonedaApoyo;
-use App\Entity\MonedaMoneda;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ComunUserController extends AbstractController
 {
@@ -23,7 +16,6 @@ class ComunUserController extends AbstractController
         return $this->render('user/index.html.twig', [
             'user' => $user,
             'monedas' => $monedas,
-
             'invitados' => null,
         ]);
     }
@@ -32,13 +24,12 @@ class ComunUserController extends AbstractController
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
         $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
-        findOneByMoneda($moneda);
+            findOneByMoneda($moneda);
         if (!$diamanteApoyo) {
             $diamanteApoyo = "Sin diamante de apoyo";
-        }
-        else {
+        } else {
             $diamanteApoyo = $diamanteApoyo->
-            getMonedaDApoyo()->getDueño()->getNombres();
+                getMonedaDApoyo()->getDueño()->getNombres();
         }
         return $this->render('user/moneda/index.html.twig', [
             'moneda' => $moneda,

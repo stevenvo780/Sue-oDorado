@@ -1,10 +1,10 @@
 admin:
-  resource: 'routes/admin/routes.yaml'
-  prefix: /admin
+   resource: "routes/admin/routes.yaml"
+   prefix: /admin
 
 profile:
-  resource: 'routes/user/routes.yaml'
-  prefix: /profile
+   resource: "routes/user/routes.yaml"
+   prefix: /profile
 
 register:
    path: /register

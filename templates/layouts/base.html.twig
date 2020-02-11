@@ -1,32 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Sueño dorado{% endblock %}</title>
-    {% block stylesheets %}
-        <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-        <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-        <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/main.css') }}" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
-    {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('node_modules/cytoscape/dist/cytoscape.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-        <script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
-        <script src="{{ asset('vendor/datatables/jquery.dataTables.js') }}"></script>
-        <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.js') }}"></script>
-        <script src="{{ asset('js/sb-admin.min.js') }}"></script>
-        <script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
-        <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
-    {% endblock %}
-    </body>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Sueño dorado
+			{% endblock %}
+		</title>
+		{% block stylesheets %}
+			<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
+			<link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+			<link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+			<link href="{{ asset('vendor/datatables/dataTables.bootstrap4.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
+			<link href="{{ asset('css/main.css') }}" rel="stylesheet">
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+		{% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+		{% block javascripts %}
+			<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+			<script src="{{ asset('node_modules/cytoscape/dist/cytoscape.min.js') }}"></script>
+			<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+			<script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+			<script src="{{ asset('vendor/chart.js/Chart.min.js') }}"></script>
+			<script src="{{ asset('vendor/datatables/jquery.dataTables.js') }}"></script>
+			<script src="{{ asset('vendor/datatables/dataTables.bootstrap4.js') }}"></script>
+			<script src="{{ asset('js/sb-admin.min.js') }}"></script>
+			<script src="{{ asset('js/demo/datatables-demo.js') }}"></script>
+			<script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
+		{% endblock %}
+	</body>
 </html>

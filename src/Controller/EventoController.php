@@ -2,18 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Eventos;
+use App\Form\EventoType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Form\EventoType;
-use App\Entity\Eventos;
-use DateTime;
 
 class EventoController extends AbstractController
 {
@@ -37,8 +35,7 @@ class EventoController extends AbstractController
         ]);
     }
 
-    public function list(EntityManagerInterface $em)
-    {
+    function list(EntityManagerInterface $em) {
         $eventos = $em->getRepository(Eventos::class)->findAll();
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
@@ -47,7 +44,7 @@ class EventoController extends AbstractController
         $serializer = new Serializer($normalizers, $encoders);
 
         $data = [];
-        for ($i=0; $i < count($eventos); $i++) {
+        for ($i = 0; $i < count($eventos); $i++) {
             array_push($data, [
                 "id" => $eventos[$i]->getId(),
                 "nombre" => $eventos[$i]->getNombre(),
@@ -86,8 +83,7 @@ class EventoController extends AbstractController
         return $this->redirectToRoute('eventos_admin');
     }
 
-    public function new(Request $request, EntityManagerInterface $em)
-    {
+    function new (Request $request, EntityManagerInterface $em) {
         $user = new Eventos();
         $form = $this->createForm(EventoType::class, $user);
 
@@ -98,9 +94,9 @@ class EventoController extends AbstractController
             return $this->redirectToRoute('eventos_admin');
         }
 
-         return $this->render(
-             'admin/evento/newEvento.html.twig',
-             array('form' => $form->createView())
-         );
+        return $this->render(
+            'admin/evento/newEvento.html.twig',
+            array('form' => $form->createView())
+        );
     }
 }

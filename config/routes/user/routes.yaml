@@ -1,14 +1,14 @@
 dasboard_user:
-   path: /
-   controller: App\Controller\ComunUserController::index
+    path: /
+    controller: App\Controller\ComunUserController::index
 
 eventos_user:
-   path: /eventos
-   controller: App\Controller\EventoController::userView
+    path: /eventos
+    controller: App\Controller\EventoController::userView
 
 list_evento_user:
-   path: /listevento
-   controller: App\Controller\EventoController::list
+    path: /listevento
+    controller: App\Controller\EventoController::list
 
 posiciones_user:
     path: /posiciones/{id}

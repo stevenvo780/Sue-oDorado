@@ -1,37 +1,40 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Editar evento{% endblock %}
+{% block title %}Editar evento
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-    {{ form_start(form) }}
-    {{ form_row(form.nombre) }}
-    {{ form_row(form.fecha) }}
-    {{ form_row(form.descripcion) }}
-    {{ form_row(form.duracionInicio) }}
-    {{ form_row(form.duracionFin) }}
-    <br>
-    <button class="btn btn-success" type="submit">Guardar informacion</button>
-    {{ form_end(form) }}
-</div>
+	<div class="container-fluid" id="contentBody">
+		{{ form_start(form) }}
+		{{ form_row(form.nombre) }}
+		{{ form_row(form.fecha) }}
+		{{ form_row(form.descripcion) }}
+		{{ form_row(form.duracionInicio) }}
+		{{ form_row(form.duracionFin) }}
+		<br>
+		<button class="btn btn-success" type="submit">Guardar informacion</button>
+		{{ form_end(form) }}
+	</div>
 
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="ModalBorrar" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ModalBorrar">¿Seguro que desea borrar el usuario?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div id="BotonBorrar" class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="">Borrar</a>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="ModalBorrar" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="ModalBorrar">¿Seguro que desea borrar el usuario?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div id="BotonBorrar" class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="">Borrar</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}
+
 

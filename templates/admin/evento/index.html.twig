@@ -1,56 +1,56 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Eventos{% endblock %}
+{% block title %}Eventos
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-<div class="card mb-3">
-    <div class="card-header">
-      <i class="fas fa-table"></i>
-      Eventos
-    </div>
-    <div style="z-index:0;" class="card-body">
-      <div class="table-responsive">
-        <table class="table " id="Eventos" width="100%" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th style="width:300px">Fecha</th>
-              <th>Descipción</th>
-              <th>Inicia</th>
-              <th>Finaliza</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tfoot>
-          </tfoot>
-          <tbody>
-          </tbody>
-        </table>
-      </div>
-    </div>
-</div>
-<a class='btn btn-success' href='{{ path('new_evento') }}'>Crear evento</a>
-</div>
+	<div class="container-fluid" id="contentBody">
+		<div class="card mb-3">
+			<div class="card-header">
+				<i class="fas fa-table"></i>
+				Eventos
+			</div>
+			<div style="z-index:0;" class="card-body">
+				<div class="table-responsive">
+					<table class="table " id="Eventos" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Nombre</th>
+								<th style="width:300px">Fecha</th>
+								<th>Descipción</th>
+								<th>Inicia</th>
+								<th>Finaliza</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tfoot></tfoot>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<a class='btn btn-success' href='{{ path('new_evento') }}'>Crear evento</a>
+	</div>
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el evento?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div id="BotonBorrar" class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="">Borrar</a>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el evento?</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div id="BotonBorrar" class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<a class="btn btn-primary" href="">Borrar</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

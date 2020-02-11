@@ -2,34 +2,28 @@
 
 namespace App\Controller;
 
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use App\Entity\Moneda;
+use App\Entity\MonedaApoyo;
+use App\Entity\MonedaMoneda;
+use App\Entity\User;
 use App\Form\UserEditPasswordType;
 use App\Form\UserType;
 use App\Form\UserTypeRegister;
-use App\Entity\User;
-use App\Entity\Moneda;
-use App\Entity\MonedaMoneda;
-use App\Entity\MonedaApoyo;
 use DateTime;
-
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 
 class UsersController extends AbstractController
 {
 
-    public function list(EntityManagerInterface $em)
-    {
+    function list(EntityManagerInterface $em) {
         $user = $em->getRepository(User::class)->findAll();
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
@@ -51,69 +45,68 @@ class UsersController extends AbstractController
         $monedaMonedas = $em->getRepository(MonedaMoneda::class)->findByMonedaPropietario($moneda);
         foreach ($monedaMonedas as $key => $monedaMoneda) {
             $em->remove($monedaMoneda);
-            
+
         }
         $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($id);
         dump($monedaDApoyo);
         if ($monedaDApoyo) {
             $em->remove($monedaDApoyo);
-            
+
         }
         if ($moneda) {
             $em->remove($moneda);
-            
+
         }
-        
+
         try {
             $em->flush();
         } catch (\Throwable $th) {
-            $error  = 'OCURRIO UN ERROR AL BORRAR LAS RELACIONES CON LAS MONEDAS';
+            $error = 'OCURRIO UN ERROR AL BORRAR LAS RELACIONES CON LAS MONEDAS';
             return new Response($serializer->serialize($error, 'json'));
         }
         $em->remove($user);
         try {
             $em->flush();
         } catch (\Throwable $th) {
-            $error  = 'OCURRIO UN ERROR AL BORRAR EL USUARIO';
+            $error = 'OCURRIO UN ERROR AL BORRAR EL USUARIO';
             return new Response($serializer->serialize($error, 'json'));
         }
 
         return new Response(0);
     }
 
-    public function new(
-        Request $request, 
-        UserPasswordEncoderInterface $passwordEncoder, 
-        EntityManagerInterface $em)
-    {
+    function new (
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $em) {
         $user = new User();
         $form = $this->createForm(UserTypeRegister::class, $user);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->
-            encodePassword($user, $user->getPlainPassword());
+                encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
             $em->persist($user);
 
             try {
-            $em->flush();
-            } catch (\Doctrine\DBAL\DBALException  $e) {
+                $em->flush();
+            } catch (\Doctrine\DBAL\DBALException $e) {
                 return $this->render(
-                'security/register.html.twig',[
-                'form' => $form->createView(),
-                'error' => true
-                 ]);
+                    'security/register.html.twig', [
+                        'form' => $form->createView(),
+                        'error' => true,
+                    ]);
             }
 
             return $this->redirectToRoute('app_login');
         }
 
-         return $this->render(
-             'security/register.html.twig',
-             array('form' => $form->createView())
-         );
+        return $this->render(
+            'security/register.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     public function edit(
@@ -128,22 +121,22 @@ class UsersController extends AbstractController
         $form->handleRequest($request);
         if ($userLogueado->getRoles()[0] == "ROLE_ADMIN") {
             if ($form->isSubmitted() && $form->isValid()) {
-                if ( array_key_exists("user_edit", $json)) {
+                if (array_key_exists("user_edit", $json)) {
                     $user->setRoles(["ROLE_ADMIN"]);
                 } else {
                     $user->setRoles(["ROLE_USER"]);
                 }
-                
+
                 $em->persist($user);
 
                 try {
                     $em->flush();
-                } catch (\Doctrine\DBAL\DBALException  $e) {
+                } catch (\Doctrine\DBAL\DBALException $e) {
                     return $this->render(
-                    'bundles/TwigBundle/viws/Exception/error409.html.twig',[
-                    'form' => $form->createView(),
-                    'error' => true
-                    ]);
+                        'bundles/TwigBundle/viws/Exception/error409.html.twig', [
+                            'form' => $form->createView(),
+                            'error' => true,
+                        ]);
                 }
 
                 return $this->redirectToRoute('dasboard');
@@ -152,7 +145,7 @@ class UsersController extends AbstractController
             return $this->render(
                 'admin/editUser.html.twig',
                 ['form' => $form->createView(),
-                'user' => $user,
+                    'user' => $user,
                 ]
             );
         } elseif ($userLogueado->getRoles()[0] == "ROLE_USER") {
@@ -168,7 +161,7 @@ class UsersController extends AbstractController
                 return $this->render(
                     'user/editProfile.html.twig',
                     ['form' => $form->createView(),
-                    'user' => $user,
+                        'user' => $user,
                     ]
                 );
             } else {
@@ -179,7 +172,7 @@ class UsersController extends AbstractController
         }
         return $this->redirectToRoute('dasboard');
     }
-    
+
     public function editPassword(
         $id,
         EntityManagerInterface $em,
@@ -195,7 +188,7 @@ class UsersController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 if ($user->getPlainPassword()) {
                     $password = $passwordEncoder->
-                    encodePassword($user, $user->getPlainPassword());
+                        encodePassword($user, $user->getPlainPassword());
                     $user->setPassword($password);
                 }
                 $em->persist($user);
@@ -208,7 +201,7 @@ class UsersController extends AbstractController
             return $this->render(
                 'admin/editPassword.html.twig',
                 ['form' => $form->createView(),
-                'user' => $user,
+                    'user' => $user,
                 ]
             );
         } elseif ($userLogueado->getRoles()[0] == "ROLE_USER") {
@@ -216,7 +209,7 @@ class UsersController extends AbstractController
                 if ($form->isSubmitted() && $form->isValid()) {
                     if ($user->getPlainPassword()) {
                         $password = $passwordEncoder->
-                        encodePassword($user, $user->getPlainPassword());
+                            encodePassword($user, $user->getPlainPassword());
                         $user->setPassword($password);
                     }
                     $em->persist($user);
@@ -229,7 +222,7 @@ class UsersController extends AbstractController
                 return $this->render(
                     'user/editProfilePassword.html.twig',
                     ['form' => $form->createView(),
-                    'user' => $user,
+                        'user' => $user,
                     ]
                 );
             } else {

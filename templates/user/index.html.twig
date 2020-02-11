@@ -1,81 +1,82 @@
 {% extends 'layouts/user.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Dashboard
+{% endblock %}
 
 {% block body %}
 
-<div class="container-fluid" id="contentBody">
+	<div class="container-fluid" id="contentBody">
 
-   <div class="arbol col-12 ml-md-auto mr-auto">
-      <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i> Extructuras</div>
-          <div class="card-body">
-             <div class="table-responsive">
-              {% if invitados %}
-              <h4>El ruby que te invito ya invito a
-              {% for invitado in invitados %}
-                  {{ invitado.nombres }}
-                  {% if loop.length > loop.index %}
-                      y
-                  {% endif %}
-              {% endfor %}
-              en esta posicion</h4>
-              {% endif %}
-              <table id="tablaMonedas" class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Estructuras</th>
-                  <th scope="col">Posicion</th>
-                  <th scope="col">Veces recibidas</th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for moneda in monedas %}
-                <tr>
-                  <td>
-                      <a class="btn btn-default" href="{{ path('moneda',{'id': moneda.id}) }}">
-                          {% if moneda.rango == 0 %}
-                              {% if moneda.dono == true %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
-                              {% else %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
-                              {% endif %}
-                              <br>
-                                  oro
-                              {% elseif moneda.rango == 1 %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
-                              <br>
-                                  Ruby
-                              {% elseif moneda.rango == 2 %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
-                              <br>
-                                  Esmeralda
-                              {% elseif moneda.rango == 3 %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
-                              <br>
-                                  Diamante
-                              {% elseif moneda.rango == 4 %}
-                              <img  href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
-                              <br>
-                                  Diamante de apoyo
-                              {% endif %}
-                    </a>
-                </td>
-                <td>{{ loop.index }}</td>
-                <td>{{ moneda.vecesRecibidas }}</td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-      </div>
-</div>
-
-
+		<div class="arbol col-12 ml-md-auto mr-auto">
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i>
+					Extructuras</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						{% if invitados %}
+							<h4>El ruby que te invito ya invito a
+								{% for invitado in invitados %}
+									{{ invitado.nombres }}
+									{% if loop.length > loop.index %}
+										y
+									{% endif %}
+								{% endfor %}
+								en esta posicion</h4>
+						{% endif %}
+						<table id="tablaMonedas" class="table">
+							<thead>
+								<tr>
+									<th scope="col">Estructuras</th>
+									<th scope="col">Posicion</th>
+									<th scope="col">Veces recibidas</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for moneda in monedas %}
+									<tr>
+										<td>
+											<a class="btn btn-default" href="{{ path('moneda',{'id': moneda.id}) }}">
+												{% if moneda.rango == 0 %}
+													{% if moneda.dono == true %}
+														<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+													{% else %}
+														<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+													{% endif %}
+													<br>
+													oro
+												{% elseif moneda.rango == 1 %}
+													<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+													<br>
+													Ruby
+												{% elseif moneda.rango == 2 %}
+													<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+													<br>
+													Esmeralda
+												{% elseif moneda.rango == 3 %}
+													<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+													<br>
+													Diamante
+												{% elseif moneda.rango == 4 %}
+													<img href="{{ path('moneda',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+													<br>
+													Diamante de apoyo
+												{% endif %}
+											</a>
+										</td>
+										<td>{{ loop.index }}</td>
+										<td>{{ moneda.vecesRecibidas }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
+
 {% block javascripts %}
 {{ parent() }}
 

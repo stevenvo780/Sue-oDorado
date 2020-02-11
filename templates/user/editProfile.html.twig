@@ -1,36 +1,36 @@
 {% extends 'layouts/user.html.twig' %}
 
-{% block title %}Configuracion{% endblock %}
+{% block title %}Configuracion
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-    <div class="card mb-3">
-        <div class="card-header">
-            <h3>Editar datos personales</h3>
-        </div>
-          <div class="card-body">
-              {{ form_start(form) }}
-                  {{ form_row(form.email) }}
-                  <br>
-                  {{ form_row(form.nombres) }}
-                  <br>
-                  {{ form_row(form.apellidos) }}
-                  <br>
-                  {{ form_row(form.telmovil) }}
-                  <br>
-                  {{ form_row(form.pais) }}
-                  <br>
-                  {{ form_row(form.ciudad) }}
-                  <br>
-                  <button class="btn btn-success" type="submit">Guardar</button>
-              {{ form_end(form) }}
-              <br>
-              <br>
-              <a class='botonAcccion btn btn-secondary' href='{{ path('edit_user_password',{'id': app.user.id} )}}'><span class='hidden-xs'>Cambiar contraseña</span></a>
-          </div>
-    </div>
-</div>
-{% endblock %}
-{% block javascripts %}
-{{ parent() }}
+	<div class="container-fluid" id="contentBody">
+		<div class="card mb-3">
+			<div class="card-header">
+				<h3>Editar datos personales</h3>
+			</div>
+			<div class="card-body">
+				{{ form_start(form) }}
+				{{ form_row(form.email) }}
+				<br>
+				{{ form_row(form.nombres) }}
+				<br>
+				{{ form_row(form.apellidos) }}
+				<br>
+				{{ form_row(form.telmovil) }}
+				<br>
+				{{ form_row(form.pais) }}
+				<br>
+				{{ form_row(form.ciudad) }}
+				<br>
+				<button class="btn btn-success" type="submit">Guardar</button>
+				{{ form_end(form) }}
+				<br>
+				<br>
+				<a class='botonAcccion btn btn-secondary' href='{{ path('edit_user_password',{'id': app.user.id} )}}'>
+					<span class='hidden-xs'>Cambiar contraseña</span>
+				</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

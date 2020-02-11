@@ -3,8 +3,8 @@ dasboard:
    controller: App\Controller\AdminController::index
 
 posiciones_admin:
-    path: /posiciones
-    controller: App\Controller\AdminController::posiciones
+   path: /posiciones
+   controller: App\Controller\AdminController::posiciones
 #Usuarios
 
 delete_User:
@@ -47,20 +47,20 @@ user_list_posicion:
    controller: App\Controller\AdminController::monedasPosicion
 
 edit_invitados_moneda:
-    path: /editmonedainvitados/{id}
-    controller: App\Controller\MonedaController::editInvitados
+   path: /editmonedainvitados/{id}
+   controller: App\Controller\MonedaController::editInvitados
 
 edit_moneda:
-    path: /editmoneda/{id}
-    controller: App\Controller\MonedaController::editMoneda
+   path: /editmoneda/{id}
+   controller: App\Controller\MonedaController::editMoneda
 
 new_moneda:
-    path: /newmoneda/{id}
-    controller: App\Controller\MonedaController::new
+   path: /newmoneda/{id}
+   controller: App\Controller\MonedaController::new
 
 delete_moneda:
-    path: /deletemoneda/{id}
-    controller: App\Controller\MonedaController::delete
+   path: /deletemoneda/{id}
+   controller: App\Controller\MonedaController::delete
 
 user_find_invitados:
    path: /userfindinvitados/{id}

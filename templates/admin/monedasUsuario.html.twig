@@ -1,89 +1,92 @@
 {% extends 'layouts/admin.html.twig' %}
 
-{% block title %}Monedas{% endblock %}
+{% block title %}Monedas
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-    <a class="btn btn-success" href="{{ path('new_moneda',{'id': user.id}) }}">Añadir moneda</a>
-    <br>
-    <br>
-     <div class="arbol col-12 ml-md-auto mr-auto">
-      <div class="card mb-3">
-          <div class="card-header">
-            <i class="fas fa-table"></i> Extructuras</div>
-          <div class="card-body">
-             <div class="table-responsive">
-        <table id="tablaMonedas" class="table">
-        <thead>
-          <tr>
-            <th scope="col">Estructura</th>
-            <th scope="col">Posicion</th>
-            <th scope="col">Veces recibidas</th>
-          </tr>
-        </thead>
-          <tbody>
-          {% for moneda in monedas %}
-            <tr>
-              <td>
-                  <a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id}) }}">
-                      {% if moneda.rango == 0 %}
-                          {% if moneda.dono == true %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
-                          {% else %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
-                          {% endif %}
-                          <br>
-                              oro
-                          {% elseif moneda.rango == 1 %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
-                          <br>
-                              Ruby
-                          {% elseif moneda.rango == 2 %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
-                          <br>
-                              Esmeralda
-                          {% elseif moneda.rango == 3 %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
-                          <br>
-                              Diamante
-                          {% elseif moneda.rango == 4 %}
-                          <img  href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
-                          <br>
-                              Diamante de apoyo
-                          {% endif %}
-                            </a>
-                </td>
-                 <td>{{ loop.index }}</td>
-                <td>{{ moneda.vecesRecibidas }}</td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-            </div>
-          </div>
-        </div>
-      </div>
-</div>
+	<div class="container-fluid" id="contentBody">
+		<a class="btn btn-success" href="{{ path('new_moneda',{'id': user.id}) }}">Añadir moneda</a>
+		<br>
+		<br>
+		<div class="arbol col-12 ml-md-auto mr-auto">
+			<div class="card mb-3">
+				<div class="card-header">
+					<i class="fas fa-table"></i>
+					Extructuras</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="tablaMonedas" class="table">
+							<thead>
+								<tr>
+									<th scope="col">Estructura</th>
+									<th scope="col">Posicion</th>
+									<th scope="col">Veces recibidas</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for moneda in monedas %}
+									<tr>
+										<td>
+											<a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id}) }}">
+												{% if moneda.rango == 0 %}
+													{% if moneda.dono == true %}
+														<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
+													{% else %}
+														<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
+													{% endif %}
+													<br>
+													oro
+												{% elseif moneda.rango == 1 %}
+													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
+													<br>
+													Ruby
+												{% elseif moneda.rango == 2 %}
+													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
+													<br>
+													Esmeralda
+												{% elseif moneda.rango == 3 %}
+													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
+													<br>
+													Diamante
+												{% elseif moneda.rango == 4 %}
+													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
+													<br>
+													Diamante de apoyo
+												{% endif %}
+											</a>
+										</td>
+										<td>{{ loop.index }}</td>
+										<td>{{ moneda.vecesRecibidas }}</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 {% endblock %}
 {% block modal %}
 <div class="modal fade" id="borrarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div id="BotonBorrar" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="">Borrar</a>
-          </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el usuario?</h5>
+				<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div id="BotonBorrar" class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<a class="btn btn-primary" href="">Borrar</a>
+			</div>
+		</div>
+	</div>
 </div>
+
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}

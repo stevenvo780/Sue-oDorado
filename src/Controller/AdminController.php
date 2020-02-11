@@ -2,14 +2,12 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\User;
-use App\Entity\MonedaMoneda;
 use App\Entity\Moneda;
 use App\Entity\MonedaApoyo;
+use App\Entity\MonedaMoneda;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
 {
@@ -36,14 +34,13 @@ class AdminController extends AbstractController
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
         $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
-        findOneByMoneda($moneda);
+            findOneByMoneda($moneda);
         if (!$diamanteApoyo) {
             $diamanteApoyo = "Sin diamante de apoyo";
-        }
-        else {
+        } else {
             $diamanteApoyo = $diamanteApoyo->getMonedaDApoyo()->getDueño()->getNombres();
         }
-        
+
         return $this->render('admin/posicionUsuario.html.twig', [
             'moneda' => $moneda,
             'monedaDeApoyo' => $diamanteApoyo,

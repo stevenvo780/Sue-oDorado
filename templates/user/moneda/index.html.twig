@@ -1,141 +1,145 @@
 {% extends 'layouts/user.html.twig' %}
 
-{% block title %}Extructura{% endblock %}
+{% block title %}Extructura
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid" id="contentBody">
-    <div id="añadirOro" class=""></div>
+	<div class="container-fluid" id="contentBody">
+		<div id="añadirOro" class=""></div>
 
-    <div class="row">
-        <div id="editMoneda" class="col-12 ml-md-auto mr-auto">
-            <div style=" text-align: center;"class="">
-                <a class="btn btn-default" href="{{ path('dasboard_user') }}">
-                {% if moneda.rango == 0 %}
-                    {% if moneda.dono == true %}
-                    <img src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
-                    {% else %}
-                    <img src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
-                    {% endif %}
-                    {% elseif moneda.rango == 1 %}
-                    <img src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
-                    {% elseif moneda.rango == 2 %}
-                    <img src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
-                    {% elseif moneda.rango == 3 %}
-                    <img src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
-                    {% elseif moneda.rango == 4 %}
-                    <img src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
-                    {% endif %}
-                    <br>
-                    <h3> {{ moneda.dueño.nombres }}</h3>
-                </a>
-            </div>
-        </div>
-    </div>
-    
+		<div class="row">
+			<div id="editMoneda" class="col-12 ml-md-auto mr-auto">
+				<div style=" text-align: center;" class="">
+					<a class="btn btn-default" href="{{ path('dasboard_user') }}">
+						{% if moneda.rango == 0 %}
+							{% if moneda.dono == true %}
+								<img src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid" width="30%">
+							{% else %}
+								<img src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid" width="30%">
+							{% endif %}
+						{% elseif moneda.rango == 1 %}
+							<img src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid" width="30%">
+						{% elseif moneda.rango == 2 %}
+							<img src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid" width="30%">
+						{% elseif moneda.rango == 3 %}
+							<img src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid" width="30%">
+						{% elseif moneda.rango == 4 %}
+							<img src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid" width="30%">
+						{% endif %}
+						<br>
+						<h3>
+							{{ moneda.dueño.nombres }}</h3>
+					</a>
+				</div>
+			</div>
+		</div>
 
-    <div class="row">
-    {% if moneda.rango == 0 %}
-        <div class="col-12" style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-            <div class="card-header">
-                <h5>Dono</h5>
-            </div>
-                    <div class="card-body">
-                    {% if moneda.dono == 0 %}
-                        No
-                    {% elseif moneda.dono == 1 %}
-                       Si
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    {% elseif moneda.rango == 1 %}
-        <div class="col-12" style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-                <div class="card-header">
-                <h5>Diamante de apoyo</h5>
-                </div>
-                    <div class="card-body">
-                    {% if monedaDeApoyo is defined %}
-                        {{ monedaDeApoyo }}
-                    {% endif %}
-                    </div>
-            </div>
-        </div>
-    {% elseif moneda.rango == 2 %}
-        <div class="col-12" style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-                <div class="card-header">
-                <h5>Diamante de apoyo</h5>
-                </div>
-                    <div class="card-body">
-                    {% if monedaDeApoyo is defined %}
-                        {{ monedaDeApoyo }}
-                    {% endif %}
-                    </div>
-            </div>
-        </div>
-    {% elseif moneda.rango == 3 %}
-                <div class="col-12" style="padding:10px;">
-            <div class="card" style="height: 10rem;">
-                <div class="card-header">
-                    <h5>Veces recibidas</h5>
-                </div>
-                <div class="card-body">
-                   {{ moneda.vecesRecibidas }}
-                </div>
-            </div>
-        </div>
-    {% endif %}
-        
-    </div>
-    <div class="row">
-        <div class="col-12" style="padding:10px;">
-            <div class="card">
-                <div class="card-header"><i class="fas fa-table"></i> Extructura</div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table " id="Monedas" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                            <th width="3%">Orden</th>
-                            <th>Dueño</th>
-                            <th>invito a</th>
-                            <th>Rango</th>
-                            <th width="3%">Dono</th>
-                            </tr>
-                        </thead>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
- 
-</div>
-    
+		<div class="row">
+			{% if moneda.rango == 0 %}
+				<div class="col-12" style="padding:10px;">
+					<div class="card" style="height: 10rem;">
+						<div class="card-header">
+							<h5>Dono</h5>
+						</div>
+						<div class="card-body">
+							{% if moneda.dono == 0 %}
+								No
+							{% elseif moneda.dono == 1 %}
+								Si
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% elseif moneda.rango == 1 %}
+				<div class="col-12" style="padding:10px;">
+					<div class="card" style="height: 10rem;">
+						<div class="card-header">
+							<h5>Diamante de apoyo</h5>
+						</div>
+						<div class="card-body">
+							{% if monedaDeApoyo is defined %}
+								{{ monedaDeApoyo }}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% elseif moneda.rango == 2 %}
+				<div class="col-12" style="padding:10px;">
+					<div class="card" style="height: 10rem;">
+						<div class="card-header">
+							<h5>Diamante de apoyo</h5>
+						</div>
+						<div class="card-body">
+							{% if monedaDeApoyo is defined %}
+								{{ monedaDeApoyo }}
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% elseif moneda.rango == 3 %}
+				<div class="col-12" style="padding:10px;">
+					<div class="card" style="height: 10rem;">
+						<div class="card-header">
+							<h5>Veces recibidas</h5>
+						</div>
+						<div class="card-body">
+							{{ moneda.vecesRecibidas }}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+
+		</div>
+		<div class="row">
+			<div class="col-12" style="padding:10px;">
+				<div class="card">
+					<div class="card-header">
+						<i class="fas fa-table"></i>
+						Extructura</div>
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table " id="Monedas" width="100%" cellspacing="0">
+								<thead>
+									<tr>
+										<th width="3%">Orden</th>
+										<th>Dueño</th>
+										<th>invito a</th>
+										<th>Rango</th>
+										<th width="3%">Dono</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
 {% endblock %}
 {% block modal %}
 
-<div class="modal fade" id="agregarOro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content ">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Añadir oro a rubi</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div id="modalAñadirOros" class="modal-body">
-        </div>
-          <div id="agregarOroBoton" class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade" id="agregarOro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content ">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Añadir oro a rubi</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div id="modalAñadirOros" class="modal-body"></div>
+				<div id="agregarOroBoton" class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
+
 {% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
