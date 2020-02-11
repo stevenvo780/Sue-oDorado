@@ -202,249 +202,266 @@
 	{{ parent() }}
 	<script type="text/javascript">
 		var arbol = new Array();
-window.onload = function () {
-usersList();
+var arbol = new Array();
+window.onload = function() {
+     usersList();
 };
-$(document).ready(function () {
-usersList();
-});
+$(document).ready(function() {
+        usersList();
+    });
 function usersList() {
-arbol = [];
-fetch('{{ path('list_monedas',{'id': moneda.id}) }}', {method: 'GET'}).then(response => response.json()).then(myJson => {
-var table = $('#Monedas').DataTable({
-"language": {
-"decimal": "",
-"emptyTable": "No hay información",
-"info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-"infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-"infoFiltered": "(Filtrado de _MAX_ total entradas)",
-"infoPostFix": "",
-"thousands": ",",
-"lengthMenu": "Mostrar _MENU_ Entradas",
-"loadingRecords": "Cargando...",
-"processing": "Procesando...",
-"search": "Buscar:",
-"zeroRecords": "Sin resultados encontrados",
-"paginate": {
-"first": "Primero",
-"last": "Ultimo",
-"next": "Siguiente",
-"previous": "Anterior"
-}
-},
-responsive: true,
-"order": [
-[0, 'desc']
-],
-"pageLength": 15,
-"destroy": true,
-rowCallback: function (row, data) {
-switch (data[3]) {
-case "Diamante":
-$($(row).find("td")[3]).css("background-color", "#6CAFFB");
-break;
-case "Esmeralda":
-$($(row).find("td")[3]).css("background-color", "#6EED91");
-break;
-case "Rubi":
-$($(row).find("td")[3]).css("background-color", "#F36F6F");
-break;
-case "Oro":
-$($(row).find("td")[3]).css("background-color", "#D4B678");
-break;
-}
-}
-});
-table.clear();
-console.log(myJson);
-for (var i = 0; i < myJson.length; i++) {
-if (myJson[i].length > 1) {
-if (myJson[i].length == 2) {
-var invto = "" + myJson[i][1].dueño.nombres;
-} else if (myJson[i].length == 3) {
-var invto = "" + myJson[i][1].dueño.nombres + " - " + myJson[i][2].dueño.nombres;
-}
-} else {
-invto = "";
-}
-var rango = "";
-var estado = "";
-switch (myJson[i][0]['Padre'].rango) {
-case 0: rango = "Oro";
-if (myJson[i][0]['Padre'].dono) {
-estado = "Si";
-} else {
-estado = "No";
-}
-break;
-case 1:
-var x = "modalAñadir(" + myJson[i][0]['Padre'].id + ")";
-var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
-rango = boton;
-if (myJson[i][0]['Padre'].dono) {
-estado = "Si";
-} else {
-estado = "No";
-}
-break;
-case 2:
-var x = "modalAñadir(" + myJson[i][0]['Padre'].id + ")";
-var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-success'><span class='hidden-xs'>Esmeralda</span></button>`;
-rango = boton;
-if (myJson[i][0]['Padre'].dono) {
-estado = "Si";
-} else {
-estado = "No";
-}
-break;
-case 3:
-var x = "modalAñadir(" + myJson[i][0]['Padre'].id + ")";
-var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-info'><span class='hidden-xs'>Diamante</span></button>`;
-rango = boton;
-if (myJson[i][0]['Padre'].dono) {
-estado = "Si";
-} else {
-estado = "No";
-}
-break;
-}
-var y = "verUsuario(" + myJson[i][0]['Padre'].id + ")";
-var nombre = `<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${
-myJson[i][0]['Padre'].dueño.nombres
-}</a>`;
-table.row.add([
-myJson[i][0]['Padre'].rango,
-nombre,
-estado,
-rango,
-invto,
-]);
-arbol.push(myJson[i][0]['Padre']);
-}
-table.draw();
-}).catch(function (err) {
-console.log(err);
+    arbol = [];
+  fetch('{{ path('list_monedas',{'id': moneda.id}) }}',{method: 'GET'})
+    .then(response => response.json())
+    .then(myJson => {
+        var table = $('#Monedas').DataTable({
+            "language": {
+                 "decimal": "",
+                 "emptyTable": "No hay información",
+                 "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                 "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                 "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                 "infoPostFix": "",
+                 "thousands": ",",
+                 "lengthMenu": "Mostrar _MENU_ Entradas",
+                 "loadingRecords": "Cargando...",
+                 "processing": "Procesando...",
+                 "search": "Buscar:",
+                 "zeroRecords": "Sin resultados encontrados",
+                 "paginate": {
+                     "first": "Primero",
+                     "last": "Ultimo",
+                     "next": "Siguiente",
+                     "previous": "Anterior"
+                 }
+            },
+        responsive: true,
+        "order": [[ 0, 'desc' ]],
+        "pageLength": 15,
+         "destroy": true,
+         rowCallback:function(row,data)
+         {
+           switch (data[3]) {
+               case "Diamante":
+                    $($(row).find("td")[3]).css("background-color","#6CAFFB");
+                   break;
+               case "Esmeralda":
+                    $($(row).find("td")[3]).css("background-color","#6EED91");
+                   break;
+               case "Rubi":
+                    $($(row).find("td")[3]).css("background-color","#F36F6F");
+                   break;
+               case "Oro":
+                    $($(row).find("td")[3]).css("background-color","#D4B678");
+                   break;
+           }
+         }
+        });
+     table.clear();
+     console.log(myJson);
+     for (var i = 0; i < myJson.length; i++) {
+         if (myJson[i].length > 1) {
+             if (myJson[i].length == 2) {
+                 var invto = "" + myJson[i][1].dueño.nombres;
+             } else if (myJson[i].length == 3) {
+                 var invto = "" + myJson[i][1].dueño.nombres + " - " + myJson[i][2].dueño.nombres;
+             }
+         }else {
+             invto = "";
+         }
+         var rango = "";
+         var estado = "";
+         switch (myJson[i][0]['Padre'].rango) {
+            case 0:
+                rango = "Oro";
+                if (myJson[i][0]['Padre'].dono) {
+                    estado = "Si";
+                }else {
+                    estado = "No";
+                }
+                break;
+            case 1:
+                var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
+                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+                rango = boton;
+                if (myJson[i][0]['Padre'].dono) {
+                    estado = "Si";
+                }else {
+                    estado = "No";
+                }
+                break;
+            case 2:
+                var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
+                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-success'><span class='hidden-xs'>Esmeralda</span></button>`;
+                rango = boton;
+                if (myJson[i][0]['Padre'].dono) {
+                    estado = "Si";
+                }else {
+                    estado = "No";
+                }
+                break;
+            case 3:
+                var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
+                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-info'><span class='hidden-xs'>Diamante</span></button>`;
+                rango = boton;
+                if (myJson[i][0]['Padre'].dono) {
+                    estado = "Si";
+                }else {
+                    estado = "No";
+                }
+                break;
+         }
+         var y = "verUsuario("+myJson[i][0]['Padre'].id+")";
+         var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres}</a>`;
+         table.row.add([
+             myJson[i][0]['Padre'].rango,
+             nombre,
+             estado,
+             rango,
+             invto,
+         ]);
+         arbol.push(myJson[i][0]['Padre']);
+     }
+     table.draw();
+    })
+    .catch(function(err) {
+       console.log(err);
 
-});
-}
-
-function verUsuario(id) {
-console.log("verUsuario");
-var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
-uri = uri.replace('id', id);
-location.href = uri;
+    });
 }
 
-function editInvitado(id) {
-var uri = "{{ path('edit_invitados_moneda',{'id': 'id'}) }}"
-uri = uri.replace('id', id);
-const data = new FormData(document.getElementById('fromEditinvitados'));
-fetch(uri, {
-method: 'POST',
-body: data
-}).then(response => response.json()).then(myJson => {
-if (myJson.length > 1) {
-var content = `<div class="alert alert-danger" role="alert">
-                                ${myJson}
+function verUsuario(id)
+{
+    console.log("verUsuario");
+    var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
+    uri = uri.replace('id', id);
+    location.href=uri;
+}
+
+function editInvitado(id)
+{
+    var uri  = "{{ path('edit_invitados_moneda',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+    const data = new FormData(document.getElementById('fromEditinvitados'));
+    fetch(uri,{method: 'POST',body: data})
+        .then(response => response.json())
+        .then(myJson => {
+                if(myJson.length > 1){
+                     var content = `<div class="alert alert-danger" role="alert">
+                                ${ myJson }
                     </div>`
-document.getElementById("error").innerHTML = content;
-} else {
-location.reload(true);
-}
-
-}).catch(function (err) {
-var content = `<div class="alert alert-danger" role="alert">
+                     document.getElementById("error").innerHTML = content;
+                }
+                else{
+                    location.reload(true);
+                }
+               
+        })
+        .catch(function(err) {
+                var content = `<div class="alert alert-danger" role="alert">
                                 Ocurrio un error al generar la relacion
                 </div>`
-document.getElementById("error").innerHTML = content;
+               document.getElementById("error").innerHTML = content;
+               
+       });
+   
+}
 
-});
+function modalAñadir(id)
+{
+    $("#añadir_oro").val('');
+    $('#añadir_oro').empty();
+    var x = "editInvitado("+id+")";
+    $('#botonEditInvitados').attr('onclick', `${x}`);
+    var uri  = "{{ path('list_all_monedas',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+    fetch(uri,{method: 'GET'})
+        .then(response => response.json())
+        .then(myJson => {
+            myJson.forEach(function(monedaG){
+                var coincidencia = arbol.find(moneda => moneda.id == monedaG.id);
+                if (coincidencia == null) {
+                    var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                    var newOption = new Option(nombreCompleto, monedaG.id, false, false);
+                    $('#añadir_oro').append(newOption).trigger('change');
+                }
+            });
+        })
+        .catch(function(err) {
+           console.log(err);
+       });
+
+    var uri  = "{{ path('user_find_invitados',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+    fetch(uri,{method: 'GET'})
+        .then(response => response.json())
+        .then(myJson => {
+            myJson.forEach(function(monedaG){
+                var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                var newOption = new Option(nombreCompleto, monedaG.id, false, true);
+                $('#añadir_oro').append(newOption).trigger('change');
+            });
+        })
+        .catch(function(err) {
+           console.log(err);
+       });
+    var search = $('#añadir_oro').select2({ maximumSelectionLength: 2 });
+    $('#agregarOro').modal('show');
 
 }
 
-function modalAñadir(id) {
-$("#añadir_oro").val('');
-$('#añadir_oro').empty();
-var x = "editInvitado(" + id + ")";
-$('#botonEditInvitados').attr('onclick', `${x}`);
-var uri = "{{ path('list_all_monedas',{'id': 'id'}) }}"
-uri = uri.replace('id', id);
-fetch(uri, {method: 'GET'}).then(response => response.json()).then(myJson => {
-myJson.forEach(function (monedaG) {
-var coincidencia = arbol.find(moneda => moneda.id == monedaG.id);
-if (coincidencia == null) {
-var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
-var newOption = new Option(nombreCompleto, monedaG.id, false, false);
-$('#añadir_oro').append(newOption).trigger('change');
-}
-});
-}).catch(function (err) {
-console.log(err);
-});
-
-var uri = "{{ path('user_find_invitados',{'id': 'id'}) }}"
-uri = uri.replace('id', id);
-fetch(uri, {method: 'GET'}).then(response => response.json()).then(myJson => {
-myJson.forEach(function (monedaG) {
-var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
-var newOption = new Option(nombreCompleto, monedaG.id, false, true);
-$('#añadir_oro').append(newOption).trigger('change');
-});
-}).catch(function (err) {
-console.log(err);
-});
-var search = $('#añadir_oro').select2({maximumSelectionLength: 2});
-$('#agregarOro').modal('show');
-
+function modalBorrar(id)
+{
+    var content = `<button type='button' id='ButtonBorrar' onclick='borrarMoneda(${id})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>`
+    document.getElementById("BotonBorrar").innerHTML = content;
+    $('#borrarModal').modal('show');
 }
 
-function modalBorrar(id) {
-var content = `<button type='button' id='ButtonBorrar' onclick='borrarMoneda(${id})' class='btn btn-danger'><span class='hidden-xs'>Borrar moneda</span></button>`
-document.getElementById("BotonBorrar").innerHTML = content;
-$('#borrarModal').modal('show');
+function guardarMoneda(id)
+{
+    var uri  = "{{ path('edit_moneda',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
+    const data = new FormData(document.getElementById('formSaveMoneda'));
+    fetch(uri,{method: 'POST',body: data})
+        .catch(function(err) {
+           console.log(err);
+       });
+
+    location.reload(true);
 }
 
-function guardarMoneda(id) {
-var uri = "{{ path('edit_moneda',{'id': 'id'}) }}"
-uri = uri.replace('id', id);
-const data = new FormData(document.getElementById('formSaveMoneda'));
-fetch(uri, {
-method: 'POST',
-body: data
-}).catch(function (err) {
-console.log(err);
-});
+function borrarMoneda(id)
+{
+    var uri  = "{{ path('delete_moneda',{'id': 'id'}) }}"
+    uri = uri.replace('id', id);
 
-location.reload(true);
-}
-
-function borrarMoneda(id) {
-var uri = "{{ path('delete_moneda',{'id': 'id'}) }}"
-uri = uri.replace('id', id);
-
-fetch(uri, {method: 'POST'}).then(response => response.json()).then(myJson => {
-if (myJson.length > 1) {
-var content = `<div class="alert alert-danger" role="alert">
-                                ${myJson}
+    fetch(uri,{method: 'POST'})
+        .then(response => response.json())
+        .then(myJson => {
+                if(myJson.length > 1){
+                     var content = `<div class="alert alert-danger" role="alert">
+                                ${ myJson }
                     </div>`
-document.getElementById("error").innerHTML = content;
-} else {
-idDueño = "{{ moneda.dueño.id }}";
-var uri = "{{ path('user_list_monedas',{'id': 'id'}) }}"
-uri = uri.replace('id', idDueño);
-window.location = uri;
-}
-
-}).catch(function (err) {
-var content = `<div class="alert alert-danger" role="alert">
+                     document.getElementById("error").innerHTML = content;
+                }
+                else{
+                    idDueño = "{{ moneda.dueño.id }}";
+                    var uri  = "{{ path('user_list_monedas',{'id': 'id'}) }}"
+                    uri = uri.replace('id', idDueño);
+                    window.location=uri;
+                }
+               
+        })
+        .catch(function(err) {
+                var content = `<div class="alert alert-danger" role="alert">
                                 Ocurrio un error al borrar la moneda
                 </div>`
-document.getElementById("error").innerHTML = content;
-
-});
-$('#borrarModal').modal('hide');
-
+               document.getElementById("error").innerHTML = content;
+               
+       });
+    $('#borrarModal').modal('hide');
+   
 }
-	</script>
+</script>
 
 {% endblock %}
