@@ -83,9 +83,18 @@ class UsersController extends AbstractController
         $form = $this->createForm(UserTypeRegister::class, $user);
 
         $form->handleRequest($request);
+        if (!$user->getPlainPassword()) {
+            return $this->render(
+                'security/register.html.twig', [
+                    'form' => $form->createView(),
+                    'error' => "las contraseñas no coinciden",
+                ]);
+        }
+
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->
                 encodePassword($user, $user->getPlainPassword());
+            dump($password);
             $user->setPassword($password);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
             $em->persist($user);
@@ -96,7 +105,7 @@ class UsersController extends AbstractController
                 return $this->render(
                     'security/register.html.twig', [
                         'form' => $form->createView(),
-                        'error' => true,
+                        'error' => "Correo ya registrado",
                     ]);
             }
 
@@ -104,9 +113,10 @@ class UsersController extends AbstractController
         }
 
         return $this->render(
-            'security/register.html.twig',
-            array('form' => $form->createView())
-        );
+            'security/register.html.twig', [
+                'form' => $form->createView(),
+                'error' => "registro invalido intente nuevamente",
+            ]);
     }
 
     public function edit(

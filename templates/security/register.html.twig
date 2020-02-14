@@ -19,12 +19,11 @@
 				<div class="col-sm-12 col-lg-6 col-xl-6 mx-auto">
 					<h1>Registro</h1>
 					{% if error is defined %}
-						{% if error %}
 							<br>
-							<h3>Correo ya registrado</h3>
-						{% endif %}
+							<h3>{{ error }}</h3>
 					{% endif %}
 					{{ form_start(form) }}
+					{{ form_errors(form) }}
 					<br>
 					{{ form_row(form.email) }}
 					<br>

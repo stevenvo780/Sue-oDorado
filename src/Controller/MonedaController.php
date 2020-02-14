@@ -236,7 +236,7 @@ class MonedaController extends AbstractController
             findByMoneda($moneda);
 
         if ($monedaApoyo) {
-            $em->remove($monedaApoyo);
+            $em->remove($monedaApoyo[0]);
         }
         $em->remove($moneda);
 
