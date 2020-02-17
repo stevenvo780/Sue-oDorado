@@ -24,11 +24,21 @@ class UsersController extends AbstractController
 {
 
     function list(EntityManagerInterface $em) {
-        $user = $em->getRepository(User::class)->findAll();
+
+        $data = [];
+        $users = $em->getRepository(User::class)->findAll();
+
+        foreach ($users as $key => $user) {
+            $monedas = $em->getRepository(Moneda::class)->findByDueño($user->getId());
+
+            $totalMonedas = count($monedas);
+            
+            array_push($data, ['user' => $user, 'totalMonedas' => $totalMonedas]);
+        }
+        dump($data);
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
-        $data = [$user];
         $serializer = new Serializer($normalizers, $encoders);
 
         return new Response($serializer->serialize($data, 'json'));
