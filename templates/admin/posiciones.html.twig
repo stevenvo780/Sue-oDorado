@@ -11,7 +11,6 @@
 {{ parent() }}
 
 <script type="text/javascript">
-console.log(0);
 var cy = cytoscape({
   container: document.getElementById('cy'),
 
@@ -78,7 +77,7 @@ cy.bind('click', 'node', function(evt) {
     var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
     uri = uri.replace('id', evt.target.id());
     location.href=uri;
-  console.log('node clicked: ', evt.target.id());
+
 });
 </script>
 

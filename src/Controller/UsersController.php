@@ -57,7 +57,7 @@ class UsersController extends AbstractController
 
         }
         $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($id);
-        dump($monedaDApoyo);
+    
         if ($monedaDApoyo) {
             $em->remove($monedaDApoyo);
 
@@ -103,7 +103,7 @@ class UsersController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->
                 encodePassword($user, $user->getPlainPassword());
-            dump($password);
+        
             $user->setPassword($password);
             $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
             $em->persist($user);

@@ -84,7 +84,7 @@ function modalBorrar(id)
     const botonUsuario = document.querySelector("#ButtonBorrarUsuario");
  
     botonUsuario.addEventListener("click", function(evento){
-        console.log("ejecutando borrar");
+
 	    borrarUsuario({{ user.id }});
     });
 }
@@ -94,11 +94,11 @@ function borrarUsuario(id)
 {
     var uri  = "{{ path('delete_User',{'id': 'id'}) }}"
     uri = uri.replace('id', id);
-    console.log(uri);
+
     fetch(uri,{method: 'POST'})
         .then(response => response.json())
         .then(myJson => {
-            console.log(myJson);
+        
                 if(myJson.length > 1){
                      var content = `<div class="alert alert-danger" role="alert">
                                 ${ myJson }

@@ -258,7 +258,7 @@ function usersList() {
          }
         });
      table.clear();
-     console.log(myJson);
+    
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
@@ -332,7 +332,6 @@ function usersList() {
 
 function verUsuario(id)
 {
-    console.log("verUsuario");
     var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
     uri = uri.replace('id', id);
     location.href=uri;
