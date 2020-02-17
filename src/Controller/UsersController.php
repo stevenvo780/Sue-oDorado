@@ -35,7 +35,6 @@ class UsersController extends AbstractController
             
             array_push($data, ['user' => $user, 'totalMonedas' => $totalMonedas]);
         }
-        dump($data);
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
