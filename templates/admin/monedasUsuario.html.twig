@@ -30,26 +30,26 @@
 											<a class="btn btn-default" href="{{ path('user_list_posicion',{'id': moneda.id}) }}">
 												{% if moneda.rango == 0 %}
 													{% if moneda.dono == true %}
-														<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
+														<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado2.png') }}" class="img-fluid monedacontent">
 													{% else %}
-														<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
+														<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Dorado1.png') }}" class="img-fluid monedacontent">
 													{% endif %}
 													<br>
 													oro
 												{% elseif moneda.rango == 1 %}
-													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
+													<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Ruby.png') }}" class="img-fluid monedacontent">
 													<br>
 													Ruby
 												{% elseif moneda.rango == 2 %}
-													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
+													<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Esmeralda.png') }}" class="img-fluid monedacontent">
 													<br>
 													Esmeralda
 												{% elseif moneda.rango == 3 %}
-													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
+													<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/Diamante.png') }}" class="img-fluid monedacontent">
 													<br>
 													Diamante
 												{% elseif moneda.rango == 4 %}
-													<img href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
+													<img class="monedaArbol" href="{{ path('user_list_posicion',{'id': moneda.id}) }}" src="{{ asset('img/monedas/DiamanteDeApoyo.png') }}" class="img-fluid monedacontent">
 													<br>
 													Diamante de apoyo
 												{% endif %}

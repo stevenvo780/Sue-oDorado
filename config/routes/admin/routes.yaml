@@ -69,3 +69,25 @@ user_find_invitados:
 find_oros:
    path: /findoros/{id}
    controller: App\Controller\MonedaController::findOrosDApoyo
+
+#Soporte
+
+list_mensaje:
+   path: /soporte
+   controller: App\Controller\SoporteController::list
+
+list_mensaje_new:
+   path: /soporte/new
+   controller: App\Controller\SoporteController::new
+
+list_mensaje_delete:
+   path: /soporte/delete/{id}
+   controller: App\Controller\SoporteController::delete
+
+list_mensaje_edit:
+   path: /soporte/edit/{id}
+   controller: App\Controller\SoporteController::edit
+
+list_chat:
+   path: /soporte/chat
+   controller: App\Controller\SoporteController::listChat
