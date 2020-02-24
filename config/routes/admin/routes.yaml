@@ -72,13 +72,13 @@ find_oros:
 
 #Soporte
 
-list_mensaje:
+soporte_admin:
    path: /soporte
-   controller: App\Controller\SoporteController::list
+   controller: App\Controller\SoporteController::indexAdmin
 
-list_mensaje_new:
-   path: /soporte/new
-   controller: App\Controller\SoporteController::new
+list_mensaje_admin:
+   path: /soporte/list
+   controller: App\Controller\SoporteController::list
 
 list_mensaje_delete:
    path: /soporte/delete/{id}
@@ -87,7 +87,3 @@ list_mensaje_delete:
 list_mensaje_edit:
    path: /soporte/edit/{id}
    controller: App\Controller\SoporteController::edit
-
-list_chat:
-   path: /soporte/chat
-   controller: App\Controller\SoporteController::listChat

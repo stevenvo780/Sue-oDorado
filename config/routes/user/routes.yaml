@@ -33,3 +33,19 @@ list_all_monedas:
 invitar_moneda:
     path: /invitar/{idRuby}
     controller: App\Controller\MonedaController::invitar
+
+
+#soporte
+
+soporte_user:
+   path: /soporte
+   controller: App\Controller\SoporteController::indexUser
+
+list_mensaje_user:
+   path: /soporte/list
+   controller: App\Controller\SoporteController::listUser
+
+list_mensaje_new_soporte:
+   path: /soporte/new/soporte
+   controller: App\Controller\SoporteController::newSoporte
+

@@ -22,11 +22,6 @@ class Mensaje
     private $fechaEnvio;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $fechaLectura;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -34,7 +29,7 @@ class Mensaje
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $destinatario;
 
@@ -46,7 +41,7 @@ class Mensaje
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $leido;
+    private $leido = false;
 
     public function getId(): ?int
     {
@@ -65,17 +60,6 @@ class Mensaje
         return $this;
     }
 
-    public function getFechaLectura(): ?\DateTimeInterface
-    {
-        return $this->fechaLectura;
-    }
-
-    public function setFechaLectura(?\DateTimeInterface $fechaLectura): self
-    {
-        $this->fechaLectura = $fechaLectura;
-
-        return $this;
-    }
 
     public function getRemitente(): ?User
     {
