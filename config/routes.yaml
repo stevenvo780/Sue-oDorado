@@ -10,9 +10,13 @@ register:
    path: /register
    controller: App\Controller\UsersController::new
 
+#informacion
+
 proyecto:
    path: /informacion
    controller: App\Controller\ProyectoController::index
+
+#users
 
 edit_user:
    path: /edituser/{id}
@@ -21,3 +25,17 @@ edit_user:
 edit_user_password:
    path: /edituserpassword/{id}
    controller: App\Controller\UsersController::editPassword
+
+#soporte
+
+list_chat:
+   path: /soporte/chat
+   controller: App\Controller\SoporteController::listChat
+
+list_mensaje_new:
+   path: /soporte/new
+   controller: App\Controller\SoporteController::new
+
+list_mensaje_visto:
+   path: /soporte/visto
+   controller: App\Controller\SoporteController::visto
