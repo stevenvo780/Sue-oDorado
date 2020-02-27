@@ -22,6 +22,8 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+    
+    Twig\Extra\Intl\IntlExtension: null
 
 
     # add more service definitions when explicit configuration is needed
