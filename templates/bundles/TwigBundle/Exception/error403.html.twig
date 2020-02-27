@@ -1,0 +1,25 @@
+
+{% set permiso = 'layouts/base.html.twig' %}
+{% if app.user %}
+	{% if is_granted('ROLE_ADMIN') %}
+		{% set permiso = 'layouts/admin.html.twig' %}
+	{% elseif is_granted('ROLE_USER') %}
+		{% set permiso = 'layouts/user.html.twig' %}
+	{% endif %}
+{% endif %}
+{% extends permiso %}
+
+{% block title %}ERROR{% endblock %}
+
+{% block body %}
+<div style="text-align: center;" class="container-fluid" id="contentBody">
+  <div class="card mb-3">
+    <div class="card-header">
+      <h1  style="color: red">ERROR</h1>
+    </div>
+    <div class="card-body">
+          <h1>ERROR 403 PERMISO DENEGADO<h1>
+    </div>
+  </div>
+</div>
+{% endblock %}

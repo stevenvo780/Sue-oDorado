@@ -1,0 +1,28 @@
+{
+  "name": "suenodorado",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "cytoscape": "^3.14.0",
+    "bootstrap": "^4.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevenvo780/SuenoDorado.git"
+  },
+  "keywords": [
+    "suenoDorado"
+  ],
+  "author": "Steven vallejo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stevenvo780/SuenoDorado/issues"
+  },
+  "homepage": "https://github.com/stevenvo780/SuenoDorado#readme"
+}

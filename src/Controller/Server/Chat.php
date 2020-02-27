@@ -34,16 +34,11 @@ class Chat extends AbstractController implements MessageComponentInterface
      */
     public function onOpen(ConnectionInterface $conn)
     {
-        
         $this->users[$conn->resourceId] = [
             'connection' => $conn,
             'user' => '',
             'rol' => '',
         ];
-        /*$conn->send(json_encode([
-            'user' => "",
-            'mensaje' => "Conectado usuario {$conn->resourceId}",
-            ]));*/
     }
 
     /**
@@ -72,27 +67,22 @@ class Chat extends AbstractController implements MessageComponentInterface
     {
         $messageData = json_decode($msg);
         
-        //echo($messageData);
         if(strlen($messageData->rol) > 1)
         {
-            echo "registro";
+            
             $this->users[$from->resourceId] = [
                 'connection' => $from,
                 'user' => $messageData->de,
                 'rol' => $messageData->rol,
             ];
         }else {
-            echo "mensaje";
             $numRecv = count($this->users) - 1;
-            // echo sprintf('Connection %d sending message "%s" to %d other socketection%s' . "\n"
-             //    , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
-     
-             //echo $this->users[$from->resourceId]['connection']->resourceId  . "\n" ;
+           
               foreach ($this->users as $user) {
                 
                  if ($messageData->para == $user['user']) {
                      try {
-                         echo $messageData->mensaje;
+                         
                          $user['connection']->send(json_encode([
                              'mensaje' => $messageData->mensaje,
                              'fecha' => $messageData->fecha,
