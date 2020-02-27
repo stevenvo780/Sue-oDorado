@@ -56,16 +56,8 @@
 		</footer>
 		{% block javascripts %}
 
-			<script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-			<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-			<script>
-				if (screen.width >= 450) {
-document.getElementById("contentBody").className = "container";
-} else {
-document.getElementById("contentBody").className = "container-fluid";
-}
-			</script>
+			<script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+			<script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
 		{% endblock %}
 	</body>
 </html>
