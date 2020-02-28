@@ -14,14 +14,16 @@ class AdminController extends AbstractController
 
     public function index()
     {
-        return $this->render('admin/index.html.twig', [
-
-        ]);
+        return $this->render('admin/index.html.twig',);
     }
 
     public function monedasUsuario(int $id, EntityManagerInterface $em)
     {
         $user = $em->getRepository(User::class)->find($id);
+        if(!$user)
+        {
+            throw $this->createNotFoundException('Usuario no encontrado'); 
+        }
         $monedas = $em->getRepository(Moneda::class)->findByDueño($id);
         return $this->render('admin/monedasUsuario.html.twig', [
             'user' => $user,
@@ -33,6 +35,12 @@ class AdminController extends AbstractController
     public function monedasPosicion(int $id, EntityManagerInterface $em)
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
+
+        if(!$moneda)
+        {
+            throw $this->createNotFoundException('Moneda No encontrada'); 
+        }
+
         $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
             findOneByMoneda($moneda);
         if (!$diamanteApoyo) {

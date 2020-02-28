@@ -26,6 +26,9 @@ class MonedaController extends AbstractController
     public function listArbolDeMonedas(int $id, EntityManagerInterface $em)
     {
         $data = $this->findArbol($id);
+        if (!$data) {
+            throw $this->createNotFoundException('Extructura no encontrada');
+        }
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
@@ -91,6 +94,9 @@ class MonedaController extends AbstractController
         $serializer = new Serializer($normalizers, $encoders);
 
         $moneda = $em->getRepository(Moneda::class)->find($id);
+        if (!$moneda) {
+            throw $this->createNotFoundException('Moneda no encontrada');
+        }
         $invitados = $em->getRepository(MonedaMoneda::class)->
             findByMonedaPropietario($id);
 
@@ -255,7 +261,9 @@ class MonedaController extends AbstractController
         int $id,
         EntityManagerInterface $em) {
         $moneda = $em->getRepository(Moneda::class)->find($id);
-
+        if (!$moneda) {
+            throw $this->createNotFoundException('Moneda no encontrada');
+        }
         if ($moneda->getRango() == 3) {
             $monedas = $em->getRepository(Moneda::class)->findByRango(2);
         } elseif ($moneda->getRango() == 2) {
@@ -290,6 +298,9 @@ class MonedaController extends AbstractController
         EntityManagerInterface $em) {
         $monedaMonedas = $em->getRepository(MonedaMoneda::class)->
             findByMonedaPropietario($idRuby);
+        if (!$monedaMonedas) {
+            throw $this->createNotFoundException('Moneda no encontrada');
+        }
         if (count($monedaMonedas) >= 2) {
             $invitados = [];
             foreach ($monedaMonedas as $key => $monedaMoneda) {
@@ -343,6 +354,9 @@ class MonedaController extends AbstractController
     public function posiciones(int $id, EntityManagerInterface $em)
     {
         $data = $this->findArbol($id);
+        if (!$data) {
+            throw $this->createNotFoundException('Extructura no encontrada');
+        }
         $monedas = [];
         $relaciones = [];
         foreach ($data as $key => $monedaa) {

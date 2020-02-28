@@ -3,150 +3,13 @@
 {% block title %}Soporte
 {% endblock %}
 
+{% block stylesheets %}
+{{ parent() }}
+    <link href="{{ asset('css/chat.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block body %}
 
-<style>
-.container{max-width:1170px; margin:auto;}
-img{ max-width:100%;}
-.inbox_people {
-  background: #f8f8f8 none repeat scroll 0 0;
-  float: left;
-  overflow: hidden;
-  width: 40%; border-right:1px solid #c4c4c4;
-}
-.inbox_msg {
-  border: 1px solid #c4c4c4;
-  clear: both;
-  overflow: hidden;
-}
-.top_spac{ margin: 20px 0 0;}
-
-
-.recent_heading {float: left; width:40%;}
-.srch_bar {
-  display: inline-block;
-  text-align: right;
-  width: 60%; padding:
-}
-.headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
-
-.recent_heading h4 {
-  color: #05728f;
-  font-size: 21px;
-  margin: auto;
-}
-.srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
-.srch_bar .input-group-addon button {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  padding: 0;
-  color: #707070;
-  font-size: 18px;
-}
-.srch_bar .input-group-addon { margin: 0 0 0 -27px;}
-
-.chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
-.chat_ib h5 span{ font-size:13px; float:right;}
-.chat_ib p{ font-size:14px; color:#989898; margin:auto}
-.chat_img {
-  float: left;
-  width: 11%;
-}
-.chat_ib {
-  float: left;
-  padding: 0 0 0 15px;
-  width: 88%;
-}
-
-.chat_people{ overflow:hidden; clear:both;}
-.chat_list {
-  border-bottom: 1px solid #c4c4c4;
-  margin: 0;
-  padding: 18px 16px 10px;
-}
-.inbox_chat { padding: 18px 16px 10px; height: 800px; overflow-y: scroll;}
-
-.active_chat{ background:#ebebeb;}
-
-.incoming_msg_img {
-  display: inline-block;
-  width: 6%;
-}
-.received_msg {
-  display: inline-block;
-  padding: 0 0 0 10px;
-  vertical-align: top;
-  width: 92%;
- }
- .received_withd_msg p {
-  background: #ebebeb none repeat scroll 0 0;
-  border-radius: 3px;
-  color: #646464;
-  font-size: 14px;
-  margin: 0;
-  padding: 5px 10px 5px 12px;
-  width: 100%;
-}
-.time_date {
-  color: #747474;
-  display: block;
-  font-size: 12px;
-  margin: 8px 0 0;
-}
-.received_withd_msg { width: 57%;}
-.mesgs {
-  float: left;
-  padding: 30px 15px 0 25px;
-  width: 60%;
-}
-
- .sent_msg p {
-  background: #05728f none repeat scroll 0 0;
-  border-radius: 3px;
-  font-size: 14px;
-  margin: 0; color:#fff;
-  padding: 5px 10px 5px 12px;
-  width:100%;
-}
-.outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
-.sent_msg {
-  float: right;
-  width: 46%;
-}
-.input_msg_write input {
-  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-  border: medium none;
-  color: #4c4c4c;
-  font-size: 15px;
-  min-height: 48px;
-  width: 100%;
-}
-
-.type_msg {border-top: 1px solid #c4c4c4;position: relative;}
-.msg_send_btn {
-  background: #05728f none repeat scroll 0 0;
-  border: medium none;
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  font-size: 17px;
-  height: 33px;
-  position: absolute;
-  right: 0;
-  top: 11px;
-  width: 33px;
-}
-.messaging { padding: 0 0 50px 0;}
-.msg_history {
-  height: 700px;
-  overflow-y: auto;
-}
-
-.dataTables_filter {
-   float: left !important;
-}
-
-</style>
 <div class="container" id="contentBody">
 	<div class="messaging">
 		<div class="inbox_msg">
@@ -161,8 +24,6 @@ img{ max-width:100%;}
 								<th>Mensaje de</th>
 							</tr>
 						</thead>
-
-						<tbody></tbody>
 					</table>
 				</div>
 			</div>
@@ -208,14 +69,14 @@ boton.addEventListener("click", function(evento){
  });
 
 window.onload = function() {
-      localStorage.removeItem('chatCon');
-       usersList();
-      var userId = "{{ app.user.id }}";
-      var mensaje=document.getElementById("mensaje").value;
-      var para = localStorage.getItem("chatCon");
-      var rol = "{{ app.user.roles[0] }}";
-      let dataSend = {mensaje: "", de: userId, para: "", rol:rol};
-      socket.send(JSON.stringify(dataSend));
+    localStorage.removeItem('chatCon');
+    usersList();
+    var userId = "{{ app.user.id }}";
+    var mensaje=document.getElementById("mensaje").value;
+    var para = localStorage.getItem("chatCon");
+    var rol = "{{ app.user.roles[0] }}";
+    let dataSend = {mensaje: "", de: userId, para: "", rol:rol};
+    socket.send(JSON.stringify(dataSend));
 };
 
 function usersList() {
@@ -255,7 +116,6 @@ function usersList() {
      table.clear();
     
      for (var i = 0; i < myJson.length; i++) {
-     
         var perfil =  `<div onclick='cambiarChat(${myJson[i].idUser})' class='chat_list'>
                             <div class='chat_people'>
                                 <div class="chat_ib">
@@ -268,12 +128,10 @@ function usersList() {
             perfil,
         ]);
      }
-     
      table.draw();
     })
     .catch(function(err) {
        console.log(err);
-
     });
 }
 
@@ -286,24 +144,12 @@ function visto(chatCon)
         data : dataSend,
         method : 'post', 
         success : function(response){
-            //var data = JSON.parse(response);
             usersList();
-         
         },
         error: function(error){
-            alert("No funciona");
+            console.log(error);
         }
     });
-}
-
-function modalBorrar(id)
-{
-    var uri  = "{{ path('delete_evento',{'id': 'id'}) }}"
-    uri = uri.replace('id', id);
-    var content = `<button class='btn btn-secondary' type='button' data-dismiss='modal'>Cancel</button>
-        <a class='btn btn-primary' href='${uri}'>Borrar</a>`;
-    document.getElementById("BotonBorrar").innerHTML = content;
-    $('#borrarModal').modal('show');
 }
 
 function cambiarChat(id)
@@ -352,7 +198,7 @@ function cambiarChat(id)
             
         },
         error: function(error){
-            alert("No funciona");
+            alert("No se pudo entrar al chat");
         }
     });
 }
@@ -365,37 +211,37 @@ function send()
     let dataSend = {mensaje: mensaje, de: userId, para: para};  
 
     var uri  = '{{ path('list_mensaje_new') }}'
-     if(mensaje.length > 1 && para > 0)
+    if(mensaje.length > 1 && para > 0)
     {
-    $.ajax({
-        url : uri,
-        data : dataSend,
-        method : 'post', 
-        success : function(response){
-            var data = JSON.parse(response);
+        $.ajax({
+            url : uri,
+            data : dataSend,
+            method : 'post', 
+            success : function(response){
+                var data = JSON.parse(response);
+                
+                let de =  ` <div  class='outgoing_msg'>
+                                    <div class='sent_msg'>
+                                        <p>${data['mensaje']}</p>
+                                        <span class='time_date'> ${data['fecha']} </span>
+                                    </div>
+                                </div> `;
+                $(de).appendTo('#mesgs');
+                $("#mesgs").animate({ scrollTop: $('#mesgs').prop("scrollHeight")}, 1000);
+
+                dataSend = {mensaje: mensaje, de: userId, para: para, fecha: data['fecha'], rol: ""};
+
+                socket.send(JSON.stringify(dataSend));
+                visto(para);
             
-            let de =  ` <div  class='outgoing_msg'>
-                                 <div class='sent_msg'>
-                                    <p>${data['mensaje']}</p>
-                                    <span class='time_date'> ${data['fecha']} </span>
-                                 </div>
-                             </div> `;
-            $(de).appendTo('#mesgs');
-            $("#mesgs").animate({ scrollTop: $('#mesgs').prop("scrollHeight")}, 1000);
-
-            dataSend = {mensaje: mensaje, de: userId, para: para, fecha: data['fecha'], rol: ""};
-
-            socket.send(JSON.stringify(dataSend));
-            visto(para);
-          
-            var inputNombre = document.getElementById("mensaje");
-            inputNombre.value = "";
-        
-        },
-        error: function(error){
-            alert("No funciona");
-        }
-    });
+                var inputNombre = document.getElementById("mensaje");
+                inputNombre.value = "";
+            
+            },
+            error: function(error){
+                alert("No se pudo enviar el mensaje");
+            }
+        });
     }
 }
 
@@ -409,14 +255,10 @@ socket.onclose = function (event) {
 };
 
 socket.onmessage = function (event) {
-    
     var data;
-    
-    if(event.data)
-    {
-        data = JSON.parse(event.data);
-    }
 
+    if(event.data) data = JSON.parse(event.data);
+    
     var con = localStorage.getItem("chatCon");
     if(con && data.mensaje)
     {
@@ -432,16 +274,12 @@ socket.onmessage = function (event) {
         $("#mesgs").animate({ scrollTop: $('#mesgs').prop("scrollHeight")}, 1000);
     }
 
-     usersList();
-     
+    usersList();
 };
 
 socket.onerror = function (error) {
     console.log(error.message);
 };
-
-
-
 </script>
 
 {% endblock %}

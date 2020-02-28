@@ -23,6 +23,10 @@ class ComunUserController extends AbstractController
     public function indexMoneda(int $id, EntityManagerInterface $em)
     {
         $moneda = $em->getRepository(Moneda::class)->find($id);
+        if(!$moneda)
+        {
+            throw $this->createNotFoundException('Moneda no encontrada'); 
+        }
         $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
             findOneByMoneda($moneda);
         if (!$diamanteApoyo) {
