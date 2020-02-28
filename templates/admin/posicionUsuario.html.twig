@@ -259,7 +259,7 @@ function usersList() {
              if (myJson[i].length == 2) {
                  var invto = "" + myJson[i][1].dueño.nombres;
              } else if (myJson[i].length == 3) {
-                 var invto = "" + myJson[i][1].dueño.nombres + " - " + myJson[i][2].dueño.nombres;
+                 var invto = "" + myJson[i][1].dueño.nombres + "    " + myJson[i][1].dueño.apellidos + " - " + myJson[i][2].dueño.nombres + " " + myJson[i][2].dueño.apellidos;
              }
          }else {
              invto = "";
@@ -307,7 +307,7 @@ function usersList() {
                 break;
          }
          var y = "verUsuario("+myJson[i][0]['Padre'].id+")";
-         var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres}</a>`;
+         var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres} ${myJson[i][0]['Padre'].dueño.apellidos}</a>`;
          table.row.add([
              myJson[i][0]['Padre'].rango,
              nombre,

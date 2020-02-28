@@ -78,10 +78,10 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
     table.clear();
-    for (var i = 0; i < myJson.length; i++) {
+    for (var i = 0; i < myJson.length; i++) { 
         var id = myJson[i]['user'].id
         var x = "modalBorrar("+id+")";
-        var uri = "{{ path('user_list_monedas',{'id': 'id'} )}}";
+        var uri = "{{ path('user_list_monedas',{'id': 'id'}) }}";
         uri = uri.replace('id', id);
         var botonList = `<a class='botonAcccion btn btn-success' href='${uri}'><span class='hidden-xs'>Estructuras</span></a>`;
         uri = "{{ path('edit_user',{'id': 'id'} )}}";

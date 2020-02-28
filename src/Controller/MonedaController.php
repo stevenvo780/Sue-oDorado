@@ -26,9 +26,6 @@ class MonedaController extends AbstractController
     public function listArbolDeMonedas(int $id, EntityManagerInterface $em)
     {
         $data = $this->findArbol($id);
-        if (!$data) {
-            throw $this->createNotFoundException('Extructura no encontrada');
-        }
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
         $serializer = new Serializer($normalizers, $encoders);
@@ -261,9 +258,6 @@ class MonedaController extends AbstractController
         int $id,
         EntityManagerInterface $em) {
         $moneda = $em->getRepository(Moneda::class)->find($id);
-        if (!$moneda) {
-            throw $this->createNotFoundException('Moneda no encontrada');
-        }
         if ($moneda->getRango() == 3) {
             $monedas = $em->getRepository(Moneda::class)->findByRango(2);
         } elseif ($moneda->getRango() == 2) {
@@ -477,6 +471,9 @@ class MonedaController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $moneda = $em->getRepository(Moneda::class)->find($id);
+        if (!$moneda) {
+            throw $this->createNotFoundException('Moneda no encontrada');
+        }
         $invitado = $em->getRepository(MonedaMoneda::class)->
             findByMonedaInvitado($id);
 
