@@ -1,6 +1,8 @@
 # SuenoDorado
 Proyecto de "economía colaborativa"
 
+Se recomieda cambiar la contraseña del usuario administrador luego de cargar los Fixtures
+
 Iniciar WebSoket:
 
 para ver el jobID con :

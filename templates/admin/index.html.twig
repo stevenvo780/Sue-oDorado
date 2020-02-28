@@ -22,33 +22,21 @@
 							<th></th>
 						</tr>
 					</thead>
-					<tfoot></tfoot>
-					<tbody></tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 {% endblock %}
 {% block javascripts %}
-
 {{ parent() }}
 <script type="text/javascript">
-window.onload = function() {
-    usersList();
-};
-$(document).ready(function() {
-        usersList();
-});
-
-function usersList() {
-
-  fetch('{{ path('list_Users') }}',{method: 'GET'})
-    .then(response => response.json())
-    .then(myJson => {
-        var table = $('#Usuarios').DataTable({
+var table;
+function loadTable()
+{
+  table = $('#Usuarios').DataTable({
         language: {
              "decimal": "",
-             "emptyTable": "No hay información",
+             "emptyTable": "CARGANDO PORFAVOR ESPERE",
              "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
              "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
              "infoFiltered": "(Filtrado de _MAX_ total entradas)",
@@ -76,11 +64,20 @@ function usersList() {
             { responsivePriority: 2, "orderable": false }
         ],
         responsive: true,
-        destroy: true,
+        destroy :true,
         });
+}
+$(document).ready(function() {
+    usersList();
+    loadTable();
+});
 
-     table.clear();
+function usersList() {
 
+  fetch('{{ path('list_Users') }}',{method: 'GET'})
+    .then(response => response.json())
+    .then(myJson => {
+    table.clear();
     for (var i = 0; i < myJson.length; i++) {
         var id = myJson[i]['user'].id
         var x = "modalBorrar("+id+")";
@@ -103,6 +100,7 @@ function usersList() {
             botonEdit,
         ]);
      }
+     loadTable();
      table.draw();
     })
     .catch(function(err) {
