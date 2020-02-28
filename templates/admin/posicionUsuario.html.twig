@@ -101,12 +101,35 @@
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-3" style="padding:10px;">
 								<div class="card" style="height: 10rem;">
 									<div class="card-header">
+										<h5>Posicion</h5>
+									</div>
+									<div class="card-body">
+										<input style=" position: relative;left: 30%; width:50%" class="form-control form-control-lg" name="posicion" type="text" value="{{ moneda.posicion }}" id="posicion">
+									</div>
+								</div>
+							</div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding:10px;">
+								<div class="card" style="height: 10rem;">
+									<div class="card-header">
 										<h5>Diamante de apoyo</h5>
 									</div>
 									<div class="card-body">
 										{% if monedaDeApoyo is defined %}
-											{{ monedaDeApoyo }}
+                                        <select class="custom-select" id="apoyo" name="apoyo">
+                                            {% if monedaDeApoyo|length > 1 %}
+                                                {% for monedaApoyo in monedaDeApoyo %}
+                                                    <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                {% endfor %}
+                                            {% else %}
+                                            {% if cambioMoneda is defined %}
+                                                {% for monedaApoyo in cambioMoneda %}
+                                                    <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                {% endfor %}
+                                            {% endif %}
+                                                <option selected value="{{ monedaDeApoyo.dueño.id }}">{{ monedaDeApoyo.dueño.nombres }} {{ monedaDeApoyo.dueño.apellidos }} {{ monedaDeApoyo.posicion }}</option>
+                                            {% endif %}
 										{% endif %}
+                                        </select>
 									</div>
 								</div>
 							</div>
@@ -137,10 +160,10 @@
 										<th width="1%">Orden</th>
 										<th>Dueño</th>
 										<th width="3%">Dono</th>
-										<th>Rango</th>
-										{% if moneda.rango != 4 %}
+                                        {% if moneda.rango != 4 %}
 											<th width="3%" class="invitoA">invito a</th>
 										{% endif %}
+										<th>Rango</th>
 									</tr>
 								</thead>
 							</table>
@@ -201,9 +224,7 @@ var arbol = new Array();
 window.onload = function() {
      usersList();
 };
-$(document).ready(function() {
-        usersList();
-    });
+
 function usersList() {
     arbol = [];
   fetch('{{ path('list_monedas',{'id': moneda.id}) }}',{method: 'GET'})
@@ -312,8 +333,8 @@ function usersList() {
              myJson[i][0]['Padre'].rango,
              nombre,
              estado,
-             rango,
              invto,
+             rango,
          ]);
          arbol.push(myJson[i][0]['Padre']);
      }
@@ -321,7 +342,6 @@ function usersList() {
     })
     .catch(function(err) {
        console.log(err);
-
     });
 }
 
@@ -375,7 +395,7 @@ function modalAñadir(id)
             myJson.forEach(function(monedaG){
                 var coincidencia = arbol.find(moneda => moneda.id == monedaG.id);
                 if (coincidencia == null) {
-                    var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                    var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos + " " + monedaG.posicion;
                     var newOption = new Option(nombreCompleto, monedaG.id, false, false);
                     $('#añadir_oro').append(newOption).trigger('change');
                 }
@@ -391,7 +411,7 @@ function modalAñadir(id)
         .then(response => response.json())
         .then(myJson => {
             myJson.forEach(function(monedaG){
-                var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos;
+                var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos + " " + monedaG.posicion;
                 var newOption = new Option(nombreCompleto, monedaG.id, false, true);
                 $('#añadir_oro').append(newOption).trigger('change');
             });

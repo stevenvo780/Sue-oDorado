@@ -41,17 +41,21 @@ class AdminController extends AbstractController
             throw $this->createNotFoundException('Moneda No encontrada'); 
         }
 
-        $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->
-            findOneByMoneda($moneda);
+        $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($moneda);
+        $cambioMoneda;
         if (!$diamanteApoyo) {
-            $diamanteApoyo = "Sin diamante de apoyo";
-        } else {
-            $diamanteApoyo = $diamanteApoyo->getMonedaDApoyo()->getDueño()->getNombres();
+            $diamanteApoyo = $em->getRepository(Moneda::class)->findByRango(4);
+            $cambioMoneda = "";
+        }
+        else {
+            $diamanteApoyo = $diamanteApoyo->getMoneda();
+            $cambioMoneda = $em->getRepository(Moneda::class)->findByRango(4);
         }
 
         return $this->render('admin/posicionUsuario.html.twig', [
             'moneda' => $moneda,
             'monedaDeApoyo' => $diamanteApoyo,
+            'cambioMoneda' => $cambioMoneda,
         ]);
     }
 

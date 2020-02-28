@@ -186,7 +186,22 @@ class MonedaController extends AbstractController
         } else {
             $monedaSave->setDono(false);
         }
+
+        $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->
+                        findOneByMoneda($json['apoyo']);
+        $monedaDApoyoSave;
+        if (!$monedaDApoyo) {
+            $monedaDApoyo = new MonedaApoyo;
+            $monedaDApoyoSave = $em->getRepository(Moneda::class)->find($json['apoyo']);
+        }
+
+        $monedaDApoyo->setMoneda($monedaSave);
+        $monedaDApoyo->setMonedaDApoyo($monedaDApoyoSave);
+        $em->persist($monedaDApoyo);
+        $em->flush();
+
         $monedaSave->setRango($json['rango']);
+        $monedaSave->setPosicion($json['posicion']);
         $monedaSave->setVecesRecibidas($json['vecesRecividas']);
         $em->persist($monedaSave);
         $em->flush();
@@ -200,6 +215,8 @@ class MonedaController extends AbstractController
         $moneda->setDueño($user);
         $moneda->setVecesRecibidas(0);
         $moneda->setRango(0);
+        $monedas = $em->getRepository(Moneda::class)->findByDueño($user);
+        $moneda->setPosicion(count($monedas));
         $moneda->setDono(false);
         $em->persist($moneda);
         $em->flush();
@@ -314,6 +331,8 @@ class MonedaController extends AbstractController
         $monedaNuevaInvitada->setDueño($this->getUser());
         $monedaNuevaInvitada->setVecesRecibidas(0);
         $monedaNuevaInvitada->setRango(0);
+        $monedas = $em->getRepository(Moneda::class)->findByDueño($this->getUser());
+        $monedaNuevaInvitada->setPosicion(count($monedas));
         $monedaNuevaInvitada->setDono(false);
 
         $monedaMoneda = new MonedaMoneda();

@@ -29,12 +29,17 @@ class Moneda
     /**
      * @ORM\Column(type="integer")
      */
-    private $rango;
+    private $rango = 0;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $posicion = 0;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $dono;
+    private $dono = false;
 
     public function getId(): ?int
     {
@@ -85,6 +90,18 @@ class Moneda
     public function setDono(?int $dono): self
     {
         $this->dono = $dono;
+
+        return $this;
+    }
+
+    public function getPosicion(): ?int
+    {
+        return $this->posicion;
+    }
+
+    public function setPosicion(int $posicion): self
+    {
+        $this->posicion = $posicion;
 
         return $this;
     }
