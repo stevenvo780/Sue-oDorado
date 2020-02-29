@@ -15,10 +15,15 @@ jobs:
 
     - name: Validate composer.json and composer.lock
       run: composer validate
-
-    - name: composer-installer-action
-      uses: nanasess/composer-installer-action@v2.0.1
-    
+      
+    - uses: nanasess/composer-installer-action@v2.0.1
+      
+    - name: env
+      run: cp .env.example .env 
+      
+    - name: install composer
+      run: composer install --prefer-dist --no-scripts -q -o
+      
     - name: instalar dependencias npm
       run: npm install
       
