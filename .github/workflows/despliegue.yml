@@ -1,4 +1,4 @@
-name: Comprobar dependencias y bases de datos
+name: Comprobar dependencias
 
 on: [push]
 
@@ -6,7 +6,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      APP_ENV: dev
+      APP_SECRET: ddef504d23db08e569ebd0181efc427c
+      
     steps:
     - uses: actions/checkout@v2
 
@@ -19,15 +22,4 @@ jobs:
     - name: instalar dependencias npm
       run: npm install
       
-    - name: montaje base de datos
-      run: php bin/console doctrine:database:create
-    
-    - name: actualizacion de base de datos
-      run: php bin/console doctrine:schema:update --force
-    
-    - name: cargar Fixtures
-      run: php bin/console doctrine:fixtures:load --append
-    
-    - name: limpiar cache
-      run: bin/console cache:clear
 
