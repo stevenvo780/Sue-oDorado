@@ -1,0 +1,32 @@
+name: Comprobar dependencias y bases de datos
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate
+
+    - name: instalar dependencias composer
+      run: composer install --prefer-dist --no-progress --no-suggest
+    
+    - name: instalar dependencias npm
+      run: npm install
+      
+    - name: montaje base de datos
+      run: php bin/console doctrine:database:create
+    
+    - name: actualizacion de base de datos
+      run: php bin/console doctrine:schema:update --force
+    
+    - name: cargar Fixtures
+      run: php bin/console doctrine:fixtures:load --append
+    
+    - name: limpiar cache
+      run: bin/console cache:clear
