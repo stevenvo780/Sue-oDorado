@@ -1,3 +1,4 @@
+
 admin:
    resource: "routes/admin/routes.yaml"
    prefix: /admin
