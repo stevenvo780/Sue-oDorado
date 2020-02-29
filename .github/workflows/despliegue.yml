@@ -14,7 +14,7 @@ jobs:
       run: composer validate
 
     - name: instalar dependencias composer
-      run: composer install --prefer-dist --no-progress --no-suggest
+      run: composer install
     
     - name: instalar dependencias npm
       run: npm install
