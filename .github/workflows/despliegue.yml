@@ -16,8 +16,8 @@ jobs:
     - name: Validate composer.json and composer.lock
       run: composer validate
 
-    - name: instalar dependencias composer
-      run: composer install
+    - name: composer-installer-action
+      uses: nanasess/composer-installer-action@v2.0.1
     
     - name: instalar dependencias npm
       run: npm install
