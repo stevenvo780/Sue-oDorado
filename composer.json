@@ -1,4 +1,6 @@
 {
+    "name": "SuenoDorado",
+    "description": "Economia colaborativa",
     "type": "project",
     "license": "proprietary",
     "require": {
