@@ -19,6 +19,11 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
+        
+        $userA = $manager->getRepository(User::class)->
+                    findOneByEmail('admin@suenodorado.com');
+
+        if (!$userA) {
         $user = new User();
         $user->setNombres('admin');
         $user->setApellidos('admin');
@@ -33,5 +38,8 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
         $manager->flush();
+
+        }
+
     }
 }
