@@ -42,16 +42,14 @@ class AdminController extends AbstractController
         }
 
         $diamanteApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($moneda);
-        $cambioMoneda;
+        $cambioMoneda = $em->getRepository(Moneda::class)->findByRango(4);
         if (!$diamanteApoyo) {
-            $diamanteApoyo = $em->getRepository(Moneda::class)->findByRango(4);
-            $cambioMoneda = "";
+            $diamanteApoyo = "";
         }
         else {
-            $diamanteApoyo = $diamanteApoyo->getMoneda();
-            $cambioMoneda = $em->getRepository(Moneda::class)->findByRango(4);
+            $diamanteApoyo = $diamanteApoyo->getMonedaDApoyo();   
         }
-
+        
         return $this->render('admin/posicionUsuario.html.twig', [
             'moneda' => $moneda,
             'monedaDeApoyo' => $diamanteApoyo,

@@ -116,15 +116,18 @@
 									<div class="card-body">
 										{% if monedaDeApoyo is defined %}
                                         <select class="custom-select" id="apoyo" name="apoyo">
-                                            {% if monedaDeApoyo|length > 1 %}
-                                                {% for monedaApoyo in monedaDeApoyo %}
+                                            {% if monedaDeApoyo == "" %}
+                                             <option selected value=""></option>
+                                                {% for monedaApoyo in cambioMoneda %}
                                                     <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
                                                 {% endfor %}
                                             {% else %}
                                             {% if cambioMoneda is defined %}
-                                                {% for monedaApoyo in cambioMoneda %}
-                                                    <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
-                                                {% endfor %}
+                                                {% if cambioMoneda|length > 1 %}
+                                                    {% for monedaApoyo in cambioMoneda %}
+                                                        <option value="{{ monedaApoyo.dueño.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                    {% endfor %}
+                                                {% endif %}
                                             {% endif %}
                                                 <option selected value="{{ monedaDeApoyo.dueño.id }}">{{ monedaDeApoyo.dueño.nombres }} {{ monedaDeApoyo.dueño.apellidos }} {{ monedaDeApoyo.posicion }}</option>
                                             {% endif %}
@@ -398,6 +401,21 @@ function modalAñadir(id)
                     var nombreCompleto = monedaG.dueño.nombres + " " + monedaG.dueño.apellidos + " " + monedaG.posicion;
                     var newOption = new Option(nombreCompleto, monedaG.id, false, false);
                     $('#añadir_oro').append(newOption).trigger('change');
+                    var search = $('#añadir_oro').select2({ 
+                    language: {
+
+                        noResults: function() {
+
+                        return "No se encontraron monedas";        
+                        },
+                        searching: function() {
+
+                        return "Buscando..";
+                        }
+                    },
+                    maximumSelectionLength: 2
+                    });
+                
                 }
             });
         })
@@ -419,7 +437,20 @@ function modalAñadir(id)
         .catch(function(err) {
            console.log(err);
        });
-    var search = $('#añadir_oro').select2({ maximumSelectionLength: 2 });
+    var search = $('#añadir_oro').select2({ 
+        language: {
+
+            noResults: function() {
+
+            return "Cargando...";        
+            },
+            searching: function() {
+
+            return "Buscando..";
+            }
+        },
+        maximumSelectionLength: 2
+         });
     $('#agregarOro').modal('show');
 
 }

@@ -186,17 +186,22 @@ class MonedaController extends AbstractController
         } else {
             $monedaSave->setDono(false);
         }
-
-        $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->
-                        findOneByMoneda($json['apoyo']);
         $monedaDApoyoSave;
-        if (!$monedaDApoyo) {
-            $monedaDApoyo = new MonedaApoyo;
-            $monedaDApoyoSave = $em->getRepository(Moneda::class)->find($json['apoyo']);
+        if($json['apoyo'] != "")
+        {
+            $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->
+                        findOneByMoneda($json['apoyo']);
+            
+            if (!$monedaDApoyo) {
+                $monedaDApoyo = new MonedaApoyo;
+                $monedaDApoyoSave = $em->getRepository(Moneda::class)->find($json['apoyo']);
+            }
+            $monedaDApoyo->setMonedaDApoyo($monedaDApoyoSave);
         }
+        
 
         $monedaDApoyo->setMoneda($monedaSave);
-        $monedaDApoyo->setMonedaDApoyo($monedaDApoyoSave);
+        
         $em->persist($monedaDApoyo);
         $em->flush();
 
