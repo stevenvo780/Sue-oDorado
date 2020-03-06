@@ -1,3 +1,7 @@
+.posiciones {
+    /* background: url('/img/monedas/Diamante.png') no-repeat fixed center; */
+}
+
 .arbol {
     overflow-y: hidden;
     white-space: nowrap;

@@ -75,12 +75,14 @@ var cy = cytoscape({
     nodeRepulsion: function( node ){ return 2048; },
   }
 });
-cy.bind('click', 'node', function(evt) {
-    var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
-    uri = uri.replace('id', evt.target.id());
-    location.href=uri;
 
+
+cy.on("tap", function(e) {
+     var uri = "{{ path('user_list_posicion',{'id': 'id'} )}}";
+    uri = uri.replace('id', e.target.id());
+    location.href=uri;
 });
+
 </script>
 
 {% endblock %}

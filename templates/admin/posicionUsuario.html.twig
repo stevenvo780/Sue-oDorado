@@ -160,11 +160,11 @@
 							<table class="table " id="Monedas" width="100%" cellspacing="0">
 								<thead>
 									<tr>
-										<th width="1%">Orden</th>
+										<th >Orden</th>
 										<th>Dueño</th>
-										<th width="3%">Dono</th>
+										<th >Dono</th>
                                         {% if moneda.rango != 4 %}
-											<th width="3%" class="invitoA">invito a</th>
+											<th class="invitoA">invito a</th>
 										{% endif %}
 										<th>Rango</th>
 									</tr>
@@ -220,9 +220,9 @@
 	</div>
 {% endblock %}
 {% block javascripts %}
-	{{ parent() }}
-	<script type="text/javascript">
-		var arbol = new Array();
+{{ parent() }}
+<script type="text/javascript">
+    var arbol = new Array();
 var arbol = new Array();
 window.onload = function() {
      usersList();
@@ -234,6 +234,9 @@ function usersList() {
     .then(response => response.json())
     .then(myJson => {
         var table = $('#Monedas').DataTable({
+            "paging":   false,
+            "info":     false,
+            "searching": false,
             "language": {
                  "decimal": "",
                  "emptyTable": "No hay información",
@@ -254,10 +257,17 @@ function usersList() {
                      "previous": "Anterior"
                  }
             },
+
+        columns: [
+        { responsivePriority: 1, "orderable": true },
+        { responsivePriority: 1, "orderable": false },
+        { responsivePriority: 3, "orderable": false },
+        { responsivePriority: 4, "orderable": false },
+        { responsivePriority: 1, "orderable": false }
+        ],
         responsive: true,
         "order": [[ 0, 'desc' ]],
         "pageLength": 15,
-         "destroy": true,
          rowCallback:function(row,data)
          {
            switch (data[3]) {
@@ -276,7 +286,6 @@ function usersList() {
            }
          }
         });
-     table.clear();
     
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
@@ -301,7 +310,7 @@ function usersList() {
                 break;
             case 1:
                 var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
-                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
+                var boton = `<button type='button'  id='ButtonEditar' onclick='${x}' class='btn btn-danger'><span class='hidden-xs'>Rubi</span></button>`;
                 rango = boton;
                 if (myJson[i][0]['Padre'].dono) {
                     estado = "Si";
@@ -311,7 +320,7 @@ function usersList() {
                 break;
             case 2:
                 var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
-                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-success'><span class='hidden-xs'>Esmeralda</span></button>`;
+                var boton = `<button type='button'  id='ButtonEditar' onclick='${x}' class='btn btn-success'><span class='hidden-xs'>Esmeralda</span></button>`;
                 rango = boton;
                 if (myJson[i][0]['Padre'].dono) {
                     estado = "Si";
@@ -321,7 +330,7 @@ function usersList() {
                 break;
             case 3:
                 var x = "modalAñadir("+myJson[i][0]['Padre'].id+")";
-                var boton = `<button type='button' style='width:100%; height:'100%' id='ButtonEditar' onclick='${x}' class='btn btn-info'><span class='hidden-xs'>Diamante</span></button>`;
+                var boton = `<button type='button'  id='ButtonEditar' onclick='${x}' class='btn btn-info'><span class='hidden-xs'>Diamante</span></button>`;
                 rango = boton;
                 if (myJson[i][0]['Padre'].dono) {
                     estado = "Si";
@@ -331,7 +340,7 @@ function usersList() {
                 break;
          }
          var y = "verUsuario("+myJson[i][0]['Padre'].id+")";
-         var nombre =`<a class='btn btn-light' onclick='${y}' style='width:100%;' height:'100%'>${myJson[i][0]['Padre'].dueño.nombres} ${myJson[i][0]['Padre'].dueño.apellidos}</a>`;
+         var nombre =`<a class='btn btn-light' onclick='${y}' >${myJson[i][0]['Padre'].dueño.nombres} ${myJson[i][0]['Padre'].dueño.apellidos}</a>`;
          table.row.add([
              myJson[i][0]['Padre'].rango,
              nombre,
@@ -342,6 +351,8 @@ function usersList() {
          arbol.push(myJson[i][0]['Padre']);
      }
      table.draw();
+     table.responsive.recalc();
+     
     })
     .catch(function(err) {
        console.log(err);
