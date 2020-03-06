@@ -12,7 +12,7 @@ list_evento_user:
 
 posiciones_user:
     path: /posiciones/{id}
-    controller: App\Controller\MonedaController::posiciones
+    controller: App\Controller\MonedaController::posicionesUser
 
 proyecto_user:
     path: /proyecto
@@ -33,6 +33,10 @@ list_all_monedas:
 invitar_moneda:
     path: /invitar/{idRuby}
     controller: App\Controller\MonedaController::invitar
+
+find_posicion:
+   path: /posicion/{id}
+   controller: App\Controller\MonedaController::posicion
 
 
 #soporte

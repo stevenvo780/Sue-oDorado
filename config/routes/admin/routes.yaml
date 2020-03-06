@@ -70,6 +70,13 @@ find_oros:
    path: /findoros/{id}
    controller: App\Controller\MonedaController::findOrosDApoyo
 
+
+posiciones_user_admin:
+    path: /posiciones/{id}
+    controller: App\Controller\MonedaController::posicionesAdmin
+
+
+
 #Soporte
 
 soporte_admin:
