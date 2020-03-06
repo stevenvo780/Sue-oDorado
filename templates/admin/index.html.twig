@@ -83,10 +83,10 @@ function usersList() {
         var x = "modalBorrar("+id+")";
         var uri = "{{ path('user_list_monedas',{'id': 'id'}) }}";
         uri = uri.replace('id', id);
-        var botonList = `<a class='botonAcccion btn btn-success' href='${uri}'><span class='hidden-xs'>Estructuras</span></a>`;
+        var botonList = `<a class=' btn btn-success' href='${uri}'><span class='hidden-xs'>Estructuras</span></a>`;
         uri = "{{ path('edit_user',{'id': 'id'} )}}";
         uri = uri.replace('id', id);
-        var botonEdit = `<a class='botonAcccion btn btn-warning' href='${uri}'><span class='hidden-xs'>Editar</span></a>`;
+        var botonEdit = `<a class=' btn btn-warning' href='${uri}'><span class='hidden-xs'>Editar</span></a>`;
 
         var paisCiudad = "" + myJson[i]['user'].pais + " - "+ myJson[i]['user'].ciudad;
         var nombreCompleto = "" + myJson[i]['user'].nombres + " " + myJson[i]['user'].apellidos;
