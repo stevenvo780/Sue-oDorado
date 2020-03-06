@@ -32,7 +32,7 @@ class UsersController extends AbstractController
             $monedas = $em->getRepository(Moneda::class)->findByDueño($user->getId());
 
             $totalMonedas = count($monedas);
-            
+
             array_push($data, ['user' => $user, 'totalMonedas' => $totalMonedas]);
         }
 
@@ -57,7 +57,7 @@ class UsersController extends AbstractController
 
         }
         $monedaDApoyo = $em->getRepository(MonedaApoyo::class)->findOneByMoneda($id);
-    
+
         if ($monedaDApoyo) {
             $em->remove($monedaDApoyo);
 
@@ -92,39 +92,41 @@ class UsersController extends AbstractController
         $form = $this->createForm(UserTypeRegister::class, $user);
 
         $form->handleRequest($request);
-        if (!$user->getPlainPassword()) {
-            return $this->render(
-                'security/register.html.twig', [
-                    'form' => $form->createView(),
-                    'error' => "las contraseñas no coinciden",
-                ]);
-        }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->
-                encodePassword($user, $user->getPlainPassword());
-        
-            $user->setPassword($password);
-            $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
-            $em->persist($user);
-
-            try {
-                $em->flush();
-            } catch (\Doctrine\DBAL\DBALException $e) {
+        if ($form->isSubmitted()) {
+            if (!$user->getPlainPassword()) {
                 return $this->render(
                     'security/register.html.twig', [
                         'form' => $form->createView(),
-                        'error' => "Correo ya registrado",
+                        'error' => "las contraseñas no coinciden",
                     ]);
             }
+            if ($form->isValid()) {
+                $password = $passwordEncoder->
+                    encodePassword($user, $user->getPlainPassword());
 
-            return $this->redirectToRoute('app_login');
+                $user->setPassword($password);
+                $user->setFechaCreacion(new DateTime(date("Y-m-d H:i:s")));
+                $em->persist($user);
+
+                try {
+                    $em->flush();
+                } catch (\Doctrine\DBAL\DBALException $e) {
+                    return $this->render(
+                        'security/register.html.twig', [
+                            'form' => $form->createView(),
+                            'error' => "Correo ya registrado",
+                        ]);
+                }
+
+                return $this->redirectToRoute('app_login');
+            }
         }
 
         return $this->render(
             'security/register.html.twig', [
                 'form' => $form->createView(),
-                'error' => "registro invalido intente nuevamente",
+                'error' => "",
             ]);
     }
 
