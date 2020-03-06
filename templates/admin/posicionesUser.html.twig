@@ -397,14 +397,13 @@ var cy = cytoscape({
 	}
 });
 
-
-cy.bind('click', 'node', function(evt) {
-	var id = evt.target.id();
+cy.on("tap", function(e) {
+    var id = e.target.id();
     var uri = "{{ path('user_list_posicion',{'id': 'id'}) }}";
     uri = uri.replace('id', id.substr(1));
     location.href=uri;
-
 });
+
 </script>
 
 {% endblock %}
