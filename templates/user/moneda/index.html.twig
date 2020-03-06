@@ -167,6 +167,9 @@ function usersList() {
             }
         }
         var table = $('#Monedas').DataTable({
+            "paging":   false,
+            "info":     false,
+            "searching": false,
             "language": {
                  "decimal": "",
                  "emptyTable": "Esta moneda no esta asociada a una extructura",
@@ -190,7 +193,7 @@ function usersList() {
             "responsive": true,
             "order": [[ 0, 'desc' ]],
             "pageLength": 15,
-             "destroy": true,
+             
          rowCallback:function(row,data)
          {
            switch (data[3]) {
@@ -209,8 +212,7 @@ function usersList() {
            }
          }
         });
-     table.clear();
-     // console.log(myJson);
+    
      for (var i = 0; i < myJson.length; i++) {
          if (myJson[i].length > 1) {
              if (myJson[i].length == 2) {
