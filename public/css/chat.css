@@ -151,7 +151,7 @@ img {
 }
 
 .received_withd_msg {
-    width: 57%;
+    width: 95%;
 }
 
 .mesgs {
@@ -177,7 +177,7 @@ img {
 
 .sent_msg {
     float: right;
-    width: 46%;
+    width: 90%;
 }
 
 .input_msg_write input {

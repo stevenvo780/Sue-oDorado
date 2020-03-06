@@ -208,8 +208,6 @@ class MonedaController extends AbstractController
         }
         
 
-       dump($monedaDApoyo);
-
         $monedaSave->setRango($json['rango']);
         $monedaSave->setPosicion($json['posicion']);
         $monedaSave->setVecesRecibidas($json['vecesRecividas']);

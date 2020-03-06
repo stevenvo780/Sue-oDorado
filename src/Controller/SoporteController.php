@@ -88,10 +88,12 @@ class SoporteController extends AbstractController
             $leido = 0;
 
             foreach ($mensajes as $key => $mensaje) {
-                if ($mensaje->getDestinatario() == $userLog && $mensaje->getLeido() == false) {
+                if ($mensaje->getLeido() == false) {
                     $leido++;
                 }
+
             }
+
             $roles = $user->getRoles();
             if (count($mensajes) > 0 && $userLog->getId() !== $user->getId() && $roles[0] !== "ROLE_ADMIN") {
                 array_push($data, [
@@ -101,7 +103,6 @@ class SoporteController extends AbstractController
                     "fecha" => $mensajes[count($mensajes) - 1]->getFechaEnvio()->format('m-d H:i'),
                 ]);
             }
-
         }
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];

@@ -80,7 +80,7 @@ window.onload = function() {
 };
 
 function usersList() {
-
+    
   fetch('{{ path('list_mensaje_admin') }}',{ method: 'GET'})
     .then(response => response.json())
     .then(myJson => {
@@ -92,7 +92,7 @@ function usersList() {
             "searching": false,
             "language": {
                  "decimal": "",
-                 "emptyTable": "No hay información",
+                 "emptyTable": "No tienes mensajes",
                  "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
                  "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
                  "infoFiltered": "(Filtrado de _MAX_ total entradas)",
@@ -115,7 +115,7 @@ function usersList() {
             "destroy": true,
         });
      table.clear();
-    
+
      for (var i = 0; i < myJson.length; i++) {
         var perfil =  `<div onclick='cambiarChat(${myJson[i].idUser})' class='chat_list'>
                             <div class='chat_people'>
@@ -259,7 +259,7 @@ socket.onmessage = function (event) {
     var data;
 
     if(event.data) data = JSON.parse(event.data);
-    
+
     var con = localStorage.getItem("chatCon");
     if(con && data.mensaje)
     {
