@@ -6,13 +6,365 @@
 
 <div class="container-fluid" id="contentBody">
 
-<div style="height: 80%; width: 80%; position: absolute; left: 10; top: 10;" id="cy"></div>
+<div style="height: 80%; width: 100%; position: absolute; left: 0; top: 10;" id="cy"></div>
 </div>
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
 
 <script type="text/javascript">
+
+window.onload = function() {
+     monedas();
+};
+
+function monedas()
+{
+	var id = "{{ moneda.id }}";
+	var uri  = "{{ path('find_posicion',{'id': 'id'}) }}";
+	uri = uri.replace('id', id);
+	fetch(uri,{method: 'GET'})
+		.then(response => response.json())
+		.then(myJson => {
+			
+			var i = 0;
+			var oros = 0;
+			var rubies = 0;
+			var esmeraldas = 0;
+			var diamantes = 0;
+			myJson['monedas'].forEach(function(monedaG){
+				
+				i = i + 50;
+				
+				switch (monedaG.rango) {
+				case 0:
+					if(monedaG.dueño)
+					{
+						if(oros == 0) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 450, y: 700 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 450, y: 700 }
+									},
+								]);
+							}
+						}
+						else if (oros == 1) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 550, y: 700 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 550, y: 700 }
+									},
+								]);
+							}
+						}
+						else if (oros == 2) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 650, y: 700 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 650, y: 700 }
+									},
+								]);
+							}
+						}					
+						else if (oros == 3) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 750, y: 700 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 750, y: 700 }
+									},
+								]);
+							}
+						}
+						else if (oros == 4) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 750, y: 100 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 750, y: 100 }
+									},
+								]);
+							}
+						}
+						else if (oros == 5) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 650, y: 100 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 650, y: 100 }
+									},
+								]);
+							}
+						}					
+						else if (oros == 6) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 550, y: 100 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 550, y: 100 }
+									},
+								]);
+							}
+						}
+						else if (oros == 7) {
+							if(monedaG.dono)
+							{
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado2.png') }}',
+										},
+										position: { x: 450, y: 100 }
+									},					
+								]);
+							} else {
+								cy.add([
+									{ group: 'nodes', 
+										data: {
+											id: "n" + monedaG.id,
+											name: monedaG.dueño.nombres,
+											rango: '{{ asset('img/monedas/Dorado1.png') }}',
+										},
+										position: { x: 450, y: 100 }
+									},
+								]);
+							}
+						}
+					}
+					
+					oros ++;
+					break;
+				case 1:
+					if(rubies == 0) {
+						cy.add([
+							{ group: 'nodes', 
+								data: {
+									id: "n" + monedaG.id,
+									name: monedaG.dueño.nombres,
+									rango: '{{ asset('img/monedas/Ruby.png') }}',
+								},
+								position: { x: 500, y: 600 }
+							},
+						]);
+					}
+					else if (rubies == 1) {
+						cy.add([
+							{ group: 'nodes', 
+								data: {
+									id: "n" + monedaG.id,
+									name: monedaG.dueño.nombres,
+									rango: '{{ asset('img/monedas/Ruby.png') }}',
+								},
+								position: { x: 700, y: 600 }
+							},
+						]);
+					}
+					else if (rubies == 2) {
+						cy.add([
+							{ group: 'nodes', 
+								data: {
+									id: "n" + monedaG.id,
+									name: monedaG.dueño.nombres,
+									rango: '{{ asset('img/monedas/Ruby.png') }}',
+								},
+								position: { x: 700, y: 200 }
+							},
+						]);
+					}
+					
+					else if (rubies == 3) {
+						cy.add([
+							{ group: 'nodes', 
+								data: {
+									id: "n" + monedaG.id,
+									name: monedaG.dueño.nombres,
+									rango: '{{ asset('img/monedas/Ruby.png') }}',
+								},
+								position: { x: 500, y: 200 }
+							},
+						]);
+					}
+
+					rubies++;
+					
+					break;
+				case 2:
+					if(esmeraldas == 0)
+					{
+						cy.add([
+							{ group: 'nodes', 
+								data: {
+									id: "n" + monedaG.id,
+									name: monedaG.dueño.nombres,
+									rango: '{{ asset('img/monedas/Esmeralda.png') }}',
+								},
+								position: { x: 600 , y: 500}
+							},
+						]);
+					} else {
+						cy.add([
+						{ group: 'nodes', 
+							data: {
+								id: "n" + monedaG.id,
+								name: monedaG.dueño.nombres,
+								rango: '{{ asset('img/monedas/Esmeralda.png') }}',
+							},
+							position: { x: 600 , y: 300}
+						},
+						]);
+						break;
+					}
+					esmeraldas++;
+					
+				case 3:
+					cy.add([
+						{ group: 'nodes', 
+							data: {
+								id: "n" + monedaG.id,
+								name: monedaG.dueño.nombres,
+								rango: '{{ asset('img/monedas/Diamante.png') }}',
+							},
+							position: { x: 600 , y: 400 }
+						},
+					]);
+					break;
+				}
+	
+			});
+
+			myJson['relaciones'].forEach(function(monedaG){
+	
+				cy.add([
+						{ group: 'edges', data: { id: "n" + monedaG.monedaPropietario.id + " - " + "n" + monedaG.monedaInvitado.id , source: "n" + monedaG.monedaPropietario.id, target: "n" + monedaG.monedaInvitado.id  } }
+					]);
+			});
+			
+		})
+		.catch(function(err) {
+			console.log(err);
+	});
+}
+
+
+
 var cy = cytoscape({
   container: document.getElementById('cy'),
 
@@ -38,34 +390,7 @@ var cy = cytoscape({
         'target-arrow-color': '#ddd'
       }),
 
-  elements: {
-      nodes: [
-          {% for moneda in monedas %}
-            { data: { id: '{{moneda.id}}', name: '{{moneda.dueño.nombres}}', rango:
-             {% if moneda.rango == 0 %}
-                 {% if moneda.dono == true %}
-                  '{{ asset('img/monedas/Dorado2.png') }}'
-                  {% else %}
-                  '{{ asset('img/monedas/Dorado1.png') }}'
-                 {% endif %}
-             {% elseif moneda.rango == 1 %}'{{ asset('img/monedas/Ruby.png') }}'
-             {% elseif moneda.rango == 2 %}'{{ asset('img/monedas/Esmeralda.png') }}'
-             {% elseif moneda.rango == 3 %}'{{ asset('img/monedas/Diamante.png') }}'
-             {% elseif moneda.rango == 4 %}'{{ asset('img/monedas/DiamanteDeApoyo.png') }}'
-             {% endif %}}
-            },
-          {% endfor %}
-      ],
-      edges: [
-          {% for moneda in monedas %}
-              {% for monedaMoneda in monedaMonedas  %}
-                  {% if monedaMoneda.monedaPropietario.id == moneda.id %}
-                  { data: { id: '{{moneda.id}}-{{monedaMoneda.monedaInvitado.id}}', source: '{{moneda.id}}', target: '{{monedaMoneda.monedaInvitado.id}}' } },
-                  {% endif %}
-              {% endfor %}
-          {% endfor %}
-      ]
-    },
+  
   layout: {
     name: 'cose',
     padding: 100,

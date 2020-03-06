@@ -119,7 +119,7 @@
                                             {% if monedaDeApoyo == "" %}
                                              <option selected value=""></option>
                                                 {% for monedaApoyo in cambioMoneda %}
-                                                    <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                    <option value="{{ monedaApoyo.dueño.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
                                                 {% endfor %}
                                             {% else %}
                                             {% if cambioMoneda is defined %}
