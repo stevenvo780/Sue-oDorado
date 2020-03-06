@@ -19,15 +19,6 @@ class Chat extends AbstractController implements MessageComponentInterface
 {
     protected $users;
 
-    protected $clients;
-
-    /**
-     * Chat constructor.
-     */
-    public function __construct()
-    {
-        $this->clients = new \SplObjectStorage;
-    }
 
     /**
      * @param ConnectionInterface $conn
@@ -46,7 +37,7 @@ class Chat extends AbstractController implements MessageComponentInterface
      */
     public function onClose(ConnectionInterface $conn)
     {
-        unset($this->users[$closedConnection->resourceId]);
+        unset($this->users[$conn->resourceId]);
     }
 
     /**
@@ -75,9 +66,10 @@ class Chat extends AbstractController implements MessageComponentInterface
                 'user' => $messageData->de,
                 'rol' => $messageData->rol,
             ];
+            
         }else {
             $numRecv = count($this->users) - 1;
-           
+            
               foreach ($this->users as $user) {
                 
                  if ($messageData->para == $user['user']) {

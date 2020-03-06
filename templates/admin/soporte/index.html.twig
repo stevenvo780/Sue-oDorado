@@ -51,6 +51,13 @@ var socket = new WebSocket("ws://"+window.location.hostname+":8080");
 
 socket.onopen = function () {
     console.log('Connection successful');
+    var userId = "{{ app.user.id }}";
+    var mensaje=document.getElementById("mensaje").value;
+    var para = localStorage.getItem("chatCon");
+    var rol = "{{ app.user.roles[0] }}";
+    let dataSend = {mensaje: "", de: userId, para: "", rol:rol};
+    socket.send(JSON.stringify(dataSend));
+    usersList();
 };
 
 const boton = document.querySelector("#enviar");
@@ -69,14 +76,7 @@ boton.addEventListener("click", function(evento){
  });
 
 window.onload = function() {
-    localStorage.removeItem('chatCon');
-    usersList();
-    var userId = "{{ app.user.id }}";
-    var mensaje=document.getElementById("mensaje").value;
-    var para = localStorage.getItem("chatCon");
-    var rol = "{{ app.user.roles[0] }}";
-    let dataSend = {mensaje: "", de: userId, para: "", rol:rol};
-    socket.send(JSON.stringify(dataSend));
+    localStorage.removeItem('chatCon');    
 };
 
 function usersList() {
