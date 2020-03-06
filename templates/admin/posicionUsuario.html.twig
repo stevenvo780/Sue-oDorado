@@ -119,17 +119,17 @@
                                             {% if monedaDeApoyo == "" %}
                                              <option selected value=""></option>
                                                 {% for monedaApoyo in cambioMoneda %}
-                                                    <option value="{{ monedaApoyo.dueño.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                    <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
                                                 {% endfor %}
                                             {% else %}
                                             {% if cambioMoneda is defined %}
                                                 {% if cambioMoneda|length > 1 %}
                                                     {% for monedaApoyo in cambioMoneda %}
-                                                        <option value="{{ monedaApoyo.dueño.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
+                                                        <option value="{{ monedaApoyo.id }}">{{ monedaApoyo.dueño.nombres }} {{ monedaApoyo.dueño.apellidos }} {{ monedaApoyo.posicion }}</option>
                                                     {% endfor %}
                                                 {% endif %}
                                             {% endif %}
-                                                <option selected value="{{ monedaDeApoyo.dueño.id }}">{{ monedaDeApoyo.dueño.nombres }} {{ monedaDeApoyo.dueño.apellidos }} {{ monedaDeApoyo.posicion }}</option>
+                                                <option selected value="{{ monedaDeApoyo.id }}">{{ monedaDeApoyo.dueño.nombres }} {{ monedaDeApoyo.dueño.apellidos }} {{ monedaDeApoyo.posicion }}</option>
                                             {% endif %}
 										{% endif %}
                                         </select>
