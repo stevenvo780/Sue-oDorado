@@ -1,206 +1,462 @@
-{% set permiso = 'layouts/base.html.twig' %}
-{% if app.user %}
-	{% if is_granted('ROLE_ADMIN') %}
-		{% set permiso = 'layouts/admin.html.twig' %}
-	{% elseif is_granted('ROLE_USER') %}
-		{% set permiso = 'layouts/user.html.twig' %}
-	{% endif %}
-{% endif %}
-{% extends permiso %}
+{% extends 'layouts/base.html.twig' %}
 {% block title %}Informacion
 {% endblock %}
 
 {% block body %}
 
-	<div style="z-index:0;" id="myCarousel" class="carousel slide" data-ride="carousel">
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class=""></li>
-			<li data-target="#myCarousel" data-slide-to="1" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="2" class=""></li>
-		</ol>
-		<div class="carousel-inner">
-			<div class="carousel-item active carousel-item-left">
-				<img src="{{ asset('assets/Banner_01.jpg') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
-				<div class="container">
-					<div class="carousel-caption text-left">
-						<h1>
-							<i>
-								<b>Sueño dorado</i>
-							</b>
-						</h1>
-						<h4>
-							<b>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti.</b>
-						</h4>
-						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-							{% else %}
-								<p>
-									<a class="btn btn-lg btn-warning" href="{{path('register')}}" role="button">Resgístrate</a>
-								</p>
-						{% endif %}
 
+	<!-- ======= Hero Section ======= -->
+	<section id="hero">
+		<div class="hero-container" data-aos="fade-up">
+			<h1>BIENVENIDO A SUEÑO DORADO</h1>
+			<h2>Economia colaborativa</h2>
+			<a href="#about" class="btn-get-started scrollto">
+				<i class="bx bx-chevrons-down"></i>
+			</a>
+		</div>
+	</section>
+	<!-- End Hero -->
+
+	<main
+		id="main">
+
+		<!-- ======= About Section ======= -->
+		<section id="about" class="about">
+			<div class="container">
+
+				<div class="row no-gutters">
+					<div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-up">
+						<div class="content">
+							<h3>Qué es una criptomoneda</h3>
+							<p>
+								Es una moneda virtual que sirve para
+												intercambiar bienes y servicios a través de
+												un sistema de transacciones electrónicas sin
+												intermediarios.
+							</p>
+							
+						</div>
+					</div>
+					<div class="col-xl-7 d-flex align-items-stretch">
+						<div class="icon-boxes d-flex flex-column justify-content-center">
+							<div class="row">
+								<div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+									<i class="bx bx-receipt"></i>
+									<h4>¿Como funciona?</h4>
+									<p>Funciona bajo la tecnología Blockchain o cadena de bloques</p>
+								</div>
+								<div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+									<i class="bx bx-cube-alt"></i>
+									<h4>¿Bloques?</h4>
+									<p>Cada bloque contiene información codificada de una transacción en la red.</p>
+								</div>
+
+								<div class="col-md-12 icon-box" data-aos="fade-up" data-aos-delay="400">
+									<i class="bx bx-shield"></i>
+									<h4>¿y como se mueve?</h4>
+									<p>Las transacciones realizadas
+																bajo esta tecnología son verificadas en varios servidores
+																de forma aleatoria en cualquier lugar del mundo, lo que
+																hace de este sistema el mas seguro y confiable a la hora de
+																transferir valor.</p>
+								</div>
+							</div>
+						</div>
+						<!-- End .content-->
 					</div>
 				</div>
+
 			</div>
-			<div class="carousel-item carousel-item-next carousel-item-left">
-				<img src="{{ asset('assets/Banner_02.jpg') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
-				<div class="container">
-					<div class="carousel-caption" style="color:black">
-						<h1>
-							<i>
-								<b>Sueño dorado</i>
-							</b>
-						</h1>
-						<h4>
-							<b>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti.</b>
-						</h4>
-						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-							{% else %}
-								<p>
-									<a class="btn btn-lg btn-warning" href="{{path('register')}}" role="button">Resgístrate</a>
-								</p>
-						{% endif %}
+		</section>
+		<!-- End About Section -->
+
+		<!-- ======= Services Section ======= -->
+		<section id="services" class="services">
+			<div class="container">
+
+				<div class="section-title" data-aos="fade-in" data-aos-delay="100">
+					<h2>¿Qué es MKTCOIN?</h2>
+					<p>Es una criptomoneda con tecnología avanzada y competitiva,
+									con un sistema de mineria por masternodos y el objetivo de
+									nuestro proyecto es trabajar por su valorización.
+					</p>
+					<br>
+					<p>MKTcoin corno moneda digital permite pagos
+											transfronterizos instantáneos utilizando tecnología de igual
+											a igual para operar sin autoridad central; Las transacciones
+											y la emisión de activos se llevan a cabo colectivamente
+											por la red.
+					</p>
+					<br>
+					<p>MKTcoin Core es el software de código abierto que permite
+										el uso de esta moneda.
+					</p>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up">
+							<div class="icon">
+								<i class="bx bx-money"></i>
+							</div>
+							<h4 class="title">
+								<a href="">
+									<p>Es dinero en efectivo</p>
+								</a>
+							</h4>
+
+						</div>
 					</div>
+
+					<div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+							<div class="icon">
+								<i class='bx bx-diamond'></i>
+							</div>
+							<h4 class="title">
+								<a href="">Se puede cambiar por otras criptomonedas</a>
+							</h4>
+
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+							<div class="icon">
+								<i class="bx bx-coin"></i>
+							</div>
+							<h4 class="title">
+								<a href="">Nuestra moneda es transables con bitcoin</a>
+							</h4>
+
+						</div>
+					</div>
+
+					<div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+							<div class="icon">
+								<i class="bx bx-world"></i>
+							</div>
+							<h4 class="title">
+								<a href="">Es La Moneda del futuro</a>
+							</h4>
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Services Section -->
+
+		<!-- ======= Counts Section ======= -->
+		<section id="counts" class="counts  section-bg">
+			<div class="container">
+
+				<div class="row no-gutters">
+
+					<div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+						<div class="count-box">
+							<i class="bx bx-coin-stack"></i>
+							<span data-toggle="counter-up">2</span>
+							<p>
+								<strong>2019</strong>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+						<div class="count-box">
+							<i class="bx bx-coin-stack"></i>
+							<span data-toggle="counter-up">500</span>
+							<p>
+								<strong>2020</strong>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+						<div class="count-box">
+
+							<i class='bx bx-coin-stack'></i>
+							<span data-toggle="counter-up">1500</span>
+							<p>
+								<strong>2021</strong>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6 d-md-flex align-items-md-stretch">
+						<div class="count-box">
+							<i class="bx bx-coin-stack"></i>
+							<span data-toggle="counter-up">3000</span>
+							<p>
+								<strong>2022</strong>
+							</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Counts Section -->
+
+		<!-- ======= Cta Section ======= -->
+		<section id="cta" class="cta">
+			<div class="container" data-aos="zoom-in">
+
+				<div class="text-center">
+					<h3>PROYECCIÓN DE MKTCOIN</h3>
+					<p>Con $500.000 pesos se compran 450.000
+									monedas Mktcoin equivalente a $2 pesos copo
+									como económica solidaria ayudaremos a la
+									valorización de la moneda esperando que en un
+									año cada moneda este en $3.000 cop lo cual
+									serian $450.000 x $3.000 tendríamos un total de
+									$1.350.000.000 millones de pesos colombianos</p>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Cta Section -->
+
+		<!-- ======= Portfolio Section ======= -->
+		<section id="portfolio" class="portfolio">
+			<div class="container">
+
+				<div class="section-title" data-aos="fade-in" data-aos-delay="100">
+					<h2>¿QUÉ QUE ES LA ECONOMIA SOLIDARIA?</h2>
+					<p>La economía circular y solidaria es una forma de producción, consumo
+										y distribución de riqueza (lo que se entiende como un tipo de
+										economía), centrada en la valorización del ser humano y no en la
+										Priorización del capital.
+					</p>
+					<br>
+					<p>Promueve la asociación, la cooperación y la autogestión orientando a
+											la producción, al consumo y a la comercialización de bienes y servicios,
+											de un modo principalmente autogestionado, teniendo como finalidad el
+											desarrollo ampliado de la vida.</p>
+				</div>
+				<br>
+				<div class="row">
+
+					<div class="col-md-12 col-lg-6 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+							<h3>ECONOMIA CIRCULAR Y COLABORATIVA</h3>
+							<h5>PARA UN MUNDO MEJOR CENTRADO EN LAS PERSONAS.</h5>
+
+							<p>Jeremy Rifkin lo plantea así en La Cuarta Revolución Industrial,
+															donde afirma que existe un modelo económico alternativo. Es
+															la economía circular y colaborativa, en la que la misma
+															tecnología que utiliza Internet, como medio de comunicación
+															distribuida, podrá ser utilizada también para distribuir la
+															Riqueza.</p>
+
+							<p>Dicha teoría se fundamente en cuatro pilares; quien
+								<strong>RECIBE</strong>
+								,
+																quienes
+								<strong>SOSTIENEN</strong>, los que
+								<strong>ATRAEN</strong>
+								y los que
+								<strong>
+									APORTAN</strong>
+							</p>
+						</div>
+					</div>
+
+					<div class="col-md-12 col-lg-6 d-flex align-items-stretch mb-5 mb-lg-0">
+						<div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+							<img src="assets/monedas01.jpg" width="100%" class="rounded" alt="">
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Portfolio Section -->
+
+		<!-- ======= Testimonials Section ======= -->
+		<section id="testimonials" class="testimonials section-bg">
+			<div class="container">
+
+				<div class="section-title" data-aos="fade-in" data-aos-delay="100">
+					<h2>COMPONENTES DE LA ESTRUCTURA</h2>
+					<p>Cuando recibes y sales de la estructura te conviertes en diamante de apoyo.</p>
+					<br>
+					<br>
+					<h3>15 PERSONAS</h3>
+				</div>
+
+				<div class="owl-carousel testimonials-carousel">
+
+					<div class="testimonial-item" data-aos="fade-up">
+
+						<img src="img/monedas/Dorado2.png" class="testimonial-img" alt="">
+						<h3>Oro</h3>
+						<h2>8</h2>
+					</div>
+
+					<div class="testimonial-item" data-aos="fade-up" data-aos-delay="100">
+
+						<img src="img/monedas/Ruby.png" class="testimonial-img" alt="">
+						<h3>Ruby</h3>
+						<h2>4</h2>
+					</div>
+
+					<div class="testimonial-item" data-aos="fade-up" data-aos-delay="200">
+
+						<img src="img/monedas/Esmeralda.png" class="testimonial-img" alt="">
+						<h3>Esmeralda</h3>
+						<h2>2</h2>
+					</div>
+
+					<div class="testimonial-item" data-aos="fade-up" data-aos-delay="300">
+
+						<img src="img/monedas/Diamante.png" class="testimonial-img" alt="">
+						<h3>Diamante</h3>
+						<h2>1</h2>
+					</div>
+
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Testimonials Section -->
+
+		<!-- ======= Team Section ======= -->
+		<section id="team" class="team">
+			<div class="container">
+
+				<div class="section-title" data-aos="fade-in" data-aos-delay="100">
+					<h2>¿Como funciona?</h2>
+				</div>
+
+				<div class="row">
+
+					<div class="col-lg-12 col-md-12">
+						<div class="" data-aos="fade-up">
+							<div class="slider">
+								<img src='assets/tuto1.png' class="active">
+								<img src='assets/tuto2.png'>
+								<img src='assets/tuto3.png'>
+								<img src='assets/tuto4.png'>
+								<img src='assets/tuto5.png'>
+								<img src='assets/tuto6.png'>
+								<img src='assets/tuto7.png'>
+								<img src='assets/tuto8.png'>
+								<img src='assets/tuto9.png'>
+								<img src='assets/tuto10.png'>
+								<span class="prev sliderSpan"><i class='bx bx-left-arrow' ></i></span>
+								<span class="next sliderSpan"><i class='bx bx-right-arrow' ></i></span>
+							</div>
+						</div>
+					</div>
+		
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Team Section -->
+
+		<!-- ======= Contact Section ======= -->
+		<section id="contact" class="contact section-bg">
+			<div class="container">
+
+				<div class="section-title" data-aos="fade-in" data-aos-delay="100">
+					<h2>Contact</h2>
+					<p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+				</div>
+
+				<div class="row" data-aos="fade-up" data-aos-delay="100">
+					<div class="col-lg-6">
+						<div class="info-box mb-4">
+							<i class="bx bx-map"></i>
+							<h3>Our Address</h3>
+							<p>A108 Adam Street, New York, NY 535022</p>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="info-box  mb-4">
+							<i class="bx bx-envelope"></i>
+							<h3>Email Us</h3>
+							<p>contact@example.com</p>
+						</div>
+					</div>
+
+					<div class="col-lg-3 col-md-6">
+						<div class="info-box  mb-4">
+							<i class="bx bx-phone-call"></i>
+							<h3>Call Us</h3>
+							<p>+1 5589 55488 55</p>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="row" data-aos="fade-up" data-aos-delay="200">
+
+					<div class="col-lg-6 ">
+						<iframe class="mb-4 mb-lg-0" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" style="border:0; width: 100%; height: 384px;" allowfullscreen></iframe>
+					</div>
+
+					
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Contact Section -->
+
+	</main>
+	<!-- End #main -->
+
+	<!-- ======= Footer ======= -->
+	<footer id="footer">
+		<div class="footer-top">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-lg-4 col-md-6 footer-newsletter" data-aos="fade-up" data-aos-delay="350">
+						<h2>
+						<a href="#" class="about-btn">Registrarse
+								<i class="bx bx-chevron-right"></i>
+							</a></h2>
+
+					</div>
+
 				</div>
 			</div>
-			<div class="carousel-item">
-				<img src="{{ asset('assets/Banner_03.jpg') }}" class="img-fluid pull-xs-left" alt="..." width="100%" height="20%">
-				<div class="container">
-					<div class="carousel-caption text-right" style="color:black">
-						<h1>
-							<i>
-								<b>Sueño dorado</i>
-							</b>
-						</h1>
-						<h4>
-							<b>Te invitamos a vibrar en abundancia y prosperidad de seguro esto es para ti.</b>
-						</h4>
-						{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-							{% else %}
-								<p>
-									<a class="btn btn-lg btn-warning" href="{{path('register')}}" role="button">Resgístrate</a>
-								</p>
-						{% endif %}
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
-	</div>
-
-	<br>
-	<!-- Marketing messaging and featurettes
-				  ================================================== -->
-
-
-	<div class="container marketing">
-
-		<div class="row">
-			<div class="col-lg-6">
-				<img src="{{ asset('assets/Pic_01.jpg') }}" class="rounded-circle" alt="Cinque Terre" width="40%" style="display:block;margin:auto;">
-				<h2>Principios</h2>
-				<ul class="">
-					<li class="">EL AMOR</li>
-					<li class="">LA CONFIANZA</li>
-					<li class="">LA CONFIABILIDAD</li>
-					<li class="">LA CLARIDAD</li>
-					<li class="">LA SOLIDARIDAD</li>
-					<li class="">LA LEGALIDAD</li>
-					<li class="">LA COMUNICACION
-					</li>
-					<li class="">EL RESPETO</li>
-					<li class="">EL COMPROMISO</li>
-				</ul>
-			</div>
-			<div class="col-lg-6">
-				<img src="{{ asset('assets/Pic_05.jpg') }}" class="rounded-circle" alt="Cinque Terre" width="40%" style="display:block;margin:auto;">
-				<h2>Aspectos legales en colombia</h2>
-				<p>
-					<b>CODIGO CIVIL - DONACIONES Y CODIGO PENAL CAPTACION DE DINERO</b>
-				</p>
-				<ul class="">
-					<li class="">Art. 1443 C.C. La donación entre vivos es un acto por el cual una persona transfiere, gratuita e irrevocablemente, una parte de sus bienes a otra persona que la acepta.
-					</li>
-					<li class="">Art. 1458 C.C.... Las donaciones cuyo valor sea igual o inferior a cincuenta (50) salarios mínimos mensuales, no requieren insinuación.
-					</li>
-					<li class="">Art. 316 C.P. CAPTACIÓN DE DINERO. Es legal la administración de dineros de terceros hasta o inferior a 20 personas.
-					</li>
-
-				</ul>
-			</div>
 		</div>
 
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7">
-				<h2 class="featurette-heading">ECONOMIA SOLIDARIA</h2>
-				<p class="lead">La economía circular y solidaria es una forma de producción, consumo, y distribución de riqueza (lo que se entiende como un tipo de economía), centrada en la valorización del ser humano y no
-																				             en la Priorización del capital. Promueve la asociación, la cooperación y la autogestión, está orientada a la producción, al consumo y a la comercialización de bienes y servicios,
-																				             de un modo principalmente autogestionado, teniendo como finalidad el desarrollo ampliado de la vida.</p>
-				<p></p>
+		<div class="container">
+			<div class="copyright">
+				&copy; Copyright
+				<strong>
+					<span>Squadfree</span>
+				</strong>. All Rights Reserved
 			</div>
-			<div class="col-md-5">
-				<img src="{{ asset('assets/Pic_04.jpg') }}" class="rounded" style="border-width:10px;" alt="..." width="100%">
-			</div>
-		</div>
-
-		<hr class="featurette-divider">
-
-		<div class="row featurette">
-			<div class="col-md-7 order-md-2">
-				<h2 class="featurette-heading">Proyeccion de la moneda</h2>
-				<p class="lead">Con $500.000 pesos se compran 250.000 monedas Mktcoin equivalente a $2 pesos cop. como economica solidaria ayudaremos a la valorizacion de la moneda esperando Que en un año cada moneda este en $3.000 cop lo cual serian 250.000 * $3.000 pesos tendriamos un total de = $750 '000.000 millones de pesos colombianos.</p>
-			</div>
-			<div class="col-md-5 order-md-1">
-				<img src="{{ asset('assets/Pic_02.jpeg') }}" class="rounded" alt="..." width="100%">
+			<div class="credits">
+				<!-- All the links in the footer should remain intact. -->
+				<!-- You can delete the links only if you purchased the pro version. -->
+				<!-- Licensing information: https://bootstrapmade.com/license/ -->
+				<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/ -->
+				Designed by<a href="https://bootstrapmade.com/"> BootstrapMade</a>
 			</div>
 		</div>
+	</footer>
+	<!-- End Footer -->
 
-		<hr class="featurette-divider">
+	<a href="#" class="back-to-top">
+		<i class="icofont-simple-up"></i>
+	</a>
 
-		<div class="row featurette">
-			<div class="col-md-7">
-				<h2 class="featurette-heading">La Economía Circular y Colaborativa para un Mundo Mejor Centrado en las PERSONAS.</h2>
-				<p class="lead">Jeremy Rifkin lo plantea así en La Cuarta Revolución Industrial, donde afirma que existe un modelo económico alternativo. Es la economía circular y colaborativa, en la que la misma tecnología que utiliza Internet, como medio de comunicación distribuida, podrá ser utilizada también para distribuir la Riqueza. Dicha teoría se fundamente en cuatro pilares; quien RECIBE, quienes SOSTIENEN, los que ATRAEN Y los que APORTAN.</p>
-			</div>
-			<div class="col-md-5">
-				<img src="{{ asset('assets/Pic_03.jpg') }}" class="rounded" alt="..." width="100%">
-			</div>
-		</div>
-		<br>
-		<br>
-		<div align="center" class="row featurette">
-			<div class="col-md-12">
-				<h1 class="featurette-heading">DIA DE MERECIMIENTO
-				</h1>
-				<img src="{{ asset('assets/Banner_03.jpg') }}" class="rounded" alt="..." width="100%">
-			</div>
-		</div>
 
-		<div align="center" class="row featurette">
-			<div class="col-md-12">
-				<ul class="list-group list-group-flush">
-					<li class="list-group-item">
-						1). 8 oros x $1.000.000 = $8'000.000 Entregas $1.000.000 para el Diamante de Apoyo y $1.000.000 ($500.000 para compra de MKTCoin - Y $ 500.000 PARA LA LOGÍSTICA DE LOS EVENTOS) Te quedas con $6000.000 PARA CUMPLIR TU SUEÑO.
-					</li>
-					<li class="list-group-item">2). Mis oros son 8 x 1.000.000 = $8'000.000 (menos $ 2.000.000 para el Diamante de Apoyo, compra de monedas y logística) Recibes = $6'000.000
-					</li>
-					<li class="list-group-item">3). último: 8 x 1.000.000 = 8.000.000 (menos $ 2.000.000 para el Diamante de Apoyo, compra de monedas y logística) Recibes = $6'000.000
-					</li>
-					<li class="list-group-item">En la tercera recibida sales de la estructura con un total en efectivo de $18'000.000 más $1'500.000 en MKTCoin, en un aproximado de 2 a 3 meses.
-					</li>
-				</ul>
-				<p></p>
-			</div>
-		</div>
-	</div>
 {% endblock %}

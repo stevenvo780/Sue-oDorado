@@ -8,27 +8,434 @@
 		</title>
 		{% block stylesheets %}
 			<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
-			<meta name="viewport" content="initial-scale=1, width=device-width">
-			<link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
+			<meta
+			name="viewport" content="initial-scale=1, width=device-width">
+			<!-- Google Fonts -->
+			<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+			<!-- Vendor CSS Files -->
 			<link href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-			<link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-			<link href="{{ asset('css/sb-admin.css') }}" rel="stylesheet">
+			<link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+			<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+			<link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+			<link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+			<link href="assets/vendor/aos/aos.css" rel="stylesheet">
 			<link href="{{ asset('css/main.css') }}" rel="stylesheet">
 			<link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-			
+			<link
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" type="text/css" rel="stylesheet">
+
+			<!-- Template Main CSS File -->
+			<link href="assets/css/style.css" rel="stylesheet">
+
 		{% endblock %}
 	</head>
 	<body>
+		{% if app.user %}
+			{% if is_granted('ROLE_ADMIN') %}
+				<div id="mySidenav" class="sidenav">
+					<div id="content">
+						<div class="container align-items-center">
+							<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+								<span style="font-size: 50px;color: red;">
+									<i class="far fa-times-circle"></i>
+								</span>
+							</a>
+							<h1 style="color:white">
+								<i class="fas fa-user-circle fa-fw"></i>
+								{% if app.user.nombres is defined %}
+									{{ app.user.nombres }}
+								{% else %}
+									<script>
+										window.locationf ="{{ path('app_login') }}";
+									</script>
+								{% endif %}
+							</h1>
+							<div class="row">
+								<div class="col-12">
+									<br>
+									<a class="badge badge-pill badge-dark" href="{{ path('dasboard') }}">
+										<span>
+											<h3>
+												<i class="fas fa-child"></i>
+												Perfiles</h3>
+										</span>
+									</a>
+									<br>
+									{% if moneda is defined %}
+										<a class="badge badge-pill badge-dark" href="{{ path('posiciones_user_admin',{'id': moneda.id}) }}">
+											<span>
+												<h3>
+													<i class="fas fa-code-branch"></i>
+													Estructura</h3>
+											</span>
+										</a>
+										<br>
+									{% else %}
+										<a class="badge badge-pill badge-dark" href="{{ path('posiciones_admin') }}">
+											<span>
+												<h3>
+													<i class="fas fa-code-branch"></i>
+													Estructura</h3>
+											</span>
+										</a>
+										<br>
+									{% endif %}
+									<a class="badge badge-pill badge-dark" href="{{ path('soporte_admin') }}">
+										<span>
+											<h3>
+												<i class="fas fa-envelope-square"></i>
+												Mensajes</h3>
+										</span>
+									</a>
+									<br>
+									<a class="badge badge-pill badge-dark" href="{{ path('eventos_admin') }}">
+
+										<span>
+											<h3>
+												<i class="fas fa-calendar-week"></i>
+												Eventos</h3>
+										</span>
+									</a>
+									<br>
+									<a class="badge badge-pill badge-dark" href="{{ path('proyecto') }}">
+										<span>
+											<h3>
+												<i class="fas fa-question"></i>
+												Quienes somos</h3>
+										</span>
+									</a>
+									<br>
+									<a class="badge badge-pill badge-dark" href="{{ path('edit_user_password',{'id': app.user.id}) }}">
+										<span>
+											<h3>
+												<i class="fas fa-wrench"></i>
+												Cambiar contraseña</h3>
+										</span>
+									</a>
+									<br>
+									<a class="badge badge-pill badge-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+										<span>
+											<h3>
+												<i class="fas fa-sign-out-alt"></i>
+												Cerrar sesion</h3>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark " id="navbarTop">
+					<img href="{{ path('dasboard_user') }}" src="{{ asset('assets/suenodoradopng.png') }}" class="logo img-fluid pull-xs-left" alt="..." width="15%">
+
+					<div id="botonBarra">
+						<button onclick="openNav()" class="navbar-toggler" type="button">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto ">
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('dasboard') }}">
+									<i class="fas fa-child"></i>
+									<span>Perfiles</span>
+								</a>
+							</li>
+							{% if moneda is defined %}
+								<li class="nav-item active">
+									<a class="nav-link" href="{{ path('posiciones_user_admin',{'id': moneda.id}) }}">
+										<i class="fas fa-code-branch"></i>
+										<span>Estructura</span>
+									</a>
+								</li>
+							{% else %}
+								<li class="nav-item active">
+									<a class="nav-link" href="{{ path('posiciones_admin') }}">
+										<i class="fas fa-code-branch"></i>
+										<span>Estructuras</span>
+									</a>
+								</li>
+							{% endif %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('soporte_admin') }}">
+									<i class="fas fa-envelope-square"></i>
+									<span>Mensajes</span>
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('eventos_admin') }}">
+									<i class="fas fa-calendar-week"></i>
+									<span>Eventos</span>
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('proyecto') }}">
+									<i class="fas fa-question"></i>
+									<span>Quienes somos</span>
+								</a>
+							</li>
+							<li class="nav-item dropdown active">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-user-circle fa-fw"></i>
+									{{ app.user.nombres }}
+								</a>
+								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{ path('edit_user_password',{'id': app.user.id}) }}">Cambiar contraseña</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesion</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<br>
+
+
+				<!-- Scroll to Top Button-->
+				<a class="scroll-to-top rounded" href="#navbarTop">
+					<i class="fas fa-angle-up"></i>
+				</a>
+
+				<!-- Logout Modal-->
+				<div class="modal fade bd-example-modal-lg" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea cerrar sesion?</h5>
+								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+								<a class="btn btn-primary" href="{{ path('app_logout') }}">Cerrar sesion</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					
+				</div>
+			{% elseif is_granted('ROLE_USER') %}
+				<div id="mySidenav" class="sidenav">
+					<div id="content">
+						<div class="container-fluid">
+							<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+							<h1 style="color:white">
+								<i class="fas fa-user-circle fa-fw"></i>
+								{% if app.user.nombres is defined %}
+									{{ app.user.nombres }}
+								{% else %}
+									<script>
+										window.locationf ="{{ path('app_login') }}";
+									</script>
+								{% endif %}
+							</h1>
+							<br>
+							<a class="badge badge-pill badge-dark" href="{{ path('dasboard_user') }}">
+								<span>
+									<h3>
+										<i class="fas fa-child"></i>
+										Perfil</h3>
+								</span>
+							</a>
+							<br>
+							{% if moneda is defined %}
+								<a class="badge badge-pill badge-dark" href="{{ path('posiciones_user',{'id': moneda.id}) }}">
+									<span>
+										<h3>
+											<i class="fas fa-code-branch"></i>
+											Estructura</h3>
+									</span>
+								</a>
+								<br>
+							{% endif %}
+							<a class="badge badge-pill badge-dark" href="{{ path('soporte_user') }}">
+								<span>
+									<h3>
+										<i class="fas fa-envelope-square"></i>
+										Soporte</h3>
+								</span>
+							</a>
+							<br>
+							<a class="badge badge-pill badge-dark" href="{{ path('eventos_user') }}">
+								<span>
+									<h3>
+										<i class="fas fa-calendar-week"></i>
+										Eventos</h3>
+								</span>
+							</a>
+							<br>
+							<a class="badge badge-pill badge-dark" href="{{ path('proyecto') }}">
+								<span>
+									<h3>
+										<i class="fas fa-question"></i>
+										Quienes somos</h3>
+								</span>
+							</a>
+							<br>
+							<a class="badge badge-pill badge-dark" href="{{ path('edit_user',{'id': app.user.id}) }}">
+								<span>
+									<h3>
+										<i class="fas fa-wrench"></i>
+										Configuracion de perfil</h3>
+								</span>
+							</a>
+							<br>
+							<a class="badge badge-pill badge-danger" href="#" data-toggle="modal" data-target="#logoutModal">
+								<span>
+									<h3>
+										<i class="fas fa-sign-out-alt"></i>
+										Cerrar sesion</h3>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark " id="navbarTop">
+					<img href="{{ path('dasboard_user') }}" src="{{ asset('assets/suenodoradopng.png') }}" class="logo img-fluid pull-xs-left" alt="..." width="15%">
+
+					<div id="botonBarra">
+						<button onclick="openNav()" class="navbar-toggler" type="button">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					</div>
+
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav ml-auto ">
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('dasboard_user') }}">
+									<i class="fas fa-child"></i>
+									<span>Perfil</span>
+								</a>
+							</li>
+							{% if moneda is defined %}
+								<li class="nav-item active">
+									<a class="nav-link" href="{{ path('posiciones_user',{'id': moneda.id}) }}">
+										<i class="fas fa-code-branch"></i>
+										<span>Estructura</span>
+									</a>
+								</li>
+							{% endif %}
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('soporte_user') }}">
+									<i class="fas fa-envelope-square"></i>
+									<span>Soporte</span>
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('eventos_user') }}">
+									<i class="fas fa-calendar-week"></i>
+									<span>Eventos</span>
+								</a>
+							</li>
+							<li class="nav-item active">
+								<a class="nav-link" href="{{ path('proyecto') }}">
+									<i class="fas fa-question"></i>
+									<span>Quienes somos</span>
+								</a>
+							</li>
+							<li class="nav-item dropdown active">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="fas fa-user-circle fa-fw"></i>
+									{{ app.user.nombres }}
+								</a>
+								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{ path('edit_user',{'id': app.user.id}) }}">Configuracion de perfil</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesion</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<br>
+
+			</div>
+
+			<a class="scroll-to-top rounded" href="#navbarTop">
+				<i class="fas fa-angle-up"></i>
+			</a>
+
+			<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content ">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea cerrar sesion?</h5>
+							<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-footer">
+							<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+							<a class="btn btn-primary" href="{{ path('app_logout') }}">Cerrar sesion</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{% else %}
+
+	{% endif %}
+	<div id="content">
+		{% if error is defined %}
+			<div class="alert alert-danger" role="alert">
+				{{ error }}
+			</div>
+		{% endif %}
+		<div id="error" class="col-12"></div>
 		{% block body %}{% endblock %}
-		{% block javascripts %}
-			
-				<script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
-				<script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
-				<script src="{{ asset('js/sb-admin.min.js') }}"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-				<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-				<script src="{{ asset('js/sb-admin.min.js') }}"></script>
-			
-		{% endblock %}
-	</body>
-</html>
+	</div>
+
+	{% block javascripts %}
+
+		<!-- Vendor JS Files -->
+		<script src="{{ asset('node_modules/jquery/dist/jquery.min.js') }}"></script>
+		<script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+		<script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+		<script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
+		<script src="assets/vendor/counterup/counterup.min.js"></script>
+		<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+		<script src="assets/vendor/venobox/venobox.min.js"></script>
+		<script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+		<script src="assets/vendor/aos/aos.js"></script>
+
+		<!-- Template Main JS File -->
+		<script src="assets/js/main.js"></script>
+
+		<script>
+
+			function openNav() {
+document.getElementById("mySidenav").style.width = "100%";
+document.getElementById("botonBarra").innerHTML = "<button onclick='closeNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
+}
+function closeNav() {
+document.getElementById("mySidenav").style.width = "0";
+document.getElementById("botonBarra").innerHTML = "<button onclick='openNav()' id='botonBarra' class='navbar-toggler' type='button'><span class='navbar-toggler-icon'></span></button>";
+}
+if (document.getElementById("contentBody")) {
+$(window).resize(function () {
+if (screen.width >= 450) {
+document.getElementById("contentBody").className = "container";
+} else {
+document.getElementById("contentBody").className = "container-fluid";
+}
+
+});
+
+if (screen.width >= 450) {
+document.getElementById("contentBody").className = "container";
+} else {
+document.getElementById("contentBody").className = "container-fluid";
+}
+}
+		</script>
+	{% endblock %}
+</html></body></html>
