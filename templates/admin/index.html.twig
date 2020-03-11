@@ -3,6 +3,7 @@
 {% block title %}Dashboard
 {% endblock %}
 
+
 {% block body %}
 	<div class="container-fluid" id="contentBody">
 		<div class="card mb-3">
@@ -10,7 +11,7 @@
 				<i class="fas fa-table"></i>
 				Usuarios</div>
 			<div style="z-index:0;" class="card-body">
-				<table class="table nowrap dt-responsive responsive" id="Usuarios" width="100%">
+				<table class="table nowrap " id="Usuarios" width="100%">
 					<thead>
 						<tr>
                             <th>Monedas</th>
@@ -33,7 +34,9 @@
 var table;
 function loadTable()
 {
+$.fn.DataTable.ext.pager.numbers_length = 4;
   table = $('#Usuarios').DataTable({
+        
         language: {
              "decimal": "",
              "emptyTable": "CARGANDO POR FAVOR ESPERE",
@@ -102,6 +105,7 @@ function usersList() {
      }
      loadTable();
      table.draw();
+     
     })
     .catch(function(err) {
        console.log(err);

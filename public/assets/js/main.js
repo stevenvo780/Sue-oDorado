@@ -156,7 +156,7 @@ $('.slider span.prev').click(function() {
                 items: 2
             },
             900: {
-                items: 3
+                items: 2
             }
         }
     });
