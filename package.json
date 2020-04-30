@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "cytoscape": "^3.14.0",
     "bootstrap": "^4.4.1"
   },
